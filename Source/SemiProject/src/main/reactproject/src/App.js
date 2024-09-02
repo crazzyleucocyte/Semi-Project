@@ -1,52 +1,161 @@
-import logo from './logo.svg';
-import './assets/App.css';
-import axios from 'axios';
-import {useState, useEffect} from 'react'
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, useParams } from 'react-router-dom';
+import './App.css';
 
-/*
-	* 4조 프로젝트 작업 시작 전 꼭 읽을 사항
-	
-	1. 긴헙에서 download를 했는데 gradle이 안보이는 경우
-		1) 왼쪽 상단 File
-		2) import
-		3) gradle 검색
-		4) Existing Gradle Project import
-		
-	2. 깃헙에서 download을 했을경우 필수 설치 모듈
-		1) npm i   					(기본 모듈 설치)
-		2) npm i react-router-dom	(페이지 전환을 위한 필수 모듈 리액트 라우터)
-		3) npm i axios				(서버와 통신간 필수 모듈 axios)
- 	
- 	3. Progress 창 꼭 띄우고 작업하기
- 		Progress 진행중에 다른 작업을 할 경우 파일 충돌이 날 수 있기 때문에 
- 		작업 시작하기전 항상 구석에 창을 띄우기
- 		
- 	4. 메소드 및 중요한 코드에는 꼭 주석 달기
- 		혼자 하는 작업이 아니라 팀 프로젝트입니다.
- 		본인은 코드에 대해 알고 있어도 다른 사람들은 해당 코드 파악하는데에 시간이 오래 걸립니다.
- 		그러니 간단한 주석이라도 꼭 달아주시면 감사드리겠습니다.
- 		현업에서도 중요시 여기는 부분이니 꼭 준수해주시기 바랍니다.
+// 예시 데이터
+const postsData = Array.from({ length: 50 }, (_, i) => ({
+  id: i + 1,
+  title: `게시글 ${i + 1}`,
+  likes: 0,
+  likedByUser: false,
+}));
 
-*/
+function PostList({ isLoggedIn }) {
+  const [posts, setPosts] = useState(postsData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchInput, setSearchInput] = useState(''); // 사용자가 입력하는 검색어
+  const postsPerPage = 10;
+
+  // 페이지 번호에 따른 게시글 추출
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts
+    .filter(post => post.title.toLowerCase().includes(searchTerm.toLowerCase())) // 검색어 필터링
+    .slice(indexOfFirstPost, indexOfLastPost);
+
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // 좋아요 버튼 클릭 핸들러
+  const handleLike = (id) => {
+    setPosts(posts.map(post =>
+      post.id === id
+        ? { ...post, 
+            likes: post.likedByUser ? post.likes - 1 : post.likes + 1, 
+            likedByUser: !post.likedByUser 
+          }
+        : post
+    ));
+  };
+
+  // 검색 버튼 클릭 핸들러
+  const handleSearch = () => {
+    setSearchTerm(searchInput);
+    setCurrentPage(1); // 검색 시 첫 페이지로 이동
+  };
+
+  const handleSearchInputChange = (event) => {
+    setSearchInput(event.target.value);
+  };
+
+  const totalPages = Math.ceil(posts.filter(post => post.title.toLowerCase().includes(searchTerm.toLowerCase())).length / postsPerPage);
+
+  return (
+    <div>
+      <h1>게시판</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>글번호</th>
+            <th>산책경로구분명</th>
+            <th>시군구명</th>
+            <th>경로레벨명</th>
+            <th>경로시간</th>
+            <th>좋아요</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentPosts.map(post => (
+            <tr key={post.id}>
+              <td>{post.id}</td>
+              <td>
+                <Link to={`/post/${post.id}`}>{post.title}</Link>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                {isLoggedIn ? (
+                  <button onClick={() => handleLike(post.id)}>
+                    {post.likedByUser ? '좋아요 취소' : '좋아요'} {post.likes}
+                  </button>
+                ) : (
+                  <button disabled>
+                    좋아요 {post.likes} (로그인 필요)
+                  </button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNumber => (
+          <button
+            key={pageNumber}
+            onClick={() => handlePageChange(pageNumber)}
+            className={currentPage === pageNumber ? 'active' : ''}
+          >
+            {pageNumber}
+          </button>
+        ))}
+      </div>
+      <div className="search">
+        <input 
+          type="text" 
+          placeholder="제목 검색" 
+          value={searchInput}
+          onChange={handleSearchInputChange}
+        />
+        <button onClick={handleSearch} className="search-button">검색</button>
+      </div>
+    </div>
+  );
+}
+
+function PostDetail() {
+  const { postId } = useParams();
+  const post = postsData.find(p => p.id === parseInt(postId));
+
+  if (!post) {
+    return <div>게시글을 찾을 수 없습니다.</div>;
+  }
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>글 번호: {post.id}</p>
+      <p>좋아요: {post.likes}</p>
+      <p>산책경로구분명: {/* 추가 데이터 */}</p>
+      <p>시군구명: {/* 추가 데이터 */}</p>
+      <p>경로레벨명: {/* 추가 데이터 */}</p>
+      <p>경로시간: {/* 추가 데이터 */}</p>
+    </div>
+  );
+}
 
 function App() {
-	//테스트로 작성한 코드입니다. 실행 결과 웹페이지에 test라고 뜬걸 보신 후 작업 시작해주시기 바랍니다.
-	
-	//test를  위한 useState
-	let[test,setTest] = useState('');
-	// /test경로로 axios요청 
-	useEffect(()=>{
-    axios.get(`/test`)
-    // 성공 결과를 test에 저장
-    .then((resultfrBk,status)=> setTest(resultfrBk.data))
-    .catch(()=> console.log('실패'))
- 	 },[])
- 	 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const toggleLogin = () => {
+    setIsLoggedIn(!isLoggedIn);
+  };
+
   return (
-    <div className="App">
-      {/* 서버에서 받은 값 출력 */}
-        <h1>{test}</h1>
-    </div>
+    <Router>
+      <div>
+        <button onClick={toggleLogin}>
+          {isLoggedIn ? '로그아웃' : '로그인'}
+        </button>
+        <Routes>
+          <Route path="/" element={<PostList isLoggedIn={isLoggedIn} />} />
+          <Route path="/post/:postId" element={<PostDetail />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
