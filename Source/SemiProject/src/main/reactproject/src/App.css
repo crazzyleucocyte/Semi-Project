@@ -1,69 +1,86 @@
 /* 기본 테이블 스타일링 */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  /* 페이지네이션 스타일링 */
-  .pagination {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .pagination button {
-    margin: 0 5px;
-    padding: 8px 16px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .pagination button.active {
-    background-color: #0056b3;
-  }
-  
-  .pagination button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* 검색창 스타일링 */
-  .search {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .search input[type="text"] {
-    padding: 8px;
-    width: 200px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 8px;
-  }
-  
-  .search-button {
-    padding: 8px 16px;
-    border: none;
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .search-button:hover {
-    background-color: #218838;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* 페이지네이션 스타일링 */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 8px 16px;
+  border: none;
+  /* background-color: #007bff; */
+  color: black;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* .pagination button.active {
+  background-color: #0056b3;
+}
+
+.pagination button:hover {
+  background-color: #0056b3;
+} */
+
+/* 검색창 스타일링 */
+.search {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.search-select {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.search input {
+  padding: 8px;
+  font-size: 16px;
+  width: 300px;
+}
+
+.search-button {
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #218838;
+}
+
+/* Header 및 Footer 스타일링 */
+header {
+  padding: 10px;
+  text-align: right;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+footer {
+  padding: 10px;
+  text-align: center;
+  background-color: #f8f9fa;
+  border-top: 1px solid #ddd;
+  margin-top: 20px;
+}
