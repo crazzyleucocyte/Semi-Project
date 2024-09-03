@@ -6,10 +6,11 @@ import '../App.css';
 const postsData = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
   title: `게시글 ${i + 1}`,
-  pathType: `산책경로 ${i + 1}`,
-  district: `시군구 ${i + 1}`,
-  level: `레벨 ${i + 1}`,
-  time: `${30 + i}분`,
+  pathType: `산책경로 ${i + 1}`,// 산책경로구분명
+  district: `시군구 ${i + 1}`,// 시군구명
+  level: `레벨 ${i + 1}`,// 경로레벨명
+  time: `${30 + i}분`,// 경로시간명
+
   likes: 0,
   likedByUser: false,
 }));
@@ -31,6 +32,7 @@ function PostList({ isLoggedIn }) {
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   // 페이지 변경 핸들러
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };

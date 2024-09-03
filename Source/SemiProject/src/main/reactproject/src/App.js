@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import Header from './components/Header';
+import Footer from './components/Footer';
+
 import PostList from './pages/PostList';
 import PostDetail from './pages/PostDetail';
 import './App.css';
@@ -14,13 +18,12 @@ function App() {
   return (
     <Router>
       <div>
-        <button onClick={toggleLogin}>
-          {isLoggedIn ? '로그아웃' : '로그인'}
-        </button>
+        <Header isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
         <Routes>
           <Route path="/" element={<PostList isLoggedIn={isLoggedIn} />} />
           <Route path="/post/:postId" element={<PostDetail isLoggedIn={isLoggedIn} />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );

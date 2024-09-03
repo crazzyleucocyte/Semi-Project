@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './PostDetail.css';
@@ -46,6 +47,7 @@ function PostDetail({ isLoggedIn }) {
     }
     setLikedByUser(!likedByUser);
   };
+
 
   if (!post) {
     return <div>게시글을 찾을 수 없습니다.</div>;
