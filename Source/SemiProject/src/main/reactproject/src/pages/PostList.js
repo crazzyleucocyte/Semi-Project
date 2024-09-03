@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useParams } from 'react-router-dom';
 import '../App.css';
 
 // 예시 데이터
 const postsData = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
   title: `게시글 ${i + 1}`,
-  routeType: `경로구분 ${i % 3}`, // 산책경로구분명
-  city: `시군구 ${i % 5}`, // 시군구명
-  level: `레벨 ${i % 4}`, // 경로레벨명
-  time: `${30 + i * 5}분`, // 경로시간명
+  pathType: `산책경로 ${i + 1}`,// 산책경로구분명
+  district: `시군구 ${i + 1}`,// 시군구명
+  level: `레벨 ${i + 1}`,// 경로레벨명
+  time: `${30 + i}분`,// 경로시간명
+
   likes: 0,
   likedByUser: false,
 }));
@@ -19,36 +20,24 @@ function PostList({ isLoggedIn }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchInput, setSearchInput] = useState('');
-  const [searchCategory, setSearchCategory] = useState('title'); // 검색 카테고리 상태 추가
+  const [searchCategory, setSearchCategory] = useState('title');
   const postsPerPage = 10;
 
+  // 페이지 번호에 따른 게시글 추출
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-  // 검색어에 맞는 게시글 필터링
-  const filteredPosts = posts.filter(post => {
-    switch (searchCategory) {
-      case 'title':
-        return post.title.toLowerCase().includes(searchTerm.toLowerCase());
-      case 'routeType':
-        return post.routeType.toLowerCase().includes(searchTerm.toLowerCase());
-      case 'city':
-        return post.city.toLowerCase().includes(searchTerm.toLowerCase());
-      case 'level':
-        return post.level.toLowerCase().includes(searchTerm.toLowerCase());
-      case 'time':
-        return post.time.toLowerCase().includes(searchTerm.toLowerCase());
-      default:
-        return false;
-    }
-  });
-
+  const filteredPosts = posts.filter(post =>
+    post[searchCategory].toString().toLowerCase().includes(searchTerm.toLowerCase())
+  );
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // 페이지 변경 핸들러
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
+  // 좋아요 버튼 클릭 핸들러
   const handleLike = (id) => {
     setPosts(posts.map(post =>
       post.id === id
@@ -60,9 +49,10 @@ function PostList({ isLoggedIn }) {
     ));
   };
 
+  // 검색 버튼 클릭 핸들러
   const handleSearch = () => {
     setSearchTerm(searchInput);
-    setCurrentPage(1);
+    setCurrentPage(1); // 검색 시 첫 페이지로 이동
   };
 
   const handleSearchInputChange = (event) => {
@@ -82,7 +72,6 @@ function PostList({ isLoggedIn }) {
         <thead>
           <tr>
             <th>글번호</th>
-            <th>제목</th>
             <th>산책경로구분명</th>
             <th>시군구명</th>
             <th>경로레벨명</th>
@@ -95,10 +84,9 @@ function PostList({ isLoggedIn }) {
             <tr key={post.id}>
               <td>{post.id}</td>
               <td>
-                <Link to={`/post/${post.id}`}>{post.title}</Link>
+                <Link to={`/post/${post.id}`}>{post.pathType}</Link>
               </td>
-              <td>{post.routeType}</td>
-              <td>{post.city}</td>
+              <td>{post.district}</td>
               <td>{post.level}</td>
               <td>{post.time}</td>
               <td>
@@ -128,12 +116,12 @@ function PostList({ isLoggedIn }) {
         ))}
       </div>
       <div className="search">
-        <select onChange={handleCategoryChange} value={searchCategory} className="search-select">
-          <option value="title">제목</option>
-          <option value="routeType">산책경로구분명</option>
-          <option value="city">시군구명</option>
+        <select value={searchCategory} onChange={handleCategoryChange} className="search-select">
+          <option value="id">글번호</option>
+          <option value="pathType">산책경로구분명</option>
+          <option value="district">시군구명</option>
           <option value="level">경로레벨명</option>
-          <option value="time">경로시간명</option>
+          <option value="time">경로시간</option>
         </select>
         <input 
           type="text" 
