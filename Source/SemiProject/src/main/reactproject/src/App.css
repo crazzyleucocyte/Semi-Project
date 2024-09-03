@@ -1,86 +1,121 @@
-/* 기본 테이블 스타일링 */
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+  color: #333;
+}
+
+/* Table Styles */
 table {
-  width: 100%;
+  width: 90%;
+  margin: 20px auto;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: center;
+  border: 1px solid #ddd;
 }
 
 th {
-  background-color: #f2f2f2;
-  font-weight: bold;
+  background-color: #f4f4f4;
+  color: #555;
 }
 
-/* 페이지네이션 스타일링 */
+td {
+  color: #333;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Pagination Styles */
 .pagination {
-  margin-top: 20px;
   text-align: center;
+  margin: 20px 0;
 }
 
 .pagination button {
   margin: 0 5px;
   padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
-  /* background-color: #007bff; */
-  color: black;
-  cursor: pointer;
   border-radius: 4px;
+  cursor: pointer;
 }
 
-/* .pagination button.active {
+.pagination button.active {
   background-color: #0056b3;
 }
 
-.pagination button:hover {
+.pagination button:hover:not(.active) {
   background-color: #0056b3;
-} */
+}
 
-/* 검색창 스타일링 */
+/* Search Box Styles */
 .search {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+  width: 90%;
+  margin: 20px auto;
+  text-align: center;
 }
 
 .search-select {
-  padding: 8px;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   font-size: 16px;
 }
 
 .search input {
-  padding: 8px;
+  padding: 10px;
+  width: 60%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   font-size: 16px;
-  width: 300px;
 }
 
-.search-button {
-  padding: 8px 16px;
-  font-size: 16px;
+.search button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-left: 10px;
   cursor: pointer;
 }
 
-.search-button:hover {
+.search button:hover {
+  background-color: #0056b3;
+}
+
+/* Like Button Styles */
+button {
+  padding: 5px 10px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
   background-color: #218838;
-}
-
-/* Header 및 Footer 스타일링 */
-header {
-  padding: 10px;
-  text-align: right;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
-}
-
-footer {
-  padding: 10px;
-  text-align: center;
-  background-color: #f8f9fa;
-  border-top: 1px solid #ddd;
-  margin-top: 20px;
 }
