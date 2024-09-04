@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useParams } from 'react-router-dom';
-import '../App.css';
+import { Link } from 'react-router-dom';
+import '../assets/App.css';
 
 // 예시 데이터
 const postsData = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
   title: `게시글 ${i + 1}`,
-  pathType: `산책경로 ${i + 1}`,
+  pathType: `문화경로 ${i + 1}`,
   district: `시군구 ${i + 1}`,
   level: `레벨 ${i + 1}`,
   time: `${30 + i}분`,
@@ -14,7 +14,7 @@ const postsData = Array.from({ length: 50 }, (_, i) => ({
   likedByUser: false,
 }));
 
-function PostList({ isLoggedIn }) {
+function PostCultureList({ isLoggedIn }) {
   const [posts, setPosts] = useState(postsData);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -65,15 +65,20 @@ function PostList({ isLoggedIn }) {
 
   return (
     <div>
+        <nav>
+            <Link to="/walk">산책 게시판으로 이동</Link>
+        </nav>
       <h1>게시판</h1>
       <table>
         <thead>
           <tr>
             <th>글번호</th>
-            <th>산책경로구분명</th>
+            <th>시설명</th>
+            <th>카테고리1</th>
+            <th>카테고리2</th>
+            <th>시도명</th>
             <th>시군구명</th>
-            <th>경로레벨명</th>
-            <th>경로시간</th>
+            <th>입장가능반려동물크기</th>
             <th>좋아요</th>
           </tr>
         </thead>
@@ -82,10 +87,12 @@ function PostList({ isLoggedIn }) {
             <tr key={post.id}>
               <td>{post.id}</td>
               <td>
-                <Link to={`/post/${post.id}`}>{post.pathType}</Link>
+                <Link to={`/culture/${post.id}`}>{post.pathType}</Link>
               </td>
               <td>{post.district}</td>
               <td>{post.level}</td>
+              <td>{post.time}</td>
+              <td>{post.time}</td>
               <td>{post.time}</td>
               <td>
                 {isLoggedIn ? (
@@ -116,10 +123,11 @@ function PostList({ isLoggedIn }) {
       <div className="search">
         <select value={searchCategory} onChange={handleCategoryChange} className="search-select">
           <option value="id">글번호</option>
-          <option value="pathType">산책경로구분명</option>
+          <option value="pathType">시설명</option>
           <option value="district">시군구명</option>
-          <option value="level">경로레벨명</option>
-          <option value="time">경로시간</option>
+          <option value="level">카테고리1</option>
+          <option value="time">카테고리2</option>
+          <option value="likes">입장가능반려동물크기</option>
         </select>
         <input 
           type="text" 
@@ -133,4 +141,4 @@ function PostList({ isLoggedIn }) {
   );
 }
 
-export default PostList;
+export default PostCultureList;
