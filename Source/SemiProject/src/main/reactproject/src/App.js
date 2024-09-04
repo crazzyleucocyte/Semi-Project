@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import {Route, Routes, Link } from 'react-router-dom';
 import PostWalkList from './pages/PostWalkList';
 import PostCultureList from './pages/PostCultureList';
 import PostWalkDetail from './pages/PostWalkDetail';
@@ -23,7 +23,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <>
       <div>
 
         <nav>
@@ -45,9 +45,9 @@ function App() {
             element={<PostReviewDetail onAddReview={handleAddReview} />}
           />
         </Routes>
-        <Footer />
+        
       </div>
-    </Router>
+    </>
   );
 }
 
