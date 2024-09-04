@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './PostDetail.css';
+import '../assets/PostWalkDetail.css';
 
-// 예시 데이터
-const postsData = Array.from({ length: 50 }, (_, i) => ({
+// 예시 데이터 (임시)
+const initialPostsData = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
   pathType: `산책경로 ${i + 1}`,
   district: `시군구 ${i + 1}`,
@@ -19,33 +19,71 @@ const postsData = Array.from({ length: 50 }, (_, i) => ({
   restroom: `화장실설명 ${i + 1}`,
   facilities: `편의시설 ${i + 1}`,
   likes: i,
-  createdAt: '2024-01-01', // 예시 생성일
-  updatedAt: '2024-01-02', // 예시 최종 수정일
-  views: 0, // 조회수 초기화
+  createdAt: `2024-09-01`, // 예시 생성일
+  updatedAt: `2024-09-01`, // 예시 수정일
+  views: 0, // 초기 조회수는 0
 }));
 
-function PostDetail({ isLoggedIn }) {
-  const { postId } = useParams();
-  const navigate = useNavigate();
-  const postIndex = postsData.findIndex(p => p.id === parseInt(postId));
-  const [post, setPost] = useState(postsData[postIndex]);
-  const [likes, setLikes] = useState(post.likes);
+const initialReviews = [
+  {
+    id: 1,
+    content: '이 경로는 정말 아름답고 평화로워요!',
+    createdAt: '2024-09-02',
+  },
+  {
+    id: 2,
+    content: '산책하기에 최적의 장소였습니다.',
+    createdAt: '2024-09-03',
+  },
+];
+
+function PostWalkDetail({ isLoggedIn }) {
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [likes, setLikes] = useState(0);
   const [likedByUser, setLikedByUser] = useState(false);
+  const [views, setViews] = useState(0);
+  const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // 조회수 증가
-    const updatedPost = { ...post, views: post.views + 1 };
-    postsData[postIndex] = updatedPost;
-    setPost(updatedPost);
-  }, [postId]);
+    // 데이터 초기화
+    const postId = parseInt(id, 10);
+    const foundPost = initialPostsData.find((p) => p.id === postId);
+
+    if (foundPost) {
+      const storedViews = localStorage.getItem(`post-${id}-views`);
+      const initialViews = storedViews ? parseInt(storedViews, 10) : foundPost.views;
+
+      setPost(foundPost);
+      setLikes(foundPost.likes);
+      setLikedByUser(foundPost.likedByUser || false);
+      setViews(initialViews);
+
+      if (!storedViews) {
+        localStorage.setItem(`post-${id}-views`, initialViews + 1);
+        setViews(initialViews + 1);
+      }
+    } else {
+      setPost(null); // 게시글이 없는 경우
+    }
+  }, [id]);
 
   const handleLike = () => {
-    if (likedByUser) {
-      setLikes(likes - 1);
+    if (isLoggedIn) {
+      if (likedByUser) {
+        setLikes(likes - 1);
+      } else {
+        setLikes(likes + 1);
+      }
+      setLikedByUser(!likedByUser);
     } else {
-      setLikes(likes + 1);
+      alert('로그인 후 좋아요를 누를 수 있습니다.');
     }
-    setLikedByUser(!likedByUser);
+  };
+
+  const handleAddReview = (newReview) => {
+    setReviews([...reviews, newReview]);
   };
 
 
@@ -58,7 +96,6 @@ function PostDetail({ isLoggedIn }) {
       <h1>{post.pathType}</h1>
       <table className="detail-table">
         <tbody>
-          {/* 글번호, 산책경로구분명, 시군구명 */}
           <tr>
             <td>글번호</td>
             <td>산책경로구분명</td>
@@ -69,8 +106,6 @@ function PostDetail({ isLoggedIn }) {
             <td>{post.pathType}</td>
             <td>{post.district}</td>
           </tr>
-
-          {/* 경로레벨명, 경로시간, 경로길이 */}
           <tr>
             <td>경로레벨명</td>
             <td>경로시간</td>
@@ -81,8 +116,6 @@ function PostDetail({ isLoggedIn }) {
             <td>{post.time}</td>
             <td>{post.length}</td>
           </tr>
-
-          {/* 지번주소, 날씨 확인, 좋아요 */}
           <tr>
             <td>지번주소</td>
             <td>날씨 확인</td>
@@ -94,19 +127,11 @@ function PostDetail({ isLoggedIn }) {
               <button>날씨 확인</button>
             </td>
             <td>
-              {isLoggedIn ? (
-                <button onClick={handleLike}>
-                  {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
-                </button>
-              ) : (
-                <button disabled>
-                  좋아요 {likes} (로그인 필요)
-                </button>
-              )}
+              <button onClick={handleLike}>
+                {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
+              </button>
             </td>
           </tr>
-
-          {/* 생성일, 최종수정날짜, 조회수 */}
           <tr>
             <td>생성일</td>
             <td>최종수정날짜</td>
@@ -115,10 +140,9 @@ function PostDetail({ isLoggedIn }) {
           <tr>
             <td>{post.createdAt}</td>
             <td>{post.updatedAt}</td>
-            <td>{post.views}</td>
+            <td>{views}</td>
           </tr>
 
-          {/* 경로설명 */}
           <tr>
             <td colSpan="3">경로설명</td>
           </tr>
@@ -126,7 +150,6 @@ function PostDetail({ isLoggedIn }) {
             <td colSpan="3">{post.description}</td>
           </tr>
 
-          {/* 사진 */}
           <tr>
             <td colSpan="3">사진</td>
           </tr>
@@ -134,7 +157,6 @@ function PostDetail({ isLoggedIn }) {
             <td colSpan="3">{post.photo}</td>
           </tr>
 
-          {/* 추가설명 */}
           <tr>
             <td colSpan="3">추가설명</td>
           </tr>
@@ -142,7 +164,6 @@ function PostDetail({ isLoggedIn }) {
             <td colSpan="3">{post.additionalInfo}</td>
           </tr>
 
-          {/* 옵션설명, 화장실 설명, 편의시설명 */}
           <tr>
             <td>옵션설명</td>
             <td colSpan="2">{post.options}</td>
@@ -155,15 +176,39 @@ function PostDetail({ isLoggedIn }) {
             <td>편의시설명</td>
             <td colSpan="2">{post.facilities}</td>
           </tr>
+          <tr>
+            <td colSpan="3">지도</td>
+          </tr>
+          <tr>
+            <td colSpan="3">{post.createdAt}</td>
+          </tr>
         </tbody>
       </table>
 
+      {/* 후기 표시 부분 */}
+      <h1>후기</h1>
+      <table className="review-table">
+        <tbody>
+          {reviews.map((review) => (
+            <tr key={review.id}>
+              <td>{review.content}</td>
+              <td>{review.createdAt}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* 후기 작성 버튼 */}
+      <div className="back-to-list">
+        <button onClick={() => navigate(`/review/${post.id}`)}>후기 작성</button>
+      </div>
+      
       {/* 목록으로 가기 버튼 */}
       <div className="back-to-list">
-        <button onClick={() => navigate('/')}>목록으로 가기</button>
+        <button onClick={() => navigate('/walk')}>목록으로 가기</button>
       </div>
     </div>
   );
 }
 
-export default PostDetail;
+export default PostWalkDetail;
