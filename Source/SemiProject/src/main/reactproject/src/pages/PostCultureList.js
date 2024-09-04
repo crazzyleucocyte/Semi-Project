@@ -31,6 +31,7 @@ function PostCultureList({ isLoggedIn }) {
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   // 페이지 변경 핸들러
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };

@@ -25,6 +25,7 @@ function App() {
   return (
     <Router>
       <div>
+
         <nav>
           <button onClick={toggleLogin}>
             {isLoggedIn ? '로그아웃' : '로그인'}
@@ -32,6 +33,8 @@ function App() {
           <Link to="/walk">산책 경로 목록</Link>&emsp;
           <Link to="/culture">문화 경로 목록</Link>
         </nav>
+
+
         <Routes>
           <Route path="/walk" element={<PostWalkList isLoggedIn={isLoggedIn} />} />
           <Route path="/walk/:id" element={<PostWalkDetail isLoggedIn={isLoggedIn} reviews={reviews} />} />
@@ -42,6 +45,7 @@ function App() {
             element={<PostReviewDetail onAddReview={handleAddReview} />}
           />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );

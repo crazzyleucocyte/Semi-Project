@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/PostWalkDetail.css';
@@ -84,6 +85,7 @@ function PostWalkDetail({ isLoggedIn }) {
   const handleAddReview = (newReview) => {
     setReviews([...reviews, newReview]);
   };
+
 
   if (!post) {
     return <div>게시글을 찾을 수 없습니다.</div>;
