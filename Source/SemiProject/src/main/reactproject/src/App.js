@@ -37,11 +37,11 @@ function App() {
 
         <Routes>
           <Route path="/walk" element={<PostWalkList isLoggedIn={isLoggedIn} />} />
-          <Route path="/walk/:id" element={<PostWalkDetail isLoggedIn={isLoggedIn} reviews={reviews} />} />
+          <Route path="/walk/:id" element={<PostWalkDetail onAddReview={handleAddReview} isLoggedIn={isLoggedIn} reviews={reviews} />} />
           <Route path="/culture" element={<PostCultureList isLoggedIn={isLoggedIn} />} />
           <Route path="/culture/:id" element={<PostCultureDetail isLoggedIn={isLoggedIn} />} />
           <Route
-            path="/review/:id"
+            path="/review/:id/:category"
             element={<PostReviewDetail onAddReview={handleAddReview} />}
           />
         </Routes>

@@ -191,7 +191,7 @@ function PostCultureDetail({ isLoggedIn }) {
       </table>
 
       <div className="back-to-list">
-        <button onClick={() => navigate(`/review/${post.id}`)}>후기 작성</button>
+        <button onClick={() => navigate(`/review/${post.id}/culture`)}>후기 작성</button>
       </div>
 
       {/* 목록으로 가기 버튼 */}

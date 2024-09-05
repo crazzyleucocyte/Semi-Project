@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/PostWalkDetail.css';
 
+
 // 예시 데이터 (임시)
 const initialPostsData = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
@@ -37,14 +38,23 @@ const initialReviews = [
   },
 ];
 
-function PostWalkDetail({ isLoggedIn }) {
+function PostWalkDetail({ isLoggedIn, onAddReview }) {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [likes, setLikes] = useState(0);
   const [likedByUser, setLikedByUser] = useState(false);
   const [views, setViews] = useState(0);
   const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
+  
   const navigate = useNavigate();
+  
+  // <Routes>
+
+  //   <Route
+  //   path="/review/:id"
+  //   element={<PostReviewDetail onAddReview={onAddReview} />}
+  //   />
+  // </Routes>
 
   useEffect(() => {
     // 데이터 초기화
@@ -200,7 +210,7 @@ function PostWalkDetail({ isLoggedIn }) {
 
       {/* 후기 작성 버튼 */}
       <div className="back-to-list">
-        <button onClick={() => navigate(`/review/${post.id}`)}>후기 작성</button>
+        <button onClick={() => navigate(`/review/${post.id}/walk`)}>후기 작성</button>
       </div>
       
       {/* 목록으로 가기 버튼 */}
