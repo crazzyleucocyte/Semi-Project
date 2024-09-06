@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import {Route, Routes, Link } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 import PostWalkList from './pages/PostWalkList';
 import PostCultureList from './pages/PostCultureList';
 import PostWalkDetail from './pages/PostWalkDetail';
 import PostCultureDetail from './pages/PostCultureDetail'; // PostCultureDetail import 추가
 import PostReviewDetail from './pages/PostReviewDetail';
+import Main from './components/Main';
 import IntroPage from './pages/IntroPage';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,7 +16,6 @@ function App() {
   const toggleLogin = () => {
     setIsLoggedIn(!isLoggedIn);
   };
-
   // 리뷰 추가 함수
   const handleAddReview = (postId, newReview) => {
     setReviews(prevReviews => ({
@@ -22,9 +23,9 @@ function App() {
       [postId]: [...(prevReviews[postId] || []), newReview]
     }));
   };
-
   return (
     <>
+
       <div>
 
         <nav>
@@ -36,7 +37,9 @@ function App() {
           <Link to="/intro">소개</Link>
         </nav>
 
+
         <Routes>
+          <Route path="/" element={ <Main /> } />
           <Route path="/walk" element={<PostWalkList isLoggedIn={isLoggedIn} />} />
           <Route path="/walk/:id" element={<PostWalkDetail onAddReview={handleAddReview} isLoggedIn={isLoggedIn} reviews={reviews} />} />
           <Route path="/culture" element={<PostCultureList isLoggedIn={isLoggedIn} />} />
@@ -47,8 +50,10 @@ function App() {
           />
           <Route path="/intro" element={<IntroPage />} />
         </Routes>
-        
       </div>
+      <button onClick={toggleLogin}>
+      {isLoggedIn ? '로그아웃' : '로그인'}
+      </button>
     </>
   );
 }

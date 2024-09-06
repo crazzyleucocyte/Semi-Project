@@ -1,0 +1,14 @@
+article {
+    border: 3px solid;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    width: 35%;
+    height: 300px;
+    margin-left: 500px;
+}
+
+.mainbody {
+    height: 100%;
+    background-color: white;
+}
