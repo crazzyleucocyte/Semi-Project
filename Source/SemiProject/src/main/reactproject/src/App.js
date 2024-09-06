@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Route, Routes } from 'react-router-dom';
+import {Route, Routes, Link } from 'react-router-dom';
 import PostWalkList from './pages/PostWalkList';
 import PostCultureList from './pages/PostCultureList';
 import PostWalkDetail from './pages/PostWalkDetail';
@@ -7,6 +7,7 @@ import PostCultureDetail from './pages/PostCultureDetail'; // PostCultureDetail 
 import PostReviewDetail from './pages/PostReviewDetail';
 import Main from './components/Main';
 import IntroPage from './pages/IntroPage';
+
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
 
       <div>
 
+
+
+
         <nav>
           <button onClick={toggleLogin}>
             {isLoggedIn ? '로그아웃' : '로그인'}
@@ -36,7 +40,6 @@ function App() {
           <Link to="/culture">문화 경로 목록</Link>&emsp;
           <Link to="/intro">소개</Link>
         </nav>
-
 
         <Routes>
           <Route path="/" element={ <Main /> } />
