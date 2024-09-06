@@ -104,19 +104,48 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
   return (
     <div className="post-detail">
       <h1>{post.pathType}</h1>
+
       <table className="detail-table">
         <tbody>
           <tr>
-            <td>글번호</td>
+            <td colSpan='3'>{post.photo}</td>
+          </tr>
+        </tbody>
+      </table>
+      <table className="detail-table">
+        <tbody>
+          <tr className="bold-text">
             <td>산책경로구분명</td>
-            <td>시군구명</td>
+            <td>좋아요</td>
+            <td>조회수</td>
           </tr>
           <tr>
-            <td>{post.id}</td>
             <td>{post.pathType}</td>
-            <td>{post.district}</td>
+            <td>
+              <button onClick={handleLike}>
+                {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
+              </button>
+            </td>
+            <td>{views}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table className="detail-table">
+        <tbody>
+          <tr className="bold-text">
+            <td>시군구명</td>
+            <td>지번주소</td>
+            <td>날씨 확인</td>
           </tr>
           <tr>
+            <td>{post.district}</td>
+              <td>{post.address}</td>
+              <td>
+                <button>날씨 확인</button>
+              </td>
+          </tr>
+          <tr className="bold-text">
             <td>경로레벨명</td>
             <td>경로시간</td>
             <td>경로길이</td>
@@ -126,71 +155,54 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
             <td>{post.time}</td>
             <td>{post.length}</td>
           </tr>
-          <tr>
-            <td>지번주소</td>
-            <td>날씨 확인</td>
-            <td>좋아요</td>
+          <tr className="bold-text">
+            <td colSpan='3'>경로설명</td>
           </tr>
           <tr>
-            <td>{post.address}</td>
-            <td>
-              <button>날씨 확인</button>
-            </td>
-            <td>
-              <button onClick={handleLike}>
-                {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
-              </button>
-            </td>
+            <td colSpan='3'>{post.description}</td>
+          </tr>
+          <tr className="bold-text">
+            <td colSpan='3'>추가설명</td>
           </tr>
           <tr>
+            <td colSpan='3'>{post.additionalInfo}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table className="detail-table2">
+        
+          <tr>
+            <th className="bold-text">옵션설명</th>
+            <td>{post.options}</td>
+          </tr>
+          <tr>
+            <th className="bold-text">화장실 설명</th>
+            <td>{post.restroom}</td>
+          </tr>
+          <tr>
+            <th className="bold-text" >편의시설명</th>
+            <td>{post.facilities}</td>
+          </tr>
+        
+      </table>
+
+      <table className="detail-table">
+        <tbody>
+          <tr className="bold-text">
+            <td colSpan='3'>지도</td>
+          </tr>
+          <tr>
+            <td colSpan='3'>{post.photo}</td>
+          </tr>
+          <tr className="bold-text">
             <td>생성일</td>
             <td>최종수정날짜</td>
-            <td>조회수</td>
           </tr>
           <tr>
             <td>{post.createdAt}</td>
             <td>{post.updatedAt}</td>
-            <td>{views}</td>
-          </tr>
-
-          <tr>
-            <td colSpan="3">경로설명</td>
-          </tr>
-          <tr>
-            <td colSpan="3">{post.description}</td>
-          </tr>
-
-          <tr>
-            <td colSpan="3">사진</td>
-          </tr>
-          <tr>
-            <td colSpan="3">{post.photo}</td>
-          </tr>
-
-          <tr>
-            <td colSpan="3">추가설명</td>
-          </tr>
-          <tr>
-            <td colSpan="3">{post.additionalInfo}</td>
-          </tr>
-
-          <tr>
-            <td>옵션설명</td>
-            <td colSpan="2">{post.options}</td>
-          </tr>
-          <tr>
-            <td>화장실 설명</td>
-            <td colSpan="2">{post.restroom}</td>
-          </tr>
-          <tr>
-            <td>편의시설명</td>
-            <td colSpan="2">{post.facilities}</td>
-          </tr>
-          <tr>
-            <td colSpan="3">지도</td>
-          </tr>
-          <tr>
-            <td colSpan="3">{post.createdAt}</td>
+            
           </tr>
         </tbody>
       </table>
@@ -215,7 +227,7 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
       
       {/* 목록으로 가기 버튼 */}
       <div className="back-to-list">
-        <button onClick={() => navigate('/walk')}>목록으로 가기</button>
+        <button onClick={() => navigate('/walk')}>목록 가기</button>
       </div>
     </div>
   );
