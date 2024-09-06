@@ -6,11 +6,18 @@ import PostWalkDetail from './pages/PostWalkDetail';
 import PostCultureDetail from './pages/PostCultureDetail'; // PostCultureDetail import 추가
 import PostReviewDetail from './pages/PostReviewDetail';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Main from './components/Main';
 =======
 import IntroPage from './pages/IntroPage';
 
 >>>>>>> main
+=======
+import Main from './components/Main';
+import IntroPage from './pages/IntroPage';
+
+
+>>>>>>> 48335a57c3d674fab1bfce3ef823040e60615470
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [reviews, setReviews] = useState({}); // 리뷰 상태 추가
@@ -30,7 +37,10 @@ function App() {
 
       <div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 48335a57c3d674fab1bfce3ef823040e60615470
 
         <nav>
           <button onClick={toggleLogin}>
@@ -41,7 +51,11 @@ function App() {
           <Link to="/intro">소개</Link>
         </nav>
 
+<<<<<<< HEAD
 >>>>>>> main
+=======
+
+>>>>>>> 48335a57c3d674fab1bfce3ef823040e60615470
         <Routes>
           <Route path="/" element={ <Main /> } />
           <Route path="/walk" element={<PostWalkList isLoggedIn={isLoggedIn} />} />
