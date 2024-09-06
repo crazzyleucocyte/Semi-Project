@@ -6,6 +6,9 @@ import PostWalkDetail from './pages/PostWalkDetail';
 import PostCultureDetail from './pages/PostCultureDetail'; // PostCultureDetail import 추가
 import PostReviewDetail from './pages/PostReviewDetail';
 import Main from './components/Main';
+import IntroPage from './pages/IntroPage';
+
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [reviews, setReviews] = useState({}); // 리뷰 상태 추가
@@ -24,16 +27,28 @@ function App() {
     <>
 
       <div>
+
+        <nav>
+          <button onClick={toggleLogin}>
+            {isLoggedIn ? '로그아웃' : '로그인'}
+          </button>
+          <Link to="/walk">산책 경로 목록</Link>&emsp;
+          <Link to="/culture">문화 경로 목록</Link>&emsp;
+          <Link to="/intro">소개</Link>
+        </nav>
+
+
         <Routes>
           <Route path="/" element={ <Main /> } />
           <Route path="/walk" element={<PostWalkList isLoggedIn={isLoggedIn} />} />
-          <Route path="/walk/:id" element={<PostWalkDetail isLoggedIn={isLoggedIn} reviews={reviews} />} />
+          <Route path="/walk/:id" element={<PostWalkDetail onAddReview={handleAddReview} isLoggedIn={isLoggedIn} reviews={reviews} />} />
           <Route path="/culture" element={<PostCultureList isLoggedIn={isLoggedIn} />} />
           <Route path="/culture/:id" element={<PostCultureDetail isLoggedIn={isLoggedIn} />} />
           <Route
-            path="/review/:id"
+            path="/review/:id/:category"
             element={<PostReviewDetail onAddReview={handleAddReview} />}
           />
+          <Route path="/intro" element={<IntroPage />} />
         </Routes>
       </div>
       <button onClick={toggleLogin}>
