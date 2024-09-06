@@ -1,0 +1,47 @@
+/* src/IntroPage.css */
+.intro-container {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .intro-header {
+    background-color: #282c34;
+    color: white;
+    padding: 40px;
+  }
+  
+  .intro-header h1 {
+    font-size: 3em;
+  }
+  
+  .intro-header p {
+    font-size: 1.2em;
+    margin-top: 10px;
+  }
+  
+  .about-section, .services-section {
+    margin: 40px 0;
+  }
+  
+  .about-section h2, .services-section h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  .services-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .services-section li {
+    font-size: 1.2em;
+    margin: 10px 0;
+  }
+  
+  .footer {
+    margin-top: 40px;
+    color: #555;
+  }
+  

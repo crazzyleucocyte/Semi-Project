@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../assets/App.css';
+import '../assets/PostList.css';
 
 // 예시 데이터
 const postsData = Array.from({ length: 50 }, (_, i) => ({
@@ -16,10 +16,10 @@ const postsData = Array.from({ length: 50 }, (_, i) => ({
 function PostWalkList({ isLoggedIn }) {
   const [posts, setPosts] = useState(postsData);
   const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
   const [searchTerm, setSearchTerm] = useState('');
   const [searchInput, setSearchInput] = useState('');
-  const [searchCategory, setSearchCategory] = useState('pathType');
-  const postsPerPage = 10;
+  const [searchCategory, setSearchCategory] = useState('id');
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -65,11 +65,26 @@ function PostWalkList({ isLoggedIn }) {
     setSearchCategory(event.target.value);
   };
 
+  const handlePostsPerPageChange = (event) => {
+    setPostsPerPage(parseInt(event.target.value, 10));
+    setCurrentPage(1); // 한 페이지에 나타낼 글 수를 변경하면 첫 페이지로 이동
+  };
+
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
   return (
     <div>
       <h1>산책 경로 목록</h1>
+
+      {/* 한 페이지에 표시할 글 수 선택하는 select 요소 */}
+      <div className="posts-per-page">
+        <select id="postsPerPageSelect" value={postsPerPage} onChange={handlePostsPerPageChange}>
+          <option value="10">10개씩 보기</option>
+          <option value="20">20개씩 보기</option>
+          <option value="50">50개씩 보기</option>
+        </select>
+      </div>
+
       <table>
         <thead>
           <tr>
@@ -106,6 +121,7 @@ function PostWalkList({ isLoggedIn }) {
           ))}
         </tbody>
       </table>
+
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
           <button
@@ -117,6 +133,7 @@ function PostWalkList({ isLoggedIn }) {
           </button>
         ))}
       </div>
+
       <div className="search">
         <select value={searchCategory} onChange={handleCategoryChange} className="search-select">
           <option value="id">글번호</option>

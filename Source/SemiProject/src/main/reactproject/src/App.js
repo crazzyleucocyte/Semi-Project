@@ -5,6 +5,7 @@ import PostCultureList from './pages/PostCultureList';
 import PostWalkDetail from './pages/PostWalkDetail';
 import PostCultureDetail from './pages/PostCultureDetail'; // PostCultureDetail import 추가
 import PostReviewDetail from './pages/PostReviewDetail';
+import IntroPage from './pages/IntroPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,9 +32,9 @@ function App() {
             {isLoggedIn ? '로그아웃' : '로그인'}
           </button>
           <Link to="/walk">산책 경로 목록</Link>&emsp;
-          <Link to="/culture">문화 경로 목록</Link>
+          <Link to="/culture">문화 경로 목록</Link>&emsp;
+          <Link to="/intro">소개</Link>
         </nav>
-
 
         <Routes>
           <Route path="/walk" element={<PostWalkList isLoggedIn={isLoggedIn} />} />
@@ -44,6 +45,7 @@ function App() {
             path="/review/:id/:category"
             element={<PostReviewDetail onAddReview={handleAddReview} />}
           />
+          <Route path="/intro" element={<IntroPage />} />
         </Routes>
         
       </div>

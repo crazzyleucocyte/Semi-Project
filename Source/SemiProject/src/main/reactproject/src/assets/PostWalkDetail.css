@@ -7,16 +7,21 @@
   margin-bottom: 20px;
 }
 
-.post-detail-table {
-  width: 100%;
+.detail-table {
+  width: 50%;
+  border-collapse: collapse;
+}
+
+.detail-table2 {
+  width: 50%;
   border-collapse: collapse;
 }
 
 .detail-table td {
   width: 33%;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc;
   padding: 10px;
-  vertical-align: top;
+  vertical-align: top; */
 }
 
 .post-detail-table tr td:nth-child(2) {
@@ -25,6 +30,10 @@
 
 .post-detail-table tr td:nth-child(3) {
   text-align: right;
+}
+
+tr:nth-child(odd) {
+  background-color: #f9f9f9;
 }
 
 .post-photos img {
@@ -44,3 +53,12 @@
   font-size: 16px;
   cursor: pointer;
 }
+
+.bold-text {
+  font-weight: bold;
+}
+
+.bold-text+td {
+  width: 66%;
+}
+

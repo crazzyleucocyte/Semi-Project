@@ -63,33 +63,50 @@ function PostCultureDetail({ isLoggedIn }) {
   return (
     <div className="post-detail">
       <h1>{post.pathType}</h1>
+
       <table className="detail-table">
         <tbody>
           <tr>
-            <td>글번호</td>
-            <td>카테고리1</td>
-            <td>카테고리2</td>
+            <td colSpan="3">{post.photo}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table className="detail-table">
+        <tbody>
+          <tr className="bold-text">
+            <td>시설명</td>
+            <td>좋아요</td>
+            <td>카테고리</td>
           </tr>
           <tr>
             <td>{post.id}</td>
+            <td>
+              <button onClick={handleLike}>
+                  {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
+              </button>
+            </td>
             <td>{post.pathType}</td>
-            <td>{post.district}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <table className="detail-table">
+        <tbody>
+          <tr>
+            <td className="bold-text">지번주소</td>
+            <td>{post.address}</td>
           </tr>
           <tr>
-            <td colSpan="3">시설명</td>
+            <td className="bold-text">도로명주소</td>
+            <td>{post.address}</td>
           </tr>
-          <tr>
-            <td colSpan="3"></td>
-          </tr>
-          <tr>
-            <td>지번주소</td>
-            <td colSpan="2">{post.address}</td>
-          </tr>
-          <tr>
-            <td>도로명주소</td>
-            <td colSpan="2">{post.address}</td>
-          </tr>
-          <tr>
+        </tbody>
+      </table>
+
+      <table className="detail-table">
+        <tbody>
+          <tr className="bold-text">
             <td>운영시간</td>
             <td>휴무일안내내용</td>
             <td>전화번호</td>
@@ -99,7 +116,7 @@ function PostCultureDetail({ isLoggedIn }) {
             <td>{post.time}</td>
             <td>{post.length}</td>
           </tr>
-          <tr>
+          <tr className="bold-text">
             <td>주차가능여부</td>
             <td>이용가격내용</td>
             <td>날씨</td>
@@ -111,13 +128,13 @@ function PostCultureDetail({ isLoggedIn }) {
               <button>날씨보기</button>
             </td>
           </tr>
-          <tr>
+          <tr className="bold-text">
             <td colSpan="3">홈페이지url</td>
           </tr>
           <tr>
             <td colSpan="3"></td>
           </tr>
-          <tr>
+          <tr className="bold-text">
             <td>반려동물가능여부</td>
             <td>반려동물정보내용</td>
             <td>입장가능반려동물크기값</td>
@@ -127,13 +144,7 @@ function PostCultureDetail({ isLoggedIn }) {
             <td>{post.time}</td>
             <td>{post.length}</td>
           </tr>
-          <tr>
-            <td colSpan="3">반려동물제한사항내용</td>
-          </tr>
-          <tr>
-            <td colSpan="3"></td>
-          </tr>
-          <tr>
+          <tr className="bold-text">
             <td>내부장소동반가능여부</td>
             <td>외부장소동반가능여부</td>
             <td>반려동물동반추가요금값</td>
@@ -143,37 +154,41 @@ function PostCultureDetail({ isLoggedIn }) {
             <td>{post.time}</td>
             <td>{post.length}</td>
           </tr>
+        </tbody>
+      </table>
+
+      <table className="detail-table">
+        <tbody>
           <tr>
-            <td>생성날짜</td>
-            <td>최종수정일자</td>
-            <td>좋아요</td>
+            <td colSpan="3"  className="bold-text">반려동물제한사항내용</td>
           </tr>
           <tr>
-            <td>{post.createdAt}</td>
-            <td>{post.updatedAt}</td>
-            <td>
-              <button onClick={handleLike}>
-                  {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
-              </button>
-            </td>
+            <td colSpan="3"></td>
           </tr>
           <tr>
-            <td colSpan="3">시설정보설명</td>
+            <td colSpan="3" className="bold-text">시설정보설명</td>
           </tr>
           <tr>
             <td colSpan="3">{post.description}</td>
           </tr>
           <tr>
-            <td colSpan="3">사진</td>
-          </tr>
-          <tr>
-            <td colSpan="3">{post.photo}</td>
-          </tr>
-          <tr>
-            <td colSpan="3">지도</td>
+            <td colSpan="3" className="bold-text">지도</td>
           </tr>
           <tr>
             <td colSpan="3">지도 데이터가 필요합니다.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table className="detail-table">
+        <tbody>
+          <tr className="bold-text">
+            <td>생성날짜</td>
+            <td>최종수정일자</td>
+          </tr>
+          <tr>
+            <td>{post.createdAt}</td>
+            <td>{post.updatedAt}</td>
           </tr>
         </tbody>
       </table>
@@ -196,7 +211,7 @@ function PostCultureDetail({ isLoggedIn }) {
 
       {/* 목록으로 가기 버튼 */}
       <div className="back-to-list">
-        <button onClick={() => navigate('/culture')}>목록으로 가기</button>
+        <button onClick={() => navigate('/culture')}>목록 가기</button>
       </div>
     </div>
   );
