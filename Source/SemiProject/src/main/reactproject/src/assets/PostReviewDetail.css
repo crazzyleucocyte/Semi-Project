@@ -77,3 +77,13 @@
     background-color: #ddd;
   }
   
+  .review-detail .image-preview {
+    margin-top: 10px;
+  }
+  
+  .review-detail .image-preview img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
