@@ -26,12 +26,6 @@ function Header() {
         <Swiper
         // Swiper 설정
         modules={[Navigation, Pagination, Autoplay]} // 사용할 모듈 설정
-        spaceBetween={10} // 슬라이드 간의 간격
-        slidesPerView={1} // 한 번에 보여줄 슬라이드 개수
-        navigation // 네비게이션 버튼 (이전/다음)
-        pagination={{ clickable: true }} // 페이지네이션 버튼 활성화
-        autoplay={{ delay: 10 }} // 자동 슬라이드 시간 설정 (3초 간격)
-        loop // 슬라이드 무한 반복
         onSlideChange={handleSlideChange}>
         {/* 각각의 배너 이미지 슬라이드 */}
         <SwiperSlide>
@@ -48,7 +42,7 @@ function Header() {
         
         <div className="div2">
         <ul>
-            <div className="div4">   
+            <div className="div3">   
               <Link className="custom-link1" to="/walk">날씨 경로 목록</Link>
               <Link className="custom-link2" to="/walk">산책 경로 목록</Link>
               <Link className="custom-link3" to="/culture">문화 경로 목록</Link>
