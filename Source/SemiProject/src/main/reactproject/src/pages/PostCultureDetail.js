@@ -63,10 +63,20 @@ function PostCultureDetail({ isLoggedIn }) {
   return (
     <div className="post-detail">
       <h1>{post.pathType}</h1>
-      
+
       <div className='detail-div'>
         <h3>{post.id}</h3>
+        <button onClick={handleLike}>
+                {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
+        </button>&emsp;
+        <button>날씨 확인</button>
       </div>
+
+      <div className='detail-div2'>
+        사진 넣는 칸
+      </div>
+      
+      
 
       <table>
         <colgroup>
@@ -78,9 +88,9 @@ function PostCultureDetail({ isLoggedIn }) {
 
         <tbody>
           <tr>
-            <th>카테고리1</th>
+            <th>카테고리</th>
             <td></td>
-            <th>카테고리2</th>
+            <th>반려동물가능여부</th>
             <td></td>
           </tr>
           <tr>
@@ -89,12 +99,7 @@ function PostCultureDetail({ isLoggedIn }) {
             <th>도로명주소</th>
             <td></td>
           </tr>
-          <tr>
-            <th>운영시간</th>
-            <td></td>
-            <th>휴무일안내내용</th>
-            <td></td>
-          </tr>
+          
           <tr>
             <th>전화번호</th>
             <td></td>
@@ -103,14 +108,6 @@ function PostCultureDetail({ isLoggedIn }) {
           </tr>
           <tr>
             <th>이용가격내용</th>
-            <td></td>
-            <th>홈페이지</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>반려동물가능여부</th>
-            <td></td>
-            <th>반려동물정보내용</th>
             <td></td>
           </tr>
           <tr>
@@ -128,6 +125,39 @@ function PostCultureDetail({ isLoggedIn }) {
         </tbody>
       </table>
 
+      <table>
+        <colgroup>
+          <col width={15} />
+          <col width={85} />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th>운영시간</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>휴무일안내내용</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>홈페이지</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>반려동물정보내용</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>반려동물제한사항내용</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>시설정보설명</th>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
       <table className="detail-table">
         <tbody>
           <tr>
@@ -136,126 +166,11 @@ function PostCultureDetail({ isLoggedIn }) {
         </tbody>
       </table>
 
-      <table className="detail-table">
-        <tbody>
-          <tr className="bold-text">
-            <td>카테고리1</td>
-            <td>카테고리2</td>
-            <td>좋아요</td>
-          </tr>
-          <tr>
-            <td>{post.pathType}</td>
-            <td>{post.pathType}</td>
-            <td>
-              <button onClick={handleLike}>
-                  {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className='detail-div2'>
+        지도 넣는 칸
+      </div>
+
       
-      <table className="detail-table">
-        <tbody>
-          <tr>
-            <td className="bold-text">지번주소</td>
-            <td className="bold-text">도로명주소</td>
-          </tr>
-          <tr>
-            <td>{post.address}</td>
-            <td>{post.address}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table className="detail-table">
-        <tbody>
-          <tr className="bold-text">
-            <td>운영시간</td>
-            <td>휴무일안내내용</td>
-            <td>전화번호</td>
-          </tr>
-          <tr>
-            <td>{post.level}</td>
-            <td>{post.time}</td>
-            <td>{post.length}</td>
-          </tr>
-          <tr className="bold-text">
-            <td>주차가능여부</td>
-            <td>이용가격내용</td>
-            <td>날씨</td>
-          </tr>
-          <tr>
-            <td>{post.level}</td>
-            <td>{post.time}</td>
-            <td>
-              <button>날씨보기</button>
-            </td>
-          </tr>
-          <tr className="bold-text">
-            <td colSpan="3">홈페이지url</td>
-          </tr>
-          <tr>
-            <td colSpan="3"></td>
-          </tr>
-          <tr className="bold-text">
-            <td>반려동물가능여부</td>
-            <td>반려동물정보내용</td>
-            <td>입장가능반려동물크기값</td>
-          </tr>
-          <tr>
-            <td>{post.level}</td>
-            <td>{post.time}</td>
-            <td>{post.length}</td>
-          </tr>
-          <tr className="bold-text">
-            <td>내부장소동반가능여부</td>
-            <td>외부장소동반가능여부</td>
-            <td>반려동물동반추가요금값</td>
-          </tr>
-          <tr>
-            <td>{post.level}</td>
-            <td>{post.time}</td>
-            <td>{post.length}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table className="detail-table">
-        <tbody>
-          <tr>
-            <td colSpan="3"  className="bold-text">반려동물제한사항내용</td>
-          </tr>
-          <tr>
-            <td colSpan="3"></td>
-          </tr>
-          <tr>
-            <td colSpan="3" className="bold-text">시설정보설명</td>
-          </tr>
-          <tr>
-            <td colSpan="3">{post.description}</td>
-          </tr>
-          <tr>
-            <td colSpan="3" className="bold-text">지도</td>
-          </tr>
-          <tr>
-            <td colSpan="3">지도 데이터가 필요합니다.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table className="detail-table">
-        <tbody>
-          <tr className="bold-text">
-            <td>생성날짜</td>
-            <td>최종수정일자</td>
-          </tr>
-          <tr>
-            <td>{post.createdAt}</td>
-            <td>{post.updatedAt}</td>
-          </tr>
-        </tbody>
-      </table>
 
       <h1>후기</h1>
       <table>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/PostWalkDetail.css';
+import axios from 'axios';
 
 
 // 예시 데이터 (임시)
@@ -39,6 +40,21 @@ const initialReviews = [
 ];
 
 function PostWalkDetail({ isLoggedIn, onAddReview }) {
+
+  useEffect(() => {
+    // 백엔드로부터 게시글 데이터를 가져옴
+    axios.get('/walking/{wid}')
+    .then(response => {
+      console.log(response.data);
+      setWalkingTrails(response.data);
+      setReviews(response.data.reviews || []); // 후기 데이터를 가져온다면 여기서 설정
+    })
+    .catch(error => {
+      console.error('Error fetching walkingTrail data: ', error);
+    });
+  }, []);
+
+  const [walkingTrails, setWalkingTrails] = useState([]);
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [likes, setLikes] = useState(0);
@@ -103,10 +119,17 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
 
   return (
     <div className="post-detail">
-      <h1>{post.pathType}</h1>
 
       <div className='detail-div'>
-        <h3>{post.pathType}</h3>
+        <h1>{walkingTrails.wlktrlName}</h1>
+        <button onClick={handleLike}>
+                {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
+        </button>&emsp;
+        <button>날씨 확인</button>
+      </div>
+
+      <div className='detail-div2'>
+        사진 넣는 칸
       </div>
 
       <table className='table1'>
@@ -120,85 +143,49 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
         <tbody>
           <tr>
             <th>시군구명</th>
-            <td>{post.district}</td>
+            <td>{walkingTrails.signguNm}</td>
             <th>지번주소</th>
             <td>{post.address}</td>
           </tr>
           <tr>
             <th>경로레벨</th>
             <td></td>
-            <th>경로시간</th>
+            <th>경로길이</th>
             <td></td>
           </tr>
           <tr>
-            <th>경로길이</th>
+            <th>경로시간</th>
             <td></td>
+            <th></th>
+            <td></td>
+          </tr>
+          
+        </tbody>
+      </table>
+
+      <table>
+        <colgroup>
+          <col width={15} />
+          <col width={85} />
+        </colgroup>
+        <tbody>
+          <tr>
             <th>옵션설명</th>
             <td></td>
           </tr>
           <tr>
             <th>화장실 설명</th>
             <td></td>
+          </tr>
+          <tr>
             <th>편의시설명</th>
             <td></td>
           </tr>
         </tbody>
       </table>
 
-      <table className="detail-table">
+      <table>
         <tbody>
-          <tr>
-            <td colSpan='3'>{post.photo}</td>
-          </tr>
-        </tbody>
-      </table>
-      <table className="detail-table">
-        <tbody>
-          <tr className="bold-text">
-            <td>조회수</td>
-            <td>날씨 확인</td>
-            <td>좋아요</td>
-          </tr>
-          <tr>
-            <td>{views}</td>
-            <td>
-                <button>날씨 확인</button>
-              </td>
-            <td>
-              <button onClick={handleLike}>
-                {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table className="detail-table3">
-        <tbody>
-          <tr className="bold-text">
-            <td>시군구명</td>
-            <td>지번주소</td>
-          </tr>
-          <tr>
-            <td>{post.district}</td>
-              <td>{post.address}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table className="detail-table">
-        <tbody>
-          
-          <tr className="bold-text">
-            <td>경로레벨명</td>
-            <td>경로시간</td>
-            <td>경로길이</td>
-          </tr>
-          <tr>
-            <td>{post.level}</td>
-            <td>{post.time}</td>
-            <td>{post.length}</td>
-          </tr>
           <tr className="bold-text">
             <td colSpan='3'>경로설명</td>
           </tr>
@@ -214,30 +201,12 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
         </tbody>
       </table>
 
-      <table className="detail-table2">
-          <tr>
-            <th className="bold-text">옵션설명</th>
-            <td>{post.options}</td>
-          </tr>
-          <tr>
-            <th className="bold-text">화장실 설명</th>
-            <td>{post.restroom}</td>
-          </tr>
-          <tr>
-            <th className="bold-text" >편의시설명</th>
-            <td>{post.facilities}</td>
-          </tr>
-        
-      </table>
+      <div className='detail-div2'>
+        지도 넣는 칸
+      </div>
 
       <table className="detail-table">
         <tbody>
-          <tr className="bold-text">
-            <td colSpan='3'>지도</td>
-          </tr>
-          <tr>
-            <td colSpan='3'>{post.photo}</td>
-          </tr>
           <tr className="bold-text">
             <td>생성일</td>
             <td>최종수정날짜</td>
@@ -245,10 +214,13 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
           <tr>
             <td>{post.createdAt}</td>
             <td>{post.updatedAt}</td>
-            
           </tr>
         </tbody>
       </table>
+      
+      
+
+      
 
       {/* 후기 표시 부분 */}
       <h1>후기</h1>
