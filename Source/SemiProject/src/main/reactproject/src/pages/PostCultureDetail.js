@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../assets/PostWalkDetail.css';
+import '../assets/PostCultureDetail.css';
 
 const initialPostsData = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
@@ -63,6 +63,70 @@ function PostCultureDetail({ isLoggedIn }) {
   return (
     <div className="post-detail">
       <h1>{post.pathType}</h1>
+      
+      <div className='detail-div'>
+        <h3>{post.id}</h3>
+      </div>
+
+      <table>
+        <colgroup>
+          <col width={15} />
+          <col width={35} />
+          <col width={15} />
+          <col width={35} />
+        </colgroup>
+
+        <tbody>
+          <tr>
+            <th>카테고리1</th>
+            <td></td>
+            <th>카테고리2</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>지번주소</th>
+            <td></td>
+            <th>도로명주소</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>운영시간</th>
+            <td></td>
+            <th>휴무일안내내용</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>전화번호</th>
+            <td></td>
+            <th>주차가능여부</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>이용가격내용</th>
+            <td></td>
+            <th>홈페이지</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>반려동물가능여부</th>
+            <td></td>
+            <th>반려동물정보내용</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>입장가능반려동물크기값</th>
+            <td></td>
+            <th>반려동물동반추가요금값</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>내부장소동반가능여부</th>
+            <td></td>
+            <th>외부장소동반가능여부</th>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
 
       <table className="detail-table">
         <tbody>
@@ -75,18 +139,18 @@ function PostCultureDetail({ isLoggedIn }) {
       <table className="detail-table">
         <tbody>
           <tr className="bold-text">
-            <td>시설명</td>
+            <td>카테고리1</td>
+            <td>카테고리2</td>
             <td>좋아요</td>
-            <td>카테고리</td>
           </tr>
           <tr>
-            <td>{post.id}</td>
+            <td>{post.pathType}</td>
+            <td>{post.pathType}</td>
             <td>
               <button onClick={handleLike}>
                   {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
               </button>
             </td>
-            <td>{post.pathType}</td>
           </tr>
         </tbody>
       </table>
@@ -95,10 +159,10 @@ function PostCultureDetail({ isLoggedIn }) {
         <tbody>
           <tr>
             <td className="bold-text">지번주소</td>
-            <td>{post.address}</td>
+            <td className="bold-text">도로명주소</td>
           </tr>
           <tr>
-            <td className="bold-text">도로명주소</td>
+            <td>{post.address}</td>
             <td>{post.address}</td>
           </tr>
         </tbody>

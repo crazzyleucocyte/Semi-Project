@@ -105,6 +105,46 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
     <div className="post-detail">
       <h1>{post.pathType}</h1>
 
+      <div className='detail-div'>
+        <h3>{post.pathType}</h3>
+      </div>
+
+      <table className='table1'>
+        <colgroup>
+          <col width={15} />
+          <col width={35} />
+          <col width={15} />
+          <col width={35} />
+        </colgroup>
+
+        <tbody>
+          <tr>
+            <th>시군구명</th>
+            <td>{post.district}</td>
+            <th>지번주소</th>
+            <td>{post.address}</td>
+          </tr>
+          <tr>
+            <th>경로레벨</th>
+            <td></td>
+            <th>경로시간</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>경로길이</th>
+            <td></td>
+            <th>옵션설명</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>화장실 설명</th>
+            <td></td>
+            <th>편의시설명</th>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
       <table className="detail-table">
         <tbody>
           <tr>
@@ -115,36 +155,40 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
       <table className="detail-table">
         <tbody>
           <tr className="bold-text">
-            <td>산책경로구분명</td>
-            <td>좋아요</td>
             <td>조회수</td>
+            <td>날씨 확인</td>
+            <td>좋아요</td>
           </tr>
           <tr>
-            <td>{post.pathType}</td>
+            <td>{views}</td>
+            <td>
+                <button>날씨 확인</button>
+              </td>
             <td>
               <button onClick={handleLike}>
                 {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
               </button>
             </td>
-            <td>{views}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table className="detail-table3">
+        <tbody>
+          <tr className="bold-text">
+            <td>시군구명</td>
+            <td>지번주소</td>
+          </tr>
+          <tr>
+            <td>{post.district}</td>
+              <td>{post.address}</td>
           </tr>
         </tbody>
       </table>
 
       <table className="detail-table">
         <tbody>
-          <tr className="bold-text">
-            <td>시군구명</td>
-            <td>지번주소</td>
-            <td>날씨 확인</td>
-          </tr>
-          <tr>
-            <td>{post.district}</td>
-              <td>{post.address}</td>
-              <td>
-                <button>날씨 확인</button>
-              </td>
-          </tr>
+          
           <tr className="bold-text">
             <td>경로레벨명</td>
             <td>경로시간</td>
@@ -171,7 +215,6 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
       </table>
 
       <table className="detail-table2">
-        
           <tr>
             <th className="bold-text">옵션설명</th>
             <td>{post.options}</td>
