@@ -1,14 +1,73 @@
 article {
-    border: 3px solid;
+    border: 1px solid;
     display: flex;
     justify-content: center; /* 수평 중앙 정렬 */
     align-items: center; /* 수직 중앙 정렬 */
-    width: 35%;
+    width: 30%;
     height: 300px;
-    margin-left: 500px;
+    margin-left: 550px;
+    border-radius: 5px 5px 5px 5px;
+    background-color: white;
 }
 
 .mainbody {
     height: 100%;
-    background-color: white;
+    width: 100%;
+    background-color: aliceblue;
+}
+.main1 {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    height: 100px;
+    width: 100%;
+    background-color: aliceblue;
+
+}
+.main2 {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    height: 100px;
+    width: 100%;
+    background-color: aliceblue;
+    
+}
+.main3 {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    height: 100px;
+    width: 100%;
+    background-color: aliceblue;
+}
+.maindiv1 {
+    width: 100%;
+    height: auto;
+    margin-bottom: 52px;
+}
+.maindiv2 {
+    width: 100%;
+    height: auto;
+    margin-bottom: 52px;
+}
+.maindiv3 {
+    width: 100%;
+    height: auto;
+    margin-bottom: 52px;
+}
+.mainlink1 {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 링크 색상 */
+    font-size: 18px; /* 글자 크기 */
+}
+.mainlink2 {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 링크 색상 */
+    font-size: 18px; /* 글자 크기 */
+}
+.mainlink3 {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 링크 색상 */
+    font-size: 18px; /* 글자 크기 */
 }

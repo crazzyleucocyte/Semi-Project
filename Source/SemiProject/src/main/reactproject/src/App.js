@@ -7,8 +7,6 @@ import PostCultureDetail from './pages/PostCultureDetail'; // PostCultureDetail 
 import PostReviewDetail from './pages/PostReviewDetail';
 import Main from './components/Main';
 import IntroPage from './pages/IntroPage';
-import Header from './components/Header';
-
 
 
 function App() {
@@ -27,8 +25,6 @@ function App() {
   };
   return (
     <>
-
-    <Header/>
       <div>
         <nav>
           <button onClick={toggleLogin}>
