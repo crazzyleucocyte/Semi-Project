@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/IntroPage.css';  // CSS 스타일링을 위한 파일 임포트
+import '../assets/IntroPage.css';
 
 const IntroPage = () => {
   return (

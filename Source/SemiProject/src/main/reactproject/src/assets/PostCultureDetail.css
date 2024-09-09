@@ -58,18 +58,10 @@ tr:nth-child(odd) {
   font-weight: bold;
 }
 
-.bold-text+td {
+/* .bold-text+td {
   width: 66%;
-}
+} */
 
 .detail-div {
   text-align: center;
-}
-
-.detail-table3 {
-  width: 50%;
-}
-
-.tabel1 th {
-  background-color: #f9f9f9;
 }
