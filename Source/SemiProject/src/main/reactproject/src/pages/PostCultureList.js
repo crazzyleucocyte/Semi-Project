@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/PostList.css';
+import axios from 'axios';
 
 // 예시 데이터
 const postsData = Array.from({ length: 50 }, (_, i) => ({
@@ -14,7 +15,12 @@ const postsData = Array.from({ length: 50 }, (_, i) => ({
   likedByUser: false,
 }));
 
+
+
 function PostCultureList({ isLoggedIn }) {
+  
+  
+  
   const [posts, setPosts] = useState(postsData);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
@@ -98,7 +104,7 @@ function PostCultureList({ isLoggedIn }) {
           <tbody>
             {currentPosts.map(post => (
               <tr key={post.id}>
-                <td>{post.id}</td>
+                <td>{post.wid}</td>
                 <td>
                   <Link to={`/culture/${post.id}`}>{post.pathType}</Link>
                 </td>

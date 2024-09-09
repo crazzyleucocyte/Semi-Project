@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/PostList.css';
+import axios from 'axios';
 
 // 예시 데이터
 const postsData = Array.from({ length: 50 }, (_, i) => ({
@@ -13,10 +14,64 @@ const postsData = Array.from({ length: 50 }, (_, i) => ({
   likedByUser: false,
 }));
 
+function WalkingTrail() {
+  axios.get('/walking/'+3+'/'+10)
+  .then(response => {
+    // setWalkingTrails(response.data);
+  })
+  .catch(error => {
+    console.error('Error fetching walkingTrail data: ', error);
+  });
+  
+}
+
 function PostWalkList({ isLoggedIn }) {
-  const [posts, setPosts] = useState(postsData);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
+  function SearchWalkingTrail(){
+    axios.post('/walking/list',{
+      'page' : currentPage,
+      'numPerPage' : postsPerPage,
+      'keyField' : searchCategory,
+      'keyWord' : searchInput
+    })
+    .then(response => {
+      console.log(response.data)
+      setWalkingTrails(response.data);
+    })
+    .catch(error => {
+      console.error('Error fetching walkingTrail data: ', error);
+    });
+  }
+  useEffect(() => {
+    // 백엔드로부터 게시글 데이터를 가져옴
+    axios.get('/walking/'+3+'/'+10)
+    .then(response => {
+      console.log(response.data)
+      setWalkingTrails(response.data);
+    })
+    .catch(error => {
+      console.error('Error fetching walkingTrail data: ', error);
+    });
+    
+    axios.post('/walking/list',{
+      'page' : currentPage,
+      'numPerPage' : postsPerPage,
+      'keyField' : searchCategory,
+      'keyWord' : searchInput
+    })
+    .then(response => {
+      console.log(response.data)
+      setWalkingTrails(response.data);
+    })
+    .catch(error => {
+      console.error('Error fetching walkingTrail data: ', error);
+    });
+  }, [currentPage]);
+  
+  const [walkingTrails, setWalkingTrails] = useState([]);
+  const [posts, setPosts] = useState(postsData);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const [searchCategory, setSearchCategory] = useState('id');
@@ -54,6 +109,7 @@ function PostWalkList({ isLoggedIn }) {
 
   const handleSearch = () => {
     setSearchTerm(searchInput);
+    SearchWalkingTrail();
     setCurrentPage(1);
   };
 
@@ -97,23 +153,23 @@ function PostWalkList({ isLoggedIn }) {
           </tr>
         </thead>
         <tbody>
-          {currentPosts.map((post) => (
-            <tr key={post.id}>
-              <td>{post.id}</td>
-              <td>
-                <Link to={`/walk/${post.id}`}>{post.pathType}</Link>
+          {walkingTrails.map((walkingTrails) => (
+            <tr key={walkingTrails.wid}>
+              <td>{walkingTrails.wid}</td>
+              <td className='detail-td'>
+                <Link to={`/walk/${walkingTrails.wid}`}>{walkingTrails.wlktrlName}</Link>
               </td>
-              <td>{post.district}</td>
-              <td>{post.level}</td>
-              <td>{post.time}</td>
+              <td>{walkingTrails.signguNm}</td>
+              <td>{walkingTrails.coursLvNm}</td>
+              <td>{walkingTrails.coursTmContent}</td>
               <td>
                 {isLoggedIn ? (
-                  <button onClick={() => handleLike(post.id)}>
-                    {post.likedByUser ? '좋아요 취소' : '좋아요'} {post.likes}
+                  <button onClick={() => handleLike(walkingTrails.id)}>
+                    {walkingTrails.likedByUser ? '좋아요 취소' : '좋아요'} {walkingTrails.likes}
                   </button>
                 ) : (
                   <button disabled>
-                    좋아요 {post.likes} (로그인 필요)
+                    좋아요 {walkingTrails.likes}
                   </button>
                 )}
               </td>
@@ -136,11 +192,10 @@ function PostWalkList({ isLoggedIn }) {
 
       <div className="search">
         <select value={searchCategory} onChange={handleCategoryChange} className="search-select">
-          <option value="id">글번호</option>
-          <option value="pathType">산책경로구분명</option>
-          <option value="district">시군구명</option>
-          <option value="level">경로레벨명</option>
-          <option value="time">경로시간</option>
+          <option value="wlktrlName">산책경로구분명</option>
+          <option value="signguNm">시군구명</option>
+          <option value="coursLvNm">경로레벨명</option>
+          <option value="coursTmContent">경로시간</option>
         </select>
         <input
           type="text"
