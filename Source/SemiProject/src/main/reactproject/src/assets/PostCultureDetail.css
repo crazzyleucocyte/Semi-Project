@@ -1,0 +1,67 @@
+.post-detail {
+  margin: 20px;
+}
+
+.post-detail h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.detail-table {
+  width: 50%;
+  border-collapse: collapse;
+}
+
+.detail-table2 {
+  width: 50%;
+  border-collapse: collapse;
+}
+
+.detail-table td {
+  width: 33%;
+  /* border: 1px solid #ccc;
+  padding: 10px;
+  vertical-align: top; */
+}
+
+.post-detail-table tr td:nth-child(2) {
+  text-align: center;
+}
+
+.post-detail-table tr td:nth-child(3) {
+  text-align: right;
+}
+
+tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.post-photos img {
+  max-width: 100px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.back-to-list {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* 버튼 위에 약간의 여백을 추가 */
+}
+
+.back-to-list button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+/* .bold-text+td {
+  width: 66%;
+} */
+
+.detail-div {
+  text-align: center;
+}
