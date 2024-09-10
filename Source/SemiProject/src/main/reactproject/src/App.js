@@ -36,6 +36,7 @@ function App() {
         </nav>
 
         <Routes>
+          {/* <Route path="/" element={ <Login /> } /> */}
           <Route path="/" element={ <Main /> } />
           <Route path="/walk" element={<PostWalkList isLoggedIn={isLoggedIn} />} />
           <Route path="/walk/:id" element={<PostWalkDetail onAddReview={handleAddReview} isLoggedIn={isLoggedIn} reviews={reviews} />} />
