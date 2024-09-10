@@ -45,6 +45,8 @@ function App() {
         </nav>
 
         <Routes>
+
+
           <Route path="/" element={<Login />} /> 
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
@@ -55,6 +57,7 @@ function App() {
         <Route path="/password-check" element={<PasswordCheck />} />
         
           <Route path="/main" element={ <Main /> } />
+
           <Route path="/walk" element={<PostWalkList isLoggedIn={isLoggedIn} />} />
           <Route path="/walk/:id" element={<PostWalkDetail onAddReview={handleAddReview} isLoggedIn={isLoggedIn} reviews={reviews} />} />
           <Route path="/culture" element={<PostCultureList isLoggedIn={isLoggedIn} />} />
