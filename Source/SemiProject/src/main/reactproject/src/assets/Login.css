@@ -1,0 +1,40 @@
+/* ---------- SIGN IN ---------- */
+.sign-in__wrapper {
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  align-items: center; /* 수직으로 가운데 정렬 */
+  height: 100vh; /* 화면 전체 높이 */
+  background-size: cover;
+  background-position: center;
+  padding-right: 150px; /* 오른쪽 여백 */
+}
+
+.sign-in__backdrop {
+  position: absolute;  /* 부모 요소에 대한 절대 위치 설정 */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;  /* 전체 영역을 차지하도록 설정 */
+  background-color: rgba(0, 0, 0, 0.3);  /* 반투명한 검정 배경색을 추가해 이미지 위에 오버레이 */
+}
+
+.sign-in__wrapper form {
+  width: 24rem;  /* 폼의 기본 너비 설정 */
+  max-width: 90%;  /* 폼이 뷰포트 너비의 90%를 넘지 않도록 제한 */
+  z-index: 1;  /* 폼이 오버레이 위에 표시되도록 z-index 설정 */
+  animation: showSignInForm 1s;  /* 폼이 등장할 때 1초 동안 애니메이션 실행 */
+}
+
+.sign-in__wrapper form img {
+  width: 4rem;  /* 로고 이미지의 너비 설정 */
+}
+
+@keyframes showSignInForm {
+  0% {
+    transform: translateY(-150%);  /* 애니메이션 시작 시 폼이 위로 150% 이동한 위치에서 시작 */
+  }
+  100% {
+    transform: translateY(0);  /* 애니메이션 종료 시 폼이 원래 위치로 돌아옴 */
+  }
+}
+
