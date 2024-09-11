@@ -39,27 +39,14 @@ const initialReviews = [
 ];
 
 function PostWalkDetail({ isLoggedIn, onAddReview }) {
-
-  useEffect(() => {
-    // 백엔드로부터 게시글 데이터를 가져옴
-    axios.get('/walking/{wid}')
-    .then(response => {
-      console.log(response.data);
-      setWalkingTrails(response.data);
-      setReviews(response.data.reviews || []); // 후기 데이터를 가져온다면 여기서 설정
-    })
-    .catch(error => {
-      console.error('Error fetching walkingTrail data: ', error);
-    });
-  }, []);
-
-  const [walkingTrails, setWalkingTrails] = useState([]);
   const { id } = useParams();
   const [walkingTrails, setWalkingTrails] = useState([]);
 
   useEffect(() => {
     // 백엔드로부터 게시글 데이터를 가져옴
-    axios.get('/walking/'+3+'/'+10)
+    axios.get('/walking/'+ id,{
+      
+    })
     .then(response => {
       console.log(response.data)
       setWalkingTrails(response.data);
@@ -76,14 +63,6 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
   const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
   
   const navigate = useNavigate();
-  
-  // <Routes>
-
-  //   <Route
-  //   path="/review/:id"
-  //   element={<PostReviewDetail onAddReview={onAddReview} />}
-  //   />
-  // </Routes>
 
   useEffect(() => {
     // 데이터 초기화
@@ -126,9 +105,9 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
   };
 
 
-  if (!post) {
-    return <div>게시글을 찾을 수 없습니다.</div>;
-  }
+  // if (!post) {
+  //   return <div>게시글을 찾을 수 없습니다.</div>;
+  // }
 
   return (
     <div className="post-detail">
@@ -155,24 +134,23 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
 
         <tbody>
           <tr>
-            <th>시군구명</th>
-            <td>{walkingTrails.signguNm}</td>
-            <th>지번주소</th>
-            <td>{post.address}</td>
-          </tr>
-          <tr>
-            <th>경로레벨</th>
-            <td></td>
-            <th>경로길이</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>경로시간</th>
-            <td></td>
-            <th></th>
-            <td></td>
-          </tr>
-          
+              <th>시군구명</th>
+              <td>{walkingTrails.signguNm}</td>
+              <th>지번주소</th>
+              <td>{walkingTrails.lnmAddress}</td>
+            </tr>
+            <tr>
+              <th>경로레벨</th>
+              <td>{walkingTrails.coursLvNm}</td>
+              <th>경로길이</th>
+              <td>{walkingTrails.coursContent}</td>
+            </tr>
+            <tr>
+              <th>경로시간</th>
+              <td>{walkingTrails.coursTmContent}</td>
+              <th></th>
+              <td></td>
+            </tr>
         </tbody>
       </table>
 
@@ -184,15 +162,15 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
         <tbody>
           <tr>
             <th>옵션설명</th>
-            <td></td>
+            <td>{walkingTrails.optnDescript}</td>
           </tr>
           <tr>
             <th>화장실 설명</th>
-            <td></td>
+            <td>{walkingTrails.toiletDescript}</td>
           </tr>
           <tr>
             <th>편의시설명</th>
-            <td></td>
+            <td>{walkingTrails.cnvnDescript}</td>
           </tr>
         </tbody>
       </table>
@@ -203,13 +181,13 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
             <td colSpan='3'>경로설명</td>
           </tr>
           <tr>
-            <td colSpan='3'>{post.description}</td>
+            <td colSpan='3'>{walkingTrails.coursDescript}</td>
           </tr>
           <tr className="bold-text">
             <td colSpan='3'>추가설명</td>
           </tr>
           <tr>
-            <td colSpan='3'>{post.additionalInfo}</td>
+            <td colSpan='3'>{walkingTrails.aditDescript}</td>
           </tr>
         </tbody>
       </table>
@@ -218,18 +196,18 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
         지도 넣는 칸
       </div>
 
-      <table className="detail-table">
+      {/* <table className="detail-table">
         <tbody>
           <tr className="bold-text">
             <td>생성일</td>
             <td>최종수정날짜</td>
           </tr>
           <tr>
-            <td>{post.createdAt}</td>
-            <td>{post.updatedAt}</td>
+            <td>{walkingTrails.createdAt}</td>
+            <td>{walkingTrails.updatedAt}</td>
           </tr>
         </tbody>
-      </table>
+      </table> */}
       
       
 

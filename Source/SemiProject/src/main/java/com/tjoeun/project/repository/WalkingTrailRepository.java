@@ -17,9 +17,8 @@ import com.tjoeun.project.domain.WalkingTrail;
 @Repository
 public interface WalkingTrailRepository extends JpaRepository<WalkingTrail, Long> {
 
-	
+	// 페이징을 위한 메서드 정의
 	Page<WalkingTrail> findAll(Pageable pageable);
-
 
 	Page<WalkingTrail> findByWIdLike(PageRequest of, String keyWord);
 
@@ -30,5 +29,4 @@ public interface WalkingTrailRepository extends JpaRepository<WalkingTrail, Long
 	Page<WalkingTrail> findByCoursLvNmLike(PageRequest of, String keyWord);
 	
 	Page<WalkingTrail> findByCoursTmContentLike(PageRequest of, String keyWord);
-
 }

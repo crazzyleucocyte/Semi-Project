@@ -65,12 +65,4 @@ public class WalkingTrailService {
 		return walkingTrailRepository.findById(wId).orElseThrow(() -> new RuntimeException("Post not found"));
 	}
 
-
-	public Page<WalkingTrail> getWalkingTrails(Pageable pageable) {
-		return walkingTrailRepository.findAll(pageable);
-	}
-
-	
-	
-	
 }
