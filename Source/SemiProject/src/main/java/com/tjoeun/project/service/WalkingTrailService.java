@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tjoeun.project.domain.WalkingTrail;
@@ -46,17 +47,27 @@ public class WalkingTrailService {
 
 
 	public Page<WalkingTrail> serchtListCoursLvNmLike(PageRequest of, String keyWord) {
-		return walkingTrailRepository.findByWlktrlNameLike(of, keyWord);
+		return walkingTrailRepository.findByCoursLvNmLike(of, keyWord);
 	}
 
 
 	public Page<WalkingTrail> serchtListCoursTmContentLike(PageRequest of, String keyWord) {
-		return walkingTrailRepository.findByWlktrlNameLike(of, keyWord);
+		return walkingTrailRepository.findByCoursTmContentLike(of, keyWord);
 	}
 
 
-	public Page<WalkingTrail> serchtListsignguNmLike(PageRequest of, String keyWord) {
-		return walkingTrailRepository.findByWlktrlNameLike(of, keyWord);
+	public Page<WalkingTrail> serchtListSignguNmLike(PageRequest of, String keyWord) {
+		return walkingTrailRepository.findBySignguNmLike(of, keyWord);
+	}
+
+
+	public WalkingTrail getWalkingTrailById(Long wId) {
+		return walkingTrailRepository.findById(wId).orElseThrow(() -> new RuntimeException("Post not found"));
+	}
+
+
+	public Page<WalkingTrail> getWalkingTrails(Pageable pageable) {
+		return walkingTrailRepository.findAll(pageable);
 	}
 
 	
