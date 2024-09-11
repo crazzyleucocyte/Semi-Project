@@ -2,17 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/PostList.css';
 import axios from 'axios';
-
-// 예시 데이터
-const postsData = Array.from({ length: 50 }, (_, i) => ({
-  id: i + 1,
-  pathType: `산책경로 ${i + 1}`,
-  district: `시군구 ${i + 1}`,
-  level: `레벨 ${i + 1}`,
-  time: `${30 + i}분`,
-  likes: 0,
-  likedByUser: false,
-}));
+// import CustomPagination from './CustomPagination';
 
 function WalkingTrail() {
   axios.get('/walking/'+3+'/'+10)
@@ -26,34 +16,87 @@ function WalkingTrail() {
 }
 
 function PostWalkList({ isLoggedIn }) {
-  
-  const [currentPage, setCurrentPage] = useState(1);
+
+  const [currentPage, setCurrentPage] = useState(1);    // 현재 페이지
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
+  const [totalBlock, setTotalBlock] = useState('');
+  const [totalRecord, setTotalRecord] = useState('');
+  const [totalPages, setTotalPages] = useState(1);      // 전체 페이지수
+  const [walkingTrails, setWalkingTrails] = useState([]);   // 가져온 게시물 목록
+
+
+
+
+
+  // useEffect(() => {
+  //   axios.get(`/walking/list`, {
+  //     params: {
+  //       page: currentPage,        // 현재 페이지
+  //       numPerPage: postsPerPage  // 페이지당 게시물 수
+  //     }
+  //   })
+  //   .then((response) => {
+  //     setWalkingTrails(response.data.items);    // 서버에서 가져온 데이터 설정
+  //     setTotalPages(response.data.totalPages);  // 서버에서 반환된 총 페이지수 설정
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error fetching walking trail data: ', error);
+  //   });
+  // }, [currentPage, postsPerPage]);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  }
+
+  // useEffect(() => {
+  //   axios.get('/api/your-endpoint')
+  //     .then(response => {
+  //       const totalPosts = response.data.totalPosts;  // 전체 게시글 수를 백엔드에서 받음
+  //       const pages = Math.ceil(totalPosts / postsPerPage);  // 페이지 수 계산
+  //       setTotalPages(pages);  // totalPages 값 설정
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  // }, [postsPerPage]);
+  
+
+
+
+
+
+
   function SearchWalkingTrail(){
-    axios.post('/walking/list',{
-      'page' : currentPage,
-      'numPerPage' : postsPerPage,
-      'keyField' : searchCategory,
-      'keyWord' : searchInput
-    })
-    .then(response => {
-      console.log(response.data)
-      setWalkingTrails(response.data);
-    })
-    .catch(error => {
-      console.error('Error fetching walkingTrail data: ', error);
-    });
+    if(searchCategory == 'null'){
+      alert('카테고리를 선택하십시오')
+
+    }else{
+      axios.post('/walking/list',{
+        'page' : currentPage,
+        'numPerPage' : postsPerPage,
+        'keyField' : searchCategory,
+        'keyWord' : searchInput
+      })
+      .then(response => {
+        console.log(response.data)
+        setWalkingTrails(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching walkingTrail data: ', error);
+      });
+    }
+
   }
   useEffect(() => {
     // 백엔드로부터 게시글 데이터를 가져옴
-    axios.get('/walking/'+3+'/'+10)
-    .then(response => {
-      console.log(response.data)
-      setWalkingTrails(response.data);
-    })
-    .catch(error => {
-      console.error('Error fetching walkingTrail data: ', error);
-    });
+    // axios.get('/walking/'+3+'/'+10)
+    // .then(response => {
+    //   console.log(response.data)
+    //   setWalkingTrails(response.data);
+    // })
+    // .catch(error => {
+    //   console.error('Error fetching walkingTrail data: ', error);
+    // });
     
     axios.post('/walking/list',{
       'page' : currentPage,
@@ -63,15 +106,16 @@ function PostWalkList({ isLoggedIn }) {
     })
     .then(response => {
       console.log(response.data)
-      setWalkingTrails(response.data);
+      setWalkingTrails(response.data.list);
+      setTotalRecord(response.data.totalRecord);
+      setTotalBlock(Math.ceil(response.data.totalRecord / postsPerPage));
     })
     .catch(error => {
       console.error('Error fetching walkingTrail data: ', error);
     });
   }, [currentPage]);
   
-  const [walkingTrails, setWalkingTrails] = useState([]);
-  const [posts, setPosts] = useState(postsData);
+  const [posts, setPosts] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const [searchCategory, setSearchCategory] = useState('id');
@@ -79,17 +123,23 @@ function PostWalkList({ isLoggedIn }) {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
-  const filteredPosts = posts.filter((post) => {
-    if (!searchTerm) return true;
-    const value = post[searchCategory];
-    return value ? value.toString().toLowerCase().includes(searchTerm.toLowerCase()) : false;
+  const filteredPosts = walkingTrails.filter((post,i) => {
+   
+    return i>=indexOfFirstPost && i<=indexOfLastPost;
   });
 
-  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  //const currentPosts = walkingTrails.get .slice(indexOfFirstPost, indexOfLastPost);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  // const handlePageChange = (pageNumber) => {
+  //   axios.get(`/walking/list?page=${pageNumber}&size=${postsPerPage}`)
+  //        .then(response => {
+  //         setWalkingTrails(response.data.content);    // 해당 페이지의 데이터를 설정
+  //         setCurrentPage(pageNumber);                 // 현재 페이지 업데이트
+  //        })
+  //        .catch(error => {
+  //         console.error('Error fetching walkingTrail data: ', error);
+  //        });
+  // };
 
   const handleLike = (id) => {
     if (isLoggedIn) {
@@ -126,7 +176,7 @@ function PostWalkList({ isLoggedIn }) {
     setCurrentPage(1); // 한 페이지에 나타낼 글 수를 변경하면 첫 페이지로 이동
   };
 
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+   //const totalPages = Math.ceil(총레코드 수 / postsPerPage);
 
   return (
     <div>
@@ -153,7 +203,7 @@ function PostWalkList({ isLoggedIn }) {
           </tr>
         </thead>
         <tbody>
-          {walkingTrails.map((walkingTrails) => (
+          {filteredPosts.map((walkingTrails) => (
             <tr key={walkingTrails.wid}>
               <td>{walkingTrails.wid}</td>
               <td className='detail-td'>
@@ -179,7 +229,8 @@ function PostWalkList({ isLoggedIn }) {
       </table>
 
       <div className="pagination">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
+        {totalPages > 0 && 
+        Array.from({ length: totalBlock }, (_, i) => i + 1).map((pageNumber) => (
           <button
             key={pageNumber}
             onClick={() => handlePageChange(pageNumber)}
@@ -189,9 +240,19 @@ function PostWalkList({ isLoggedIn }) {
           </button>
         ))}
       </div>
+      {/* <div>
+        {totalPages > 0 && (
+          <CustomPagination
+            pageCount={Math.max(1, totalPages - 1)}
+            onPageChange={handlePageChange}
+            currentPage={currentPage}
+          />
+        )}
+      </div> */}
 
       <div className="search">
         <select value={searchCategory} onChange={handleCategoryChange} className="search-select">
+          <option value="null">선택</option>
           <option value="wlktrlName">산책경로구분명</option>
           <option value="signguNm">시군구명</option>
           <option value="coursLvNm">경로레벨명</option>
