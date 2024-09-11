@@ -39,6 +39,21 @@ const initialReviews = [
 ];
 
 function PostWalkDetail({ isLoggedIn, onAddReview }) {
+
+  useEffect(() => {
+    // 백엔드로부터 게시글 데이터를 가져옴
+    axios.get('/walking/{wid}')
+    .then(response => {
+      console.log(response.data);
+      setWalkingTrails(response.data);
+      setReviews(response.data.reviews || []); // 후기 데이터를 가져온다면 여기서 설정
+    })
+    .catch(error => {
+      console.error('Error fetching walkingTrail data: ', error);
+    });
+  }, []);
+
+  const [walkingTrails, setWalkingTrails] = useState([]);
   const { id } = useParams();
   const [walkingTrails, setWalkingTrails] = useState([]);
 

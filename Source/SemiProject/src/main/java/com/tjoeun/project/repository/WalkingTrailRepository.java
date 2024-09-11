@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,8 +16,10 @@ import com.tjoeun.project.domain.WalkingTrail;
 
 @Repository
 public interface WalkingTrailRepository extends JpaRepository<WalkingTrail, Long> {
+
 	
 	Page<WalkingTrail> findAll(Pageable pageable);
+
 
 	Page<WalkingTrail> findByWIdLike(PageRequest of, String keyWord);
 
@@ -26,4 +30,5 @@ public interface WalkingTrailRepository extends JpaRepository<WalkingTrail, Long
 	Page<WalkingTrail> findByCoursLvNmLike(PageRequest of, String keyWord);
 	
 	Page<WalkingTrail> findByCoursTmContentLike(PageRequest of, String keyWord);
+
 }

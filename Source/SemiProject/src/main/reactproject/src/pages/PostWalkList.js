@@ -15,6 +15,17 @@ function WalkingTrail() {
   
 }
 
+function WalkingTrail() {
+  axios.get('/walking/'+3+'/'+10)
+  .then(response => {
+    // setWalkingTrails(response.data);
+  })
+  .catch(error => {
+    console.error('Error fetching walkingTrail data: ', error);
+  });
+  
+}
+
 function PostWalkList({ isLoggedIn }) {
 
   const [currentPage, setCurrentPage] = useState(1);    // 현재 페이지
@@ -97,6 +108,7 @@ function PostWalkList({ isLoggedIn }) {
     // .catch(error => {
     //   console.error('Error fetching walkingTrail data: ', error);
     // });
+
     
     axios.post('/walking/list',{
       'page' : currentPage,

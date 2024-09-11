@@ -151,3 +151,53 @@
 .dropdown-item:last-child {
   border-bottom: none;
 }
+.swiper-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+.slide-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  background-color: #eee;
+  font-size: 24px;
+}
+.custom-prev, .custom-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 200px 200px 200px 200px; /* 각 모서리를 다른 값으로 설정 */
+  color: white;
+  justify-content: center;
+  align-items: center;
+  width: 52px;
+  height: 52px;
+  cursor: pointer;
+  text-align: center;
+  z-index: 10;
+  
+}
+.custom-prev {
+  left: 200px;
+  background-image: url('../assets/icon.jpg'); /* 또는 backgroundImage 변수를 사용할 수 있음 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.custom-next {
+  right: 200px;
+  background-image: url('../assets/icon2.jpg'); /* 또는 backgroundImage 변수를 사용할 수 있음 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+}
+
+
+.custom-prev:hover, .custom-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
