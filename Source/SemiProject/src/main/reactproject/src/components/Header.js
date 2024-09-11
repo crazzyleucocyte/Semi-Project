@@ -1,6 +1,6 @@
 
 import { Swiper, SwiperSlide } from "swiper/react"; // Swiper 관련 컴포넌트
-import { Navigation, Pagination, Autoplay } from "swiper"; // 필요한 모듈
+import { Navigation } from "swiper"; // 필요한 모듈
 import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.min.css'
@@ -11,35 +11,62 @@ import '../assets/Header.css';
 import banner from '../assets/banner.jpg';
 import banner2 from '../assets/banner.jpg';
 import banner3 from '../assets/banner3.jpg';
+import icon from '../assets/icon.jpg';
 function Header() {
-  const handleSlideChange = (swiper) => {
-    console.log("현재 슬라이드 인덱스:", swiper.activeIndex);
-  };
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
     <header> 
-     <nav>
-     <div className="div1">
+
+     <div className="swiper-container">
         <Swiper
-        // Swiper 설정
-        modules={[Navigation, Pagination, Autoplay]} // 사용할 모듈 설정
-        onSlideChange={handleSlideChange}>
-        {/* 각각의 배너 이미지 슬라이드 */}
+         modules={[Navigation]}
+         spaceBetween={50}
+         slidesPerView={1}
+         navigation={{
+           nextEl: ".custom-next",
+           prevEl: ".custom-prev",
+         }}>
+          
         <SwiperSlide>
-        <img src={banner} alt="1번사진" />
+          <div className="slide-content">
+          <img src={banner} alt="1번사진" />
+          </div>
         </SwiperSlide>
+
         <SwiperSlide>
-        <img src={banner2} alt="2번사진" />
+          <div className="slide-content">
+          <img src={banner2} alt="2번사진" />
+          </div>
+       
         </SwiperSlide>
+        
         <SwiperSlide>
-        <img src={banner3} alt="3번사진" />
+          <div className="slide-content">
+          <img src={banner3} alt="3번사진" />
+          </div>
         </SwiperSlide>
         </Swiper>
-        </div>
+            {/* 커스텀 내비게이션 버튼 */}
         
+        <div>
+         <button className="custom-prev">
+
+         </button>
+
+        </div>
+
+           <div>
+              <button className="custom-next">
+         
+              </button>
+           </div>
+    
+        </div>
+      
         <div className="div2">
         <ul>
             <div className="div3">   
@@ -62,7 +89,7 @@ function Header() {
          
         </ul>
         </div>    
-      </nav>
+ 
     </header>
   );
   
