@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../assets/PostList.css';
+// import * as FaqStyle from '../assets/FaqStyle';
 
 function WalkingTrailsList() {
   const [walkingTrails, setWalkingTrails] = useState([]);
@@ -90,7 +91,7 @@ function WalkingTrailsList() {
   
   return (
     <div>
-      <h1>Walking Trails</h1>
+      <h1 className='h1-list'>산책누리 산책길</h1>
 
        {/* 한 페이지에 표시할 글 수 선택하는 select 요소 */}
        <div className="posts-per-page">
@@ -101,8 +102,8 @@ function WalkingTrailsList() {
           </select>
         </div>
 
-      <table>
-        <thead>
+      <table className='table-list'>
+        <thead className='thead-list'>
           <tr>
             <th>글번호</th>
             <th>산책경로구분명</th>
