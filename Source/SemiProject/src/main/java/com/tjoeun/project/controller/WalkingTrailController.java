@@ -56,10 +56,7 @@ public class WalkingTrailController {
 			System.out.println("keyField : " + keyField);
 			
 			switch(keyField) {
-			
 				case "wlktrlName" :
-				// 매개변수(키워드, 페이지번호, 페이지당 레코드수) 
-
 					pageList = walkingTrailService.serchtListWlktrlNameLike(PageRequest.of(page, numPerPage, Sort.by(Sort.Direction.DESC,"wlktrlName")),keyWord);
 					break;
 				case "signguNm":
@@ -69,7 +66,6 @@ public class WalkingTrailController {
 				case "coursLvNm" :
 					pageList = walkingTrailService.serchtListCoursLvNmLike(PageRequest.of(page, numPerPage, Sort.by(Sort.Direction.DESC,"coursLvNm")), keyWord);
 					break;
-				
 				case "coursTmContent":
 					pageList = walkingTrailService.serchtListCoursTmContentLike(PageRequest.of(page, numPerPage, Sort.by(Sort.Direction.DESC,"coursTmContent")), keyWord);
 				break;

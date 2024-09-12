@@ -4,6 +4,7 @@ import '../assets/PostReviewDetail.css';
 
 function PostReviewDetail({ onAddReview }) {
   const { id, category } = useParams();
+  // const [walkingTrails, setWalkingTrails] = useState([]);
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null); // 사진 파일 상태 추가
   const navigate = useNavigate();

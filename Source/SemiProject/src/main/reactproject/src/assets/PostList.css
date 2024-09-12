@@ -1,51 +1,51 @@
-.detail-td {
+.detail-td > a {
   text-decoration: none !important;
   color: #333 !important;
 }
 
 /* General Styles */
-body {
+/* body {
   font-family: Arial, sans-serif;
-  /* background-color: #f8f8f8; */
+  background-color: #f8f8f8;
   margin: 0;
   padding: 0;
-}
+} */
 
-h1 {
+.h1-list {
   text-align: center;
   margin: 20px 0;
   color: #333;
 }
 
 /* Table Styles */
-table {
+.table-list {
   width: 70%;
   margin: 20px auto;
   border-collapse: collapse;
-  background-color: #fff;
+  /* background-color: #fff; */
   /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
   border: none;
 }
-thead>tr{
+.thead-list > tr{
   padding: 10px;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
-th, td {
+.table-list th, td {
   padding: 10px;
   text-align: center;
 }
 
-thead th {
+.thead-list th {
   border-bottom: 1.5px solid ;
   background-color: #f4f4f4;
   color: #555;
 }
 
-td {
+/* td {
   color: #333;
-}
+} */
 
 /* tr:nth-child(even) {
   background-color: #f9f9f9;
@@ -53,14 +53,21 @@ td {
 
 /* Pagination Styles */
 .pagination {
+  /* position: relative;
+  left:500px; */
+  display: flex;
+  justify-content: center;
   text-align: center;
   margin: 20px 0;
 }
 
 .pagination button {
+  display: inline-block;
+  padding: 5px 10px;
   margin: 0 5px;
-  padding: 8px 16px;
-  background-color: #007bff;
+  /* padding: 8px 16px; */
+  /* background-color: #007bff; */
+  background-color: #28a745;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -101,7 +108,8 @@ td {
 
 .search button {
   padding: 10px 20px;
-  background-color: #007bff;
+  /* background-color: #007bff; */
+  background-color: #28a745;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -114,7 +122,7 @@ td {
 }
 
 /* Like Button Styles */
-button {
+/* button {
   padding: 5px 10px;
   background-color: #28a745;
   color: #fff;
@@ -130,7 +138,7 @@ button:disabled {
 
 button:hover:not(:disabled) {
   background-color: #218838;
-}
+} */
 
 #postsPerPageSelect {
   padding: 5px;
