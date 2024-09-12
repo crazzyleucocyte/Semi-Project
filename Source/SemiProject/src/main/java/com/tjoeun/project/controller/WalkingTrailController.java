@@ -8,15 +8,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tjoeun.project.domain.WalkingTrail;
@@ -25,7 +25,7 @@ import com.tjoeun.project.service.WalkingTrailService;
 
 @RestController
 @RequestMapping("/walking")
-@CrossOrigin(origins = "http://localhost:3000") // React 개발 서버 주소
+//@CrossOrigin(origins = "http://localhost:3000") // React 개발 서버 주소
 public class WalkingTrailController {
 
     @Autowired
@@ -86,6 +86,14 @@ public class WalkingTrailController {
 	public WalkingTrail getWalkingTrailById(@PathVariable(name="wId") Long wId) {
 		return walkingTrailService.getWalkingTrailById(wId);
 	}
-
-
+//
+//    @GetMapping("/{wId}")
+//    public ResponseEntity<WalkingTrail> getTrailById(@PathVariable Long wId) {
+//    	Optional<WalkingTrail> trail = walkingTrailService.findById(wId);
+//    	if(trail.isPresent()) {
+//    		return new ResponseEntity<>(trail.get(), HttpStatus.OK);
+//    	} else {
+//    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    	}
+//    }
 }

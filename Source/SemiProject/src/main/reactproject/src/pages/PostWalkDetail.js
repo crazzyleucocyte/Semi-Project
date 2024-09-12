@@ -38,6 +38,8 @@ const initialReviews = [
   },
 ];
 
+
+
 function PostWalkDetail({ isLoggedIn, onAddReview }) {
   const { id } = useParams();
   const [walkingTrails, setWalkingTrails] = useState([]);
@@ -56,10 +58,10 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
     });
   }, []);
   
-  const [post, setPost] = useState(null);
+  // const [post, setPost] = useState(null);
   const [likes, setLikes] = useState(0);
   const [likedByUser, setLikedByUser] = useState(false);
-  const [views, setViews] = useState(0);
+  // const [views, setViews] = useState(0);
   const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
   
   const navigate = useNavigate();
@@ -113,18 +115,19 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
     <div className="post-detail">
 
       <div className='detail-div'>
-        <h1>{walkingTrails.wlktrlName}</h1>
-        <button onClick={handleLike}>
+        <h1 className='h1-list'>{walkingTrails.wlktrlName}</h1>
+        <button onClick={handleLike} className='button-detail'>
                 {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
         </button>&emsp;
-        <button>날씨 확인</button>
+        <button className='button-detail'>날씨 확인</button>
       </div>
 
       <div className='detail-div2'>
         사진 넣는 칸
+        <img src='' />
       </div>
 
-      <table className='table1'>
+      <table className='table-detail'>
         {/* <colgroup>
           <col width={15} />
           <col width={35} />
@@ -154,11 +157,11 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
         </tbody>
       </table>
 
-      <table>
-        <colgroup>
+      <table className='table-detail'>
+        {/* <colgroup>
           <col width={15} />
           <col width={85} />
-        </colgroup>
+        </colgroup> */}
         <tbody>
           <tr>
             <th>옵션설명</th>
@@ -175,7 +178,7 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
         </tbody>
       </table>
 
-      <table>
+      <table className='table-detail'>
         <tbody>
           <tr className="bold-text">
             <td colSpan='3'>경로설명</td>
@@ -215,7 +218,7 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
 
       {/* 후기 표시 부분 */}
       <h1>후기</h1>
-      <table className="review-table">
+      <table className="table-detail">
         <tbody>
           {reviews.map((review) => (
             <tr key={review.id}>
@@ -227,13 +230,13 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
       </table>
 
       {/* 후기 작성 버튼 */}
-      <div className="back-to-list">
-        <button onClick={() => navigate(`/review/${walkingTrails.wid}/walk`)}>후기 작성</button>
+      <div className='div-detail'>
+        <button onClick={() => navigate(`/review/${walkingTrails.wid}/walk`)} className="button-detail">후기 작성</button>
       </div>
       
       {/* 목록으로 가기 버튼 */}
-      <div className="back-to-list">
-        <button onClick={() => navigate('/walk')}>뒤로 가기</button>
+      <div className='div-detail'>
+        <button onClick={() => navigate('/walk')} className="button-detail">뒤로 가기</button>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@
   width: 70%;
   margin: 20px auto;
   border-collapse: collapse;
-  /* background-color: #fff; */
+  /* background-color: #f4f4f4; */
   /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
   border: none;
 }
@@ -39,7 +39,7 @@
 
 .thead-list th {
   border-bottom: 1.5px solid ;
-  background-color: #f4f4f4;
+  /* background-color: #f4f4f4; */
   color: #555;
 }
 
@@ -47,9 +47,9 @@
   color: #333;
 } */
 
-/* tr:nth-child(even) {
+.thead-list tr:nth-child(even) {
   background-color: #f9f9f9;
-} */
+}
 
 /* Pagination Styles */
 .pagination {

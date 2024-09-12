@@ -1,6 +1,7 @@
 package com.tjoeun.project.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -64,5 +65,10 @@ public class WalkingTrailService {
 	public WalkingTrail getWalkingTrailById(Long wId) {
 		return walkingTrailRepository.findById(wId).orElseThrow(() -> new RuntimeException("Post not found"));
 	}
+
+
+//	public Optional<WalkingTrail> findById(Long wId) {
+//		return walkingTrailRepository.findById(wId);
+//	}
 
 }

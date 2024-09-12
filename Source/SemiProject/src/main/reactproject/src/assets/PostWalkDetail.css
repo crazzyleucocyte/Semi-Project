@@ -7,6 +7,38 @@
   margin-bottom: 20px;
 }
 
+.h1-list {
+  text-align: center;
+  margin: 20px 0;
+  color: #333;
+}
+
+/* Table Styles */
+.table-detail {
+  width: 70%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  /* background-color: #fff; */
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  border: none;
+}
+.tbody-detail > tr{
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-detail th, .table-detail td {
+  padding: 10px;
+  text-align: left;
+}
+
+.tbody-detail th {
+  border-bottom: 1.5px solid ;
+  background-color: #f4f4f4;
+  color: #555;
+}
+
 /* .detail-table {
   width: 50%;
   border-collapse: collapse;
@@ -42,17 +74,17 @@
   margin-right: 10px;
 } */
 
-.back-to-list {
+/* .back-to-list {
   display: flex;
   justify-content: center;
-  margin-top: 20px; /* 버튼 위에 약간의 여백을 추가 */
+  margin-top: 20px;
 }
 
 .back-to-list button {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-}
+} */
 
 .bold-text {
   font-weight: bold;
@@ -66,10 +98,6 @@
   text-align: center;
 }
 
-.detail-table3 {
-  width: 50%;
-}
-
 /* .tabel1 th {
   background-color: #f9f9f9;
 } */
@@ -77,4 +105,27 @@
 .detail-div2 {
   margin: 150px;
   text-align: center;
+}
+
+.button-detail {
+  padding: 5px 10px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-detail:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.button-detail:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.div-detail {
+  text-align: center;
+  margin-top: 10px;
 }
