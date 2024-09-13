@@ -47,7 +47,7 @@ function App() {
         <Routes>
 
 
-          <Route path="/" element={<Login />} /> 
+          <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn}/>} /> 
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/password-change" element={<PasswordChange />} />

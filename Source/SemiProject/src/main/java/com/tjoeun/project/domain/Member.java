@@ -21,7 +21,6 @@ import lombok.NonNull;
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@SQLRestriction("isDeleted != null")
 public class Member {
 //			사용자 아이디
 	@Id
@@ -42,12 +41,12 @@ public class Member {
 //			사용자 주민번호
 	@Column(name="MEM_SSN",length=13)
 	@NonNull
-	private int memSsn;
+	private String memSsn;
 
 //			사용자 전화번호
 	@Column(name="PHONE", length=11)
 	@NonNull
-	private int phone;
+	private String phone;
 
 //			사용자 이메일
 	@Column(name="EMAIL", length=30)
@@ -69,7 +68,7 @@ public class Member {
 	
 //			삭제 날짜
 //			회원 자체를 삭제하려면 nativeQuery로 삭제
-	@Column(name="isDeleted")
+	@Column(name = "ISDELETED")
 	private LocalDateTime isDeleted;
 	
 	
