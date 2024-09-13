@@ -7,15 +7,47 @@
   margin-bottom: 20px;
 }
 
-.detail-table {
-  width: 50%;
-  border-collapse: collapse;
+.h1-list {
+  text-align: center;
+  margin: 20px 0;
+  color: #333;
 }
 
-.detail-table2 {
+/* Table Styles */
+.table-detail {
+  width: 70%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  /* background-color: #fff; */
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  border: none;
+}
+.tbody-detail > tr{
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-detail th, .table-detail td {
+  padding: 10px;
+  text-align: left;
+}
+
+.tbody-detail th {
+  border-bottom: 1.5px solid ;
+  background-color: #f4f4f4;
+  color: #555;
+}
+
+/* .detail-table {
   width: 50%;
   border-collapse: collapse;
-}
+} */
+
+/* .detail-table2 {
+  width: 50%;
+  border-collapse: collapse;
+} */
 
 .detail-table td {
   width: 33%;
@@ -24,35 +56,35 @@
   vertical-align: top; */
 }
 
-.post-detail-table tr td:nth-child(2) {
+/* .post-detail-table tr td:nth-child(2) {
   text-align: center;
-}
+} */
 
-.post-detail-table tr td:nth-child(3) {
+/* .post-detail-table tr td:nth-child(3) {
   text-align: right;
-}
+} */
 
-tr:nth-child(odd) {
+/* td:nth-child(odd) {
   background-color: #f9f9f9;
-}
+} */
 
-.post-photos img {
+/* .post-photos img {
   max-width: 100px;
   height: auto;
   margin-right: 10px;
-}
+} */
 
-.back-to-list {
+/* .back-to-list {
   display: flex;
   justify-content: center;
-  margin-top: 20px; /* 버튼 위에 약간의 여백을 추가 */
+  margin-top: 20px;
 }
 
 .back-to-list button {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-}
+} */
 
 .bold-text {
   font-weight: bold;
@@ -66,15 +98,34 @@ tr:nth-child(odd) {
   text-align: center;
 }
 
-.detail-table3 {
-  width: 50%;
-}
-
-.tabel1 th {
+/* .tabel1 th {
   background-color: #f9f9f9;
-}
+} */
 
 .detail-div2 {
   margin: 150px;
   text-align: center;
+}
+
+.button-detail {
+  padding: 5px 10px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-detail:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.button-detail:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.div-detail {
+  text-align: center;
+  margin-top: 10px;
 }
