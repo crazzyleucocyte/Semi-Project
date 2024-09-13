@@ -22,9 +22,23 @@ import axios from 'axios';
 //   updatedAt: `2024-09-01`, // 예시 수정일
 // }));
 
+const initialReviews = [
+  {
+    id: 1,
+    content: '이 경로는 정말 아름답고 평화로워요!',
+    createdAt: '2024-09-02',
+  },
+  {
+    id: 2,
+    content: '산책하기에 최적의 장소였습니다.',
+    createdAt: '2024-09-03',
+  },
+];
+
 function PostCultureDetail({ isLoggedIn }) {
   const { id } = useParams();
   const [culture, setCulture] = useState([]);
+  const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
 
   useEffect(() => {
     axios.get('/culture/' + id, {
@@ -80,18 +94,19 @@ function PostCultureDetail({ isLoggedIn }) {
     <div className="post-detail">
 
       <div className='detail-div'>
-        <h1>{culture.fcltyName}</h1>
-        <button onClick={handleLike}>
+        <h1 className='h1-list'>{culture.fcltyName}</h1>
+        <button onClick={handleLike} className='button-detail'>
                 {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
         </button>&emsp;
-        <button>날씨 확인</button>
+        <button className='button-detail'>날씨 확인</button>
       </div>
 
       <div className='detail-div2'>
         사진 넣는 칸
+        <img src='' />
       </div>
       
-      <table>
+      <table className='table-detail'>
         {/* <colgroup>
           <col width={15} />
           <col width={35} />
@@ -138,7 +153,7 @@ function PostCultureDetail({ isLoggedIn }) {
         </tbody>
       </table>
 
-      <table>
+      <table className='table-detail'>
         <colgroup>
           <col width={15} />
           <col width={85} />
@@ -175,27 +190,26 @@ function PostCultureDetail({ isLoggedIn }) {
         지도 넣는 칸
       </div>
 
-      
-
-      <h1>후기</h1>
-      <table>
+      {/* 후기 표시 부분 */}
+      <h1 className='h1-list'>후기</h1>
+      <table className="table-detail">
         <tbody>
-          <tr>
-            <td colSpan="3">사진첨부칸</td>
-          </tr>
-          <tr>
-            <td colSpan="3">후기내용</td>
-          </tr>
+          {reviews.map((review) => (
+            <tr key={review.id}>
+              <td>{review.content}</td>
+              <td>{review.createdAt}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
-      <div className="back-to-list">
-        <button onClick={() => navigate(`/review/${culture.cid}/culture`)}>후기 작성</button>
+      <div className="div-detail">
+        <button onClick={() => navigate(`/review/${culture.cid}/culture`)} className='button-detail'>후기 작성</button>
       </div>
 
       {/* 목록으로 가기 버튼 */}
-      <div className="back-to-list">
-        <button onClick={() => navigate('/culture')}>목록 가기</button>
+      <div className="div-detail">
+        <button onClick={() => navigate('/culture')} className='button-detail'>목록 가기</button>
       </div>
     </div>
   );
