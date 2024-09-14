@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/PostCultureDetail.css';
 import axios from 'axios';
+import Kakao from '../data/Kakao';
 
 // const initialPostsData = Array.from({ length: 50 }, (_, i) => ({
 //   id: i + 1,
@@ -187,7 +188,7 @@ function PostCultureDetail({ isLoggedIn }) {
       </table>
 
       <div className='detail-div2'>
-        지도 넣는 칸
+        <Kakao />
       </div>
 
       {/* 후기 표시 부분 */}

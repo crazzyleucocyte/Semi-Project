@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/PostWalkDetail.css';
 import axios from 'axios';
+import Kakao from '../data/Kakao';
 
 
 // 예시 데이터 (임시)
@@ -196,7 +197,7 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
       </table>
 
       <div className='detail-div2'>
-        지도 넣는 칸
+        <Kakao />
       </div>
 
       {/* <table className="detail-table">

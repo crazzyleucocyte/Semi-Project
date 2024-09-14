@@ -103,6 +103,8 @@
 } */
 
 .detail-div2 {
+  display: flex;
+  justify-content: center;
   margin: 150px;
   text-align: center;
 }
