@@ -38,6 +38,11 @@ dependencies {
 	//log4j
 	//implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 	implementation "org.webjars:jquery:3.7.1"
+	
+	//jsonParser
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	// Jackson for JSON Processing
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
 }
 
 tasks.named('test') {

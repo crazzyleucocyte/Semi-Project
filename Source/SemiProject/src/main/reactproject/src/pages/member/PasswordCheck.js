@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import "../assets/Profile2.css"; // CSS 파일 임포트
-import BackgroundImage from "./../assets/background.jpg";
-import Logo from "./../assets/logo.png";
+import "../../assets/Profile2.css"; // CSS 파일 임포트
+// import BackgroundImage from "./../assets/background.jpg";
+// import Logo from "./../assets/logo.png";
 
 const PasswordCheck = () => {
   const [password, setPassword] = useState(""); // 입력된 비밀번호를 저장하는 상태
@@ -37,7 +37,7 @@ const PasswordCheck = () => {
   return (
     <div
       className="profile__wrapper"
-      style={{ backgroundImage: `url(${BackgroundImage})` }}
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/member/background.jpg)` }}
     >
       <div className="profile__backdrop"></div> {/* 배경 위에 어두운 레이어 */}
 
@@ -45,7 +45,7 @@ const PasswordCheck = () => {
         {/* 로고 이미지 */}
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={Logo}
+          src={process.env.PUBLIC_URL+'/img/member/logo.png'}
           alt="logo"
         />
 

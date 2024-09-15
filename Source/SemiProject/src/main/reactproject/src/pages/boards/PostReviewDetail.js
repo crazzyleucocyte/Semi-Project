@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../assets/PostReviewDetail.css';
+import '../../assets/PostReviewDetail.css';
 
 function PostReviewDetail({ onAddReview }) {
   const { id, category } = useParams();

@@ -182,7 +182,7 @@
 }
 .custom-prev {
   left: 200px;
-  background-image: url('../assets/icon.jpg'); /* 또는 backgroundImage 변수를 사용할 수 있음 */
+  /* background-image: url('../assets/icon.jpg'); 또는 backgroundImage 변수를 사용할 수 있음 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -190,7 +190,7 @@
 
 .custom-next {
   right: 200px;
-  background-image: url('../assets/icon2.jpg'); /* 또는 backgroundImage 변수를 사용할 수 있음 */
+  /* background-image: url('../assets/icon2.jpg'); 또는 backgroundImage 변수를 사용할 수 있음 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

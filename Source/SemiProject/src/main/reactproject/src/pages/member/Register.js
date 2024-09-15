@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Alert } from "react-bootstrap";
 import axios from "axios";
-import "../assets/Register.css";
-import BackgroundImage from "./../assets/background.jpg";
-import Logo from "./../assets/logo.png";
+import "../../assets/Register.css";
+// import BackgroundImage from "./../assets/background.jpg";
+// import Logo from "./../assets/logo.png";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -139,14 +139,14 @@ const Signup = () => {
   return (
     <div
       className="sign-up__wrapper"
-      style={{ backgroundImage: `url(${BackgroundImage})` }}
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/member/background.jpg)` }}
     >
       <div className="sign-up__backdrop"></div>
 
       <form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={Logo}
+          src={process.env.PUBLIC_URL+'/img/member/logo.png'}
           alt="logo"
         />
 

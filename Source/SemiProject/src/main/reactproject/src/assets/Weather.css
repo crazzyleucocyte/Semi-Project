@@ -1,0 +1,258 @@
+
+
+.loadingDiv{
+    width: 2000px;
+    height: 2000px;
+    z-index: 10;
+    position: absolute;
+    /* background-position: center; */
+    /* background-repeat: no-repeat;
+    background-size: contain; */
+    /* text-align: center; */
+    /* display: grid; Grid 사용 */
+    background-color: white;
+    padding: auto;
+}
+.loadingImg{
+    width: 300px;
+    margin: auto;
+}
+.weatherBody{
+    z-index: 1;
+}
+
+.weather{
+    text-align: center;
+    display: grid; /* Grid 사용 */
+  place-items: center; /* 수평 및 수직 가운데 정렬 */
+}
+
+.scroll-container {
+    display: flex;
+    width: 70%; /* 원하는 너비를 설정하세요 */
+    overflow-x: scroll; 
+    white-space: nowrap; /* 모든 요소를 한 줄로 정렬 */
+    align-items: center;
+    scroll-behavior: smooth;
+}
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-content {
+    display: inline-block; /* 가로로 스크롤 가능한 콘텐츠 컨테이너 */
+}
+.itemDetail{
+    /* display: inline-block; 모든 아이템이 한 줄로 표시되도록 설정 */
+    /* border: 1px solid black; */
+    background-color: white;
+    display: flex;
+    /* padding: 10px; */
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+    height: 220px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 20px;
+    font-family:  'SDGothic';
+}
+
+
+.item {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: inline-block; /* 모든 아이템이 한 줄로 표시되도록 설정 */
+    width: 220px; /* 각 아이템의 너비 */
+    height: 220px; /* 각 아이템의 높이 */
+    margin-right: 15px; /* 아이템 사이의 간격 */
+    /* border-left: 1px solid rgba(128, 128, 128, 0.514); */
+    
+    border-radius: 8px;
+    /* background-color: lightblue; 배경색 설정 */
+    /* text-align: center; */
+    /* line-height: 200px; 아이템을 가운데 정렬 */
+}
+
+.weatherImg{
+    padding-left: 0px; /* 아이템 사이의 간격 */
+    padding-top: 5px;
+    width: 100%;
+    /* border: 1px solid blue; */
+}
+.imgDiv{
+    /* border: 1px solid blue; */
+    width: 100px;
+}
+.time{
+    /* border: 1px solid blue; */
+    margin-top: -20px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    
+}
+.date{
+    padding-top: 10px;
+    /* border: 1px solid blue; */
+    font-weight: 700;
+    margin-top: -9px;
+}
+.tmpPop{
+    /* border: 1px solid blue; */
+    font-weight: 600;
+    margin-top: -15px;
+}
+.tmpPop>span{
+    /* border: 1px solid blue; */
+    font-weight: 400;
+    margin-top: -15px;
+}
+
+
+.mid{
+    display: flex;
+    background-color: white;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    width: 1000px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+}
+.mid-block{
+    width: 50%;
+    
+}
+.mid-items{
+    border: 1px solid black;
+    width: 50%;
+    height: 65px;
+    
+}
+.mid-table-head{
+    margin: 20px;
+    font-family:  'SDGothic';
+    font-size: 0.8rem;
+    border: 1px solid rgba(128, 128, 128, 0.575);
+    border-radius: 12px;
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.mid-item{
+    display: flex;
+    justify-content: space-evenly;
+    height: 65px;
+    border: 1px solid rgba(128, 128, 128, 0.575);
+    margin: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 15px;
+    line-height: 70px;
+    font-family:  'SDGothic';
+    font-weight: 600;
+
+    
+}
+
+.midImg{
+    padding-top: 5px;
+    height:  90%;
+}
+.midImgDiv{
+    /* border: 1px solid purple; */
+    /* width:   10000px; */
+
+}
+.midDay{
+/* border: 1px solid purple; */
+}
+.midTmp{
+    /* border: 1px solid purple; */
+}
+.midrnSt{
+    /* border: 1px solid purple; */
+    /* line-height: 30px; */
+
+}
+#min{
+    color: cornflowerblue;
+}
+#max{
+    color: rgb(235, 75, 75);
+}
+
+
+
+
+.line{
+    border-right: 2px solid rgba(160, 160, 160, 0.76);
+    height: 385px;
+    border-radius: 50px;
+    
+    /* line-height: -10px; */
+}
+
+.outLine{
+    /* border: 1px solid blue; */
+    height: 100px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@font-face {
+    font-family: 'SDGothic';
+    src: url('./font/AppleSDGothicNeoT.ttf') format('truetype');
+   font-weight: 100;
+}
+@font-face {
+    font-family: 'SDGothic';
+    src: url('./font/AppleSDGothicNeoUL.ttf') format('truetype');
+   font-weight: 200;
+}
+@font-face {
+    font-family: 'SDGothic';
+    src: url('./font/AppleSDGothicNeoL.ttf') format('truetype');
+   font-weight: 300;
+}
+@font-face {
+    font-family: 'SDGothic';
+    src: url('./font/AppleSDGothicNeoR.ttf') format('truetype');
+   font-weight: 400;
+}
+@font-face {
+    font-family: 'SDGothic';
+    src: url('./font/AppleSDGothicNeoM.ttf') format('truetype');
+   font-weight: 500;
+}
+@font-face {
+    font-family: 'SDGothic';
+    src: url('./font/AppleSDGothicNeoSB.ttf') format('truetype');
+   font-weight: 600;
+}
+@font-face {
+    font-family: 'SDGothic';
+    src: url('./font/AppleSDGothicNeoB.ttf') format('truetype');
+   font-weight: 700;
+}
+@font-face {
+    font-family: 'SDGothic';
+    src: url('./font/AppleSDGothicNeoEB.ttf') format('truetype');
+   font-weight: 800;
+}
+@font-face {
+    font-family: 'SDGothic';
+    src: url('./font/AppleSDGothicNeoH.ttf') format('truetype');
+   font-weight: 900;
+}

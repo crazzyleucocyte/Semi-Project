@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../assets/PostList.css';
+import '../../assets/PostList.css';
 import axios from 'axios';
 
 function PostCultureList() {

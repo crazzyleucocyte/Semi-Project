@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../assets/Login.css";
-import BackgroundImage from "../assets/background.jpg";
-import Logo from "../assets/logo.png";
+import "../../assets/Login.css";
+// import BackgroundImage from "../assets/background.jpg";
+// import Logo from "../assets/logo.png";
 
 const Login = ({ setIsLoggedIn }) => {
   const [credentials, setCredentials] = useState({
@@ -61,14 +61,14 @@ const Login = ({ setIsLoggedIn }) => {
   return (
     <div
       className="sign-in__wrapper"
-      style={{ backgroundImage: `url(${BackgroundImage})` }}
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/member/background.jpg)` }}
     >
       <div className="sign-in__backdrop"></div>
 
       <form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={Logo}
+          src={process.env.PUBLIC_URL+'/img/member/logo.png'}
           alt="logo"
         />
         <div className="h4 mb-2 text-center">로그인</div>

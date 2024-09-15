@@ -8,15 +8,31 @@ import 'swiper/components/pagination/pagination.min.css'
 import { Link } from "react-router-dom";
 import React, { useState} from 'react';
 import '../assets/Header.css';
-import banner from '../assets/banner.jpg';
-import banner2 from '../assets/banner.jpg';
-import banner3 from '../assets/banner3.jpg';
-import icon from '../assets/icon.jpg';
+// import banner from '../assets/banner.jpg';
+// import banner2 from '../assets/banner.jpg';
+// import banner3 from '../assets/banner3.jpg';
+// import icon from '../assets/icon.jpg';
 function Header() {
+
   
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
+  const customPrevStyle = {
+    left: '200px',
+    backgroundImage: `url(${process.env.PUBLIC_URL}/img/main/icon.jpg)`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
+  };
+
+  const customNextStyle = {
+    right: '200px',
+    backgroundImage: `url(${process.env.PUBLIC_URL}/img/main/icon2.jpg)`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
+  };
 
   return (
     <header> 
@@ -33,34 +49,34 @@ function Header() {
           
         <SwiperSlide>
           <div className="slide-content">
-          <img src={banner} alt="1번사진" />
+          <img src={process.env.PUBLIC_URL+'/img/main/banner.jpg'} alt="1번사진" />
           </div>
         </SwiperSlide>
 
         <SwiperSlide>
           <div className="slide-content">
-          <img src={banner2} alt="2번사진" />
+          <img src={process.env.PUBLIC_URL+'/img/main/banner2.jpg'} alt="2번사진" />
           </div>
        
         </SwiperSlide>
         
         <SwiperSlide>
           <div className="slide-content">
-          <img src={banner3} alt="3번사진" />
+          <img src={process.env.PUBLIC_URL+'/img/main/banner3.jpg'} alt="3번사진" />
           </div>
         </SwiperSlide>
         </Swiper>
             {/* 커스텀 내비게이션 버튼 */}
         
         <div>
-         <button className="custom-prev">
+         <button className="custom-prev" style={customPrevStyle}>
 
          </button>
 
         </div>
 
            <div>
-              <button className="custom-next">
+              <button className="custom-next" style={customPrevStyle}>
          
               </button>
            </div>
@@ -70,7 +86,7 @@ function Header() {
         <div className="div2">
         <ul>
             <div className="div3">   
-              <Link className="custom-link1" to="/walk">날씨 경로 목록</Link>
+              <Link className="custom-link1" to="/weather">날씨 경로 목록</Link>
               <Link className="custom-link2" to="/walk">산책 경로 목록</Link>
               <Link className="custom-link3" to="/culture">문화 경로 목록</Link>
               <div className="dropdown">

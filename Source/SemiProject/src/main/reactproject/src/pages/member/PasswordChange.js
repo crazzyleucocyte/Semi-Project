@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"; // useNavigate 가져오기
-import "../assets/Profile2.css"; // CSS 파일 임포트
-import BackgroundImage from "./../assets/background.jpg"; // 배경 이미지
-import Logo from "./../assets/logo.png"; // 로고 이미지
+import "../../assets/Profile2.css"; // CSS 파일 임포트
+// import BackgroundImage from "./../assets/background.jpg"; // 배경 이미지
+// import Logo from "./../assets/logo.png"; // 로고 이미지
 
 const PasswordChange = () => {
   const [passwords, setPasswords] = useState({
@@ -45,7 +45,7 @@ const PasswordChange = () => {
   return (
     <div
       className="profile__wrapper"
-      style={{ backgroundImage: `url(${BackgroundImage})` }} // 배경 이미지 설정
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/member/background.jpg)` }} // 배경 이미지 설정
     >
       <div className="profile__backdrop"></div> {/* 배경 위에 어두운 레이어 */}
       
@@ -54,7 +54,7 @@ const PasswordChange = () => {
         {/* 로고 이미지 */}
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={Logo}
+          src={process.env.PUBLIC_URL+'/img/member/logo.png'}
           alt="logo"
         />
 
