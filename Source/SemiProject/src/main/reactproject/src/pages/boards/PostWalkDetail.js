@@ -203,7 +203,7 @@ function PostWalkDetail({ isLoggedIn, onAddReview, handleSetcityInfo }) {
       </table>
 
       <div className='detail-div2'>
-         <Kakao />
+        <Kakao />
       </div>
 
       {/* <table className="detail-table">
