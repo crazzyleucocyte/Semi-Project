@@ -86,14 +86,6 @@ public class WalkingTrailController {
 	public WalkingTrail getWalkingTrailById(@PathVariable(name="wId") Long wId) {
 		return walkingTrailService.getWalkingTrailById(wId);
 	}
-//
-//    @GetMapping("/{wId}")
-//    public ResponseEntity<WalkingTrail> getTrailById(@PathVariable Long wId) {
-//    	Optional<WalkingTrail> trail = walkingTrailService.findById(wId);
-//    	if(trail.isPresent()) {
-//    		return new ResponseEntity<>(trail.get(), HttpStatus.OK);
-//    	} else {
-//    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    	}
-//    }
+    
+    
 }
