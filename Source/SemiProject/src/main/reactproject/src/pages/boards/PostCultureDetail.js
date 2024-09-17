@@ -3,6 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import '../../assets/PostCultureDetail.css';
 import axios from 'axios';
 import Kakao from '../../data/Kakao';
+import { useDispatch } from 'react-redux';
+import { setCityInfo } from '../../hooks/store';
+
 
 // const initialPostsData = Array.from({ length: 50 }, (_, i) => ({
 //   id: i + 1,
@@ -36,10 +39,12 @@ const initialReviews = [
   },
 ];
 
-function PostCultureDetail({ isLoggedIn, handleSetcityInfo }) {
+function PostCultureDetail({ isLoggedIn }) {
   const { id } = useParams();
   const [culture, setCulture] = useState([]);
   const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
+  const dispatch =useDispatch()
+
 
   useEffect(() => {
     axios.get('/culture/' + id, {
@@ -48,12 +53,7 @@ function PostCultureDetail({ isLoggedIn, handleSetcityInfo }) {
     .then(response => {
       console.log(response.data);
       setCulture(response.data);
-      handleSetcityInfo({
-        la : response.data.lcLattd,
-        lo : response.data.lcLongt,
-        ctprvnNm : response.data.ctprvnName,
-        signguNm : response.data.signguName
-      })
+      
     })
     .catch(error => {
       console.error('Error fetching culture data: ', error);
@@ -96,7 +96,14 @@ function PostCultureDetail({ isLoggedIn, handleSetcityInfo }) {
   // if (!post) {
   //   return <div>게시글을 찾을 수 없습니다.</div>;
   // }
-
+  const setWeatherInfo=()=>{
+    dispatch(setCityInfo({
+      la : culture.lcLattd,
+        lo : culture.lcLongt,
+        ctprvnNm : culture.ctprvnName,
+        signguNm : culture.signguName
+    }))
+  }
   return (
     <div className="post-detail">
 
@@ -105,7 +112,9 @@ function PostCultureDetail({ isLoggedIn, handleSetcityInfo }) {
         <button onClick={handleLike} className='button-detail'>
                 {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
         </button>&emsp;
-        <button className='button-detail' onClick={()=>navigate("/weather")}>날씨 확인</button>
+        <button className='button-detail' onClick={()=>{
+          setWeatherInfo();
+          navigate("/weather")}}>날씨 확인</button>
       </div>
 
       <div className='detail-div2'>

@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import '../../assets/PostWalkDetail.css';
 import axios from 'axios';
 import Kakao from '../../data/Kakao';
+import { useDispatch } from 'react-redux';
+import { setCityInfo } from '../../hooks/store';
 
 
 // 예시 데이터 (임시)
@@ -41,9 +43,10 @@ const initialReviews = [
 
 
 
-function PostWalkDetail({ isLoggedIn, onAddReview, handleSetcityInfo }) {
+function PostWalkDetail({ isLoggedIn, onAddReview }) {
   const { id } = useParams();
   const [walkingTrails, setWalkingTrails] = useState([]);
+  const dispatch =useDispatch()
 
   useEffect(() => {
     // 백엔드로부터 게시글 데이터를 가져옴
@@ -53,12 +56,7 @@ function PostWalkDetail({ isLoggedIn, onAddReview, handleSetcityInfo }) {
     .then(response => {
       console.log(response.data);
       setWalkingTrails(response.data);
-      handleSetcityInfo({
-        la : response.data.lcLattd,
-        lo : response.data.lcLongt,
-        ctprvnNm : response.data.ctprvnNm,
-        signguNm : response.data.signguNm
-      })
+      
     })
     .catch(error => {
       console.error('Error fetching walkingTrail data: ', error);
@@ -117,7 +115,14 @@ function PostWalkDetail({ isLoggedIn, onAddReview, handleSetcityInfo }) {
   // if (!post) {
   //   return <div>게시글을 찾을 수 없습니다.</div>;
   // }
-
+  const setWeatherInfo=()=>{
+    dispatch(setCityInfo({
+      la : walkingTrails.lcLattd,
+        lo : walkingTrails.lcLongt,
+        ctprvnNm : walkingTrails.ctprvnNm,
+        signguNm : walkingTrails.signguNm
+    }))
+  }
   return (
     <div className="post-detail">
 
@@ -126,7 +131,9 @@ function PostWalkDetail({ isLoggedIn, onAddReview, handleSetcityInfo }) {
         <button onClick={handleLike} className='button-detail'>
                 {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
         </button>&emsp;
-        <button className='button-detail' onClick={()=>navigate("/weather")}>날씨 확인</button>
+        <button className='button-detail' onClick={()=>{
+          setWeatherInfo();
+          navigate("/weather")}}>날씨 확인</button>
       </div>
 
       <div className='detail-div2'>

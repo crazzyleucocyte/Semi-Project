@@ -1,52 +1,48 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
+import {useSelector} from "react-redux";
 import AreaSelector from "../../components/AreaSelector";
 import '../../assets/Weather.css'
 
-export default function Weather({cityInfo,handleSetcityInfo}){
+export default function Weather(){
+    let reduxs = useSelector(state => state.CityInfo)
     const [loading, setLoading] = useState(true); // 로딩 상태 관리
     //const [Data, setData] = useState(testdata)
-    const [weatherResult, setWeatherResult] = useState({
-        midResult : [],
-        shortResult : []
-    });
+    const [cityInfo, setCityInfo] = useState(reduxs);
     const [midWeather,setMidWeather] = useState([]);
     const [shortWeather,setShortWeather] = useState([]);
 
-    const handleWeatherResult = (newWeather) => {
-        setWeatherResult(prevWeather => ({
-          ...prevWeather,
-         ...newWeather
+    const handleSetcityInfo = (newcityInfo) => {
+        setCityInfo(prevCityInfo => ({
+          ...prevCityInfo,
+         ...newcityInfo
         }));
       };
-    
 
     useEffect(()=>{
-       console.log("Effect cityInfo : ", cityInfo)
-       console.log("true of false : ", cityInfo.la ==='')
-       if(cityInfo.la !==''){
-
-           return(
-    
-               Caller()
-           );
-       }else{
-        setLoading(false)
-       }
+       console.log("Effect reduxs : ", reduxs)
+       //    if(cityInfo.la !==''){
+        
+       //        return(
+        
+       Caller()
+       //        );
+       //    }else{
+        //     setLoading(false)
+        //    }
     },[cityInfo])
     useEffect(()=>{
         console.log(loading)
     },[loading])
-   
+    
     
     const Caller = function(){
         setLoading(true)
-        console.log("caller : ", cityInfo)
+        console.log("cityInfo : ", cityInfo)
+        console.log("reduxs : ", reduxs)
         axios.post('/api/weather', cityInfo)
         .then(({data}) =>{
             console.log('data',data)
-            // setWeatherResult(...result.data)
-            handleWeatherResult(data)
             try {
                 setMidWeather([...data.midResult])
                 setShortWeather([...data.shortResult])
@@ -54,7 +50,6 @@ export default function Weather({cityInfo,handleSetcityInfo}){
                 console.log(error)                
             }
             
-            console.log('weatherResult', weatherResult)
             console.log("midWeather ",midWeather)
             setLoading(false)
             // console.log("shortWeather ",shortWeather)
@@ -129,10 +124,9 @@ const divLoadingStyle = {
         {loading ? <div className="loadingDiv" ><img className="loadingImg"src={process.env.PUBLIC_URL+'/img/loading.gif'}/><span>로딩중...</span></div>: ''}
         <div className ="weatherBody">
 
-        <AreaSelector Caller={Caller} setWeatherResult={setWeatherResult} handleSetcityInfo={handleSetcityInfo}/>
+        <AreaSelector Caller={Caller} handleSetcityInfo={handleSetcityInfo}  />
         <h1>{cityInfo.ctprvnNm} {cityInfo.signguNm}의 날씨</h1>
         {/* <button onClick={Caller}> 예보 호출 버튼</button>&emsp; */}
-        <button onClick={ () => console.log("weatherResult", weatherResult)} >test 버튼</button>
         <div className="weather" style={divStyle}>
 
         <div className="scroll-container"  ref={scrollContainerRef}>

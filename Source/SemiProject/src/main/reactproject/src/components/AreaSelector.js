@@ -1,13 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setCityInfo } from '../hooks/store';
 
 const AreaSelector = ({weatherResult,setWeatherResult, handleSetcityInfo}) => {
   // 상태 관리
   const [selectedProvince, setSelectedProvince] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
+  const dispatch =useDispatch()
 
   useEffect(()=>{
-
+      console.log(dispatch(setCityInfo()))
       console.log("selectedProvince : ", selectedProvince)
       console.log("selectedCity : ", selectedCity)
     },[selectedCity])
@@ -49,6 +52,7 @@ const AreaSelector = ({weatherResult,setWeatherResult, handleSetcityInfo}) => {
     axios.get(`/api/weather/${selectedProvince}/${selectedCity}`)
          .then(({data})=>{
             console.log("data : ", data)
+            dispatch(setCityInfo(data))
             handleSetcityInfo(data)
          })
 
