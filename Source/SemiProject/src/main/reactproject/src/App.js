@@ -22,7 +22,7 @@ function App() {
   const toggleLogin = () => {
     setIsLoggedIn(!isLoggedIn);
   };
-  // 리뷰 추가 함수
+  // 리뷰 추가 함수npm i react-router-dom
   const handleAddReview = (postId, newReview) => {
     setReviews(prevReviews => ({
       ...prevReviews,
