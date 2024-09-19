@@ -108,6 +108,9 @@ public class WalkingTrail {
 	@Column(name="LC_LO", nullable=false, length=20)
 	@NonNull
 	private Double lcLongt;
+//			사진 경로
+	@Column(name="PICTURE_PT", length=4000)
+	private String picturePath;
 	
 	//		시설 추가된날짜
 	@CreatedDate

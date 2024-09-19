@@ -150,6 +150,10 @@ public class CultureFacility {
 	@NonNull
 	private String petAditExtracharge;
 	
+//			사진 경로
+	@Column(name="PICTURE_PT", length=4000)
+	private String picturePath;
+	
 //			시설 추가된날짜
 	@CreatedDate
 	@Column(name="FCLTY_CREATE_DT", insertable=false, updatable=false, columnDefinition="DATE DEFAULT SYSDATE")
