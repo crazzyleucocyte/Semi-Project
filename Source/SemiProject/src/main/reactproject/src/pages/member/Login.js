@@ -3,8 +3,6 @@ import { Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../assets/Login.css";
-// import BackgroundImage from "../assets/background.jpg";
-// import Logo from "../assets/logo.png";
 
 const Login = ({ setIsLoggedIn }) => {
   const [credentials, setCredentials] = useState({
@@ -17,9 +15,19 @@ const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // sessionStorage에서 username이 없으면 localStorage도 삭제합니다.
+    const sessionUsername = sessionStorage.getItem('username');
+    
+    if (!sessionUsername) {
+      // sessionStorage에 username이 없으면 localStorage도 비웁니다.
+      localStorage.removeItem('username');
+    }
+
     // localStorage에서 저장된 username을 불러옵니다.
     const savedUsername = localStorage.getItem('username');
-    if (savedUsername) {
+    if (sessionUsername) {
+      setCredentials(prevState => ({ ...prevState, username: sessionUsername }));
+    } else if (savedUsername) {
       setCredentials(prevState => ({ ...prevState, username: savedUsername }));
     }
   }, []);
@@ -40,8 +48,11 @@ const Login = ({ setIsLoggedIn }) => {
 
       if (response.data.success) {
         setIsLoggedIn(true);
-        // 로그인 성공 시 항상 아이디를 localStorage에 저장합니다.
+        
+        // 로그인 성공 시 sessionStorage와 localStorage에 아이디를 저장합니다.
+        sessionStorage.setItem('username', credentials.username);
         localStorage.setItem('username', credentials.username);
+        
         navigate("/main");
       } else {
         setShowError(true);

@@ -68,7 +68,7 @@ public class Member {
 	
 //			삭제 날짜
 //			회원 자체를 삭제하려면 nativeQuery로 삭제
-	@Column(name = "ISDELETED")
+	@Column(name = "ISDELETED") 
 	private LocalDateTime isDeleted;
 	
 	
