@@ -164,7 +164,7 @@ public class CultureFacility {
 	@Column(name="FCLTY_MODIFIED_DT", insertable=false, columnDefinition="DATE DEFAULT SYSDATE")
 	private LocalDateTime fcltyModifiedDate;
 	
-	
-	
+	@Column(name="LIKE_CT", columnDefinition="NUMBER DEFAULT 0")
+	private int likeCount;
 	
 }

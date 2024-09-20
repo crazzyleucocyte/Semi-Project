@@ -124,4 +124,7 @@ public class WalkingTrail {
 	
 //	sql문 파일이랑 이 컬럼들이랑 컬럼 맞추기
 	
+	@Column(name="LIKE_CT", columnDefinition="NUMBER DEFAULT 0")
+	private int likeCount;
+
 }

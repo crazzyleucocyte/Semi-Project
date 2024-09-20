@@ -46,4 +46,12 @@ public class CultureFacilityService {
 		return cultureFacilityRepository.findById(cId).orElseThrow(() -> new RuntimeException("Post not found"));
 	}
 
+	public CultureFacility findById(Long no) {
+		return cultureFacilityRepository.findById(no).orElseThrow(() -> new RuntimeException("Post not found"));
+	}
+
+	public CultureFacility save(CultureFacility cultureFacility) {
+		return cultureFacilityRepository.save(cultureFacility);
+	}
+
 }
