@@ -1,5 +1,5 @@
 .detail-td > a {
-  text-decoration: none !important;
+  /* text-decoration: none !important; */
   color: #333 !important;
 }
 
@@ -67,19 +67,23 @@
   margin: 0 5px;
   /* padding: 8px 16px; */
   /* background-color: #007bff; */
-  background-color: #28a745;
-  color: #fff;
+  /* background-color: #28a745; */
+  background-color: #fff;
+  color: #333;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .pagination button.active {
-  background-color: #0056b3;
+  /* background-color: #0056b3; */
+  background-color: #28a745;
+  color: #fff;
 }
 
 .pagination button:hover:not(.active) {
   background-color: #0056b3;
+  color: #fff;
 }
 
 /* Search Box Styles */
@@ -150,4 +154,16 @@ button:hover:not(:disabled) {
 .posts-per-page {
   text-align: right;
   margin-right: 15%;
+}
+
+.likeBtn {
+  padding: 5px 10px;
+  /* background-color: #007bff; */
+  /* background-color: #28a745; */
+  background-color: #fff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-left: 10px;
+  cursor: pointer;
 }

@@ -18,6 +18,9 @@ function WalkingTrailsList() {
   
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
+  const [sortField, setSortField] = useState(null);
+  const [sortDirection, setSortDirection] = useState('asc');
   
   // 페이지 변경 처리
   const handlePageChange = (pageNumber) => {
@@ -65,7 +68,7 @@ function WalkingTrailsList() {
   }
   useEffect(() => {
     listCaller()
-  }, [currentPage, postsPerPage, searchInput, searchCategory]);
+  }, [currentPage, postsPerPage ]);
 
   const handleSearch = () => {
     setSearchTerm(searchInput);
@@ -88,6 +91,53 @@ function WalkingTrailsList() {
       listCaller();
     }
   }
+
+  const getLevelStars = (level) => {
+    switch(level) {
+      case '매우쉬움':
+        return '⭐';
+      case '쉬움':
+        return '⭐⭐';
+      case '보통':
+        return '⭐⭐⭐';
+      case '어려움':
+        return '⭐⭐⭐⭐';
+      case '매우어려움':
+        return '⭐⭐⭐⭐⭐';
+      default:
+        return '?';
+    }
+  };
+
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
+
+  const sortedWalkingTrails = [...walkingTrails].sort((a, b) => {
+    if (sortField === null) return 0;
+    
+    let aValue = a[sortField];
+    let bValue = b[sortField];
+
+    if (sortField === 'coursLvNm') {
+      const levelOrder = { '매우쉬움': 1, '쉬움': 2, '보통': 3, '어려움': 4, '매우어려움': 5 };
+      aValue = levelOrder[a.coursLvNm] || 0;
+      bValue = levelOrder[b.coursLvNm] || 0;
+    } else if (sortField === 'coursTmContent') {
+      aValue = parseInt(a.coursTmContent) || 0;
+      bValue = parseInt(b.coursTmContent) || 0;
+    }
+
+    if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+    if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+    return 0;
+  });
+
   
   return (
     <div>
@@ -105,35 +155,35 @@ function WalkingTrailsList() {
       <table className='table-list'>
         <thead className='thead-list'>
           <tr>
-            <th>글번호</th>
-            <th>산책경로구분명</th>
-            <th>시군구명</th>
-            <th>경로레벨명</th>
-            <th>경로시간</th>
-            <th>좋아요</th>
+            {/* <th>글번호</th> */}
+            <th>시군구</th>
+            <th onClick={() => handleSort('likes')} style={{cursor: 'pointer'}}>
+              좋아요 {sortField === 'likes' && (sortDirection === 'asc' ? '▲' : '▼')}
+            </th>
+            <th>산책길 이름</th>
+            <th onClick={() => handleSort('coursLvNm')} style={{cursor: 'pointer'}}>
+              경로레벨 {sortField === 'coursLvNm' && (sortDirection === 'asc' ? '▲' : '▼')}
+            </th>
+            <th onClick={() => handleSort('coursTmContent')} style={{cursor: 'pointer'}}>
+              산책 시간 {sortField === 'coursTmContent' && (sortDirection === 'asc' ? '▲' : '▼')}
+            </th>
           </tr>
         </thead>
         <tbody>
           {walkingTrails.map((walkingTrails) => (
             <tr key={walkingTrails.wid}>
-              <td>{walkingTrails.wid}</td>
+              {/* <td>{walkingTrails.wid}</td> */}
+              <td>{walkingTrails.signguNm}</td>
+              <td>
+                <button className='likeBtn'>👍</button>
+              </td>
               <td className='detail-td'>
                 <Link to={`/walk/${walkingTrails.wid}`}>{walkingTrails.wlktrlName}</Link>
               </td>
-              <td>{walkingTrails.signguNm}</td>
-              <td>{walkingTrails.coursLvNm}</td>
-              <td>{walkingTrails.coursTmContent}</td>
-              <td>
-                {/* {isLoggedIn ? (
-                  <button onClick={() => handleLike(walkingTrails.id)}>
-                    {walkingTrails.likedByUser ? '좋아요 취소' : '좋아요'} {walkingTrails.likes}
-                  </button>
-                ) : (
-                  <button disabled>
-                    좋아요 {walkingTrails.likes}
-                  </button>
-                )} */}
+              <td title='{walkingTrails.coursLvNm}'>
+                {getLevelStars(walkingTrails.coursLvNm)}
               </td>
+              <td>{walkingTrails.coursTmContent}</td>
             </tr>
           ))}
         </tbody>
@@ -173,12 +223,12 @@ function WalkingTrailsList() {
 
 
       <div className="search">
-        <select value={searchCategory} onChange={handleCategoryChange} className="search-select">
+        <select  onChange={handleCategoryChange} className="search-select">
           <option value="null">선택</option>
-          <option value="wlktrlName">산책경로구분명</option>
-          <option value="signguNm">시군구명</option>
-          <option value="coursLvNm">경로레벨명</option>
-          <option value="coursTmContent">경로시간</option>
+          <option value="wlktrlName">산책길 이름</option>
+          <option value="signguNm">시군구</option>
+          <option value="coursLvNm">경로레벨</option>
+          <option value="coursTmContent">산책 시간</option>
         </select>
         <input
           type="text"

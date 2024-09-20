@@ -1,6 +1,7 @@
 package com.tjoeun.project.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,4 +30,19 @@ public interface WalkingTrailRepository extends JpaRepository<WalkingTrail, Long
 	Page<WalkingTrail> findByCoursLvNmLike(PageRequest of, String keyWord);
 	
 	Page<WalkingTrail> findByCoursTmContentLike(PageRequest of, String keyWord);
+	
+//	@Query("SELECT w FROM WALKING_TRAIL w WHERE w.wId < :wId ORDER BY w.wId DESC")
+//    Optional<WalkingTrail> findPreviousWalkingTrail(@Param("wId") Long wId);
+//
+//    @Query("SELECT w FROM WALKING_TRAIL w WHERE w.wId > :wId ORDER BY w.wId ASC")
+//    Optional<WalkingTrail> findNextWalkingTrail(@Param("wId") Long wId);
+
+	@Query("SELECT w FROM WALKING_TRAIL w WHERE w.wId < :wId ORDER BY w.wId DESC")
+	Optional<WalkingTrail> findFirstByWIdLessThanOrderByWIdDesc(Long currentId);
+
+	@Query("SELECT w FROM WALKING_TRAIL w WHERE w.wId > :wId ORDER BY w.wId ASC")
+	Optional<WalkingTrail> findFirstByWIdGreaterThanOrderByWIdAsc(Long currentId);
+	
+	
+	
 }

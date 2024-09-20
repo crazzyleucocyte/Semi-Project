@@ -131,7 +131,7 @@ function PostCultureList() {
 
   return (
     <div>
-        <h1 className='h1-list'>게시판</h1>
+        <h1 className='h1-list'>산책누리 문화길</h1>
 
         {/* 한 페이지에 표시할 글 수 선택하는 select 요소 */}
         <div className="posts-per-page">
@@ -145,39 +145,31 @@ function PostCultureList() {
         <table className='table-list'>
           <thead className='thead-list'>
             <tr>
-              <th>글번호</th>
-              <th>시설명</th>
-              <th>카테고리1</th>
-              <th>카테고리2</th>
-              <th>시도명</th>
-              <th>시군구명</th>
-              <th>입장가능반려동물크기</th>
+              {/* <th>글번호</th> */}
+              <th>시·군·구 통합</th>
+              {/* <th>시군구</th> */}
               <th>좋아요</th>
+              <th>시설명</th>
+              <th>펫 라이프 스타일</th>
+              <th>펫 라이프 케어</th>
+              <th>입장가능 반려동물 크기</th>
             </tr>
           </thead>
           <tbody>
             {culture.map((culture) => (
               <tr key={culture.cid}>
-                <td>{culture.cid}</td>
+                {/* <td>{culture.cid}</td> */}
+                <td>{culture.ctprvnName}&nbsp;{culture.signguName}</td>
+                {/* <td>{culture.signguName}</td> */}
+                <td>
+                  <button className='likeBtn'>👍</button>
+                </td>
                 <td className='detail-td'>
                   <Link to={`/culture/${culture.cid}`}>{culture.fcltyName}</Link>
                 </td>
                 <td>{culture.ctgryOne}</td>
                 <td>{culture.ctgryTwo}</td>
-                <td>{culture.ctprvnName}</td>
-                <td>{culture.signguName}</td>
                 <td>{culture.entrPetSize}</td>
-                <td>
-                  {/* {isLoggedIn ? (
-                    <button onClick={() => handleLike(post.id)}>
-                      {post.likedByUser ? '좋아요 취소' : '좋아요'} {post.likes}
-                    </button>
-                  ) : (
-                    <button disabled>
-                      좋아요 {post.likes} (로그인 필요)
-                    </button>
-                  )} */}
-                </td>
               </tr>
             ))}
           </tbody>

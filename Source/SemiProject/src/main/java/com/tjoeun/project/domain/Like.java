@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity(name="TB_LIKE")
 @NoArgsConstructor
 @AllArgsConstructor
+@IdClass(LikeId.class)
 public class Like {
 
 	@Id

@@ -1,5 +1,6 @@
 .post-detail {
   margin: 20px;
+  position: relative;
 }
 
 .post-detail h1 {
@@ -49,12 +50,12 @@
   border-collapse: collapse;
 } */
 
-.detail-table td {
+/* .detail-table td {
   width: 33%;
-  /* border: 1px solid #ccc;
+  border: 1px solid #ccc;
   padding: 10px;
-  vertical-align: top; */
-}
+  vertical-align: top;
+} */
 
 /* .post-detail-table tr td:nth-child(2) {
   text-align: center;
@@ -130,4 +131,29 @@
 .div-detail {
   text-align: center;
   margin-top: 10px;
+}
+
+.nav-button {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
 }

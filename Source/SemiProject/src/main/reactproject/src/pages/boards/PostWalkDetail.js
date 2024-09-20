@@ -1,73 +1,128 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import '../../assets/PostWalkDetail.css';
 import axios from 'axios';
 import Kakao from '../../data/Kakao';
 import { useDispatch } from 'react-redux';
 import { setCityInfo } from '../../hooks/store';
 
-
-// 예시 데이터 (임시)
-// const initialPostsData = Array.from({ length: 50 }, (_, i) => ({
-//   id: i + 1,
-//   pathType: `산책경로 ${i + 1}`,
-//   district: `시군구 ${i + 1}`,
-//   level: `레벨 ${i + 1}`,
-//   time: `${30 + i}분`,
-//   length: `${3 + i}km`,
-//   address: `지번주소 ${i + 1}`,
-//   description: `경로설명 ${i + 1}`,
-//   photo: `사진 ${i + 1}`,
-//   additionalInfo: `추가설명 ${i + 1}`,
-//   options: `옵션설명 ${i + 1}`,
-//   restroom: `화장실설명 ${i + 1}`,
-//   facilities: `편의시설 ${i + 1}`,
-//   likes: i,
-//   createdAt: `2024-09-01`, // 예시 생성일
-//   updatedAt: `2024-09-01`, // 예시 수정일
-//   views: 0, // 초기 조회수는 0
-// }));
-
-const initialReviews = [
-  {
-    id: 1,
-    content: '이 경로는 정말 아름답고 평화로워요!',
-    createdAt: '2024-09-02',
-  },
-  {
-    id: 2,
-    content: '산책하기에 최적의 장소였습니다.',
-    createdAt: '2024-09-03',
-  },
-];
+// const initialReviews = [
+//   {
+//     id: 1,
+//     content: '이 경로는 정말 아름답고 평화로워요!',
+//     createdAt: '2024-09-02',
+//   },
+//   {
+//     id: 2,
+//     content: '산책하기에 최적의 장소였습니다.',
+//     createdAt: '2024-09-03',
+//   },
+// ];
 
 
 
-function PostWalkDetail({ isLoggedIn, onAddReview }) {
+function PostWalkDetail({ isLoggedIn, onAddReview,  initialLikes}) {
   const { id } = useParams();
   const [walkingTrails, setWalkingTrails] = useState([]);
   const dispatch =useDispatch()
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(initialLikes);
+  const [reviews, setReviews] = useState([]);
+  const userId = localStorage.getItem('username');
+
+  const [prevPostId, setPrevPostId] = useState(null);
+  const [nextPostId, setNextPostId] = useState(null);
+
+  // useEffect(() => {
+  //   // 초기 좋아요 상태 확인
+  //   checkLikeStatus();
+  // }, []);
+
+  // const checkLikeStatus = async () => {
+  //   try {
+  //     const response = await axios.get(`/api/like/status?userId=${userId}&postNo=${postId}`);
+  //     setIsLiked(response.data);
+  //   } catch (error) {
+  //     console.error('좋아요 상태 확인 중 오류 발생:', error);
+  //   }
+  // };
+
+  // const handleLike = async () => {
+  //   try {
+  //     const response = await axios.post(`/api/like?userId=${userId}&postNo=${postId}`);
+  //     const newLikeStatus = response.data;
+  //     setIsLiked(newLikeStatus);
+  //     setLikeCount(prevCount => newLikeStatus ? prevCount + 1 : prevCount - 1);
+  //   } catch (error) {
+  //     console.error('좋아요 처리 중 오류 발생:', error);
+  //   }
+  // };
+  useEffect(() => {
+    // 초기 좋아요 상태는 따로 확인하지 않고 initialLikes로 추정
+    setIsLiked(initialLikes > 0);
+  }, [initialLikes]);
+
+  const handleLike = async () => {
+    try {
+      const postId = walkingTrails.wid;
+      const response = await axios.post(`/api/like`,{
+        lId:userId,
+        no:postId
+      });
+      const newLikeStatus = response.data;
+      setIsLiked(newLikeStatus);
+      setLikeCount(prevCount => newLikeStatus ? prevCount + 1 : prevCount - 1);
+    } catch (error) {
+      console.error('좋아요 처리 중 오류 발생:', error);
+    }
+  };
 
   useEffect(() => {
     // 백엔드로부터 게시글 데이터를 가져옴
-    axios.get('/walking/'+ id,{
-      
-    })
+    axios.get('/walking/'+ id)
     .then(response => {
       console.log(response.data);
       setWalkingTrails(response.data);
-      
+      fetchReviews();
+      fetchAdjacentPosts();
+      console.log(walkingTrails);
     })
     .catch(error => {
       console.error('Error fetching walkingTrail data: ', error);
     });
-  }, []);
+  }, [id]);
+
+  const fetchReviews = () => {
+    axios.get(`/api/reviews/${id}`)
+      .then(response => {
+        setReviews(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching reviews: ', error);
+      });
+  };
+
+  const handleAddReview = (newReview) => {
+    axios.post(`/api/reviews`, {
+      walkId: id,
+      content: newReview.content,
+      userId: userId
+    })
+      .then(response => {
+        fetchReviews(); // 새로운 후기를 포함하여 모든 후기를 다시 가져옵니다
+      })
+      .catch(error => {
+        console.error('Error adding review: ', error);
+      });
+  };
+
   
   // const [post, setPost] = useState(null);
-  const [likes, setLikes] = useState(0);
-  const [likedByUser, setLikedByUser] = useState(false);
+  // const [likes, setLikes] = useState(0);
+  // const [likedByUser, setLikedByUser] = useState(false);
   // const [views, setViews] = useState(0);
-  const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
+  // const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
   
   const navigate = useNavigate();
 
@@ -94,42 +149,84 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
   //   }
   // }, [id]);
 
-  const handleLike = () => {
-    if (isLoggedIn) {
-      if (likedByUser) {
-        setLikes(likes - 1);
-      } else {
-        setLikes(likes + 1);
-      }
-      setLikedByUser(!likedByUser);
-    } else {
-      alert('로그인 후 좋아요를 누를 수 있습니다.');
-    }
-  };
+  // const handleLike = () => {
+  //   if (isLoggedIn) {
+  //     if (likedByUser) {
+  //       setLikes(likes - 1);
+  //     } else {
+  //       setLikes(likes + 1);
+  //     }
+  //     setLikedByUser(!likedByUser);
+  //   } else {
+  //     alert('로그인 후 좋아요를 누를 수 있습니다.');
+  //   }
+  // };
 
-  const handleAddReview = (newReview) => {
-    setReviews([...reviews, newReview]);
-  };
+  // const handleAddReview = (newReview) => {
+  //   setReviews([...reviews, newReview]);
+  // };
 
-
-  // if (!post) {
-  //   return <div>게시글을 찾을 수 없습니다.</div>;
-  // }
   const setWeatherInfo=()=>{
     dispatch(setCityInfo({
       la : walkingTrails.lcLattd,
-        lo : walkingTrails.lcLongt,
-        ctprvnNm : walkingTrails.ctprvnNm,
-        signguNm : walkingTrails.signguNm
+      lo : walkingTrails.lcLongt,
+      ctprvnNm : walkingTrails.ctprvnNm,
+      signguNm : walkingTrails.signguNm
     }))
   }
+
+  const getLevelStars = (level) => {
+    switch(level) {
+      case '매우쉬움':
+        return '⭐';
+      case '쉬움':
+        return '⭐⭐';
+      case '보통':
+        return '⭐⭐⭐';
+      case '어려움':
+        return '⭐⭐⭐⭐';
+      case '매우어려움':
+        return '⭐⭐⭐⭐⭐';
+      default:
+        return '?';
+    }
+  };
+
+  const fetchAdjacentPosts = async () => {
+    try {
+      console.log('요청 URL:', `/api/walking/adjacent/${id}`);
+      const response = await axios.get(`/api/walking/adjacent/${id}`);
+      console.log('인접 게시물 데이터:', response.data);
+      setPrevPostId(response.data.prevId);
+      setNextPostId(response.data.nextId);
+    } catch (error) {
+      console.error('인접 게시물 가져오기 오류:', error);
+    }
+  };
+
+  const navigateToAdjacentPost = (postId) => {
+    console.log('이동할 게시물 ID:', postId);
+    if (postId) {
+      navigate(`/walk/${postId}`);
+      console.log('이동할 게시물이 없습니다.');
+    }
+  };
+
   return (
     <div className="post-detail">
+      {/* 이전글 버튼 */}
+      <button
+        className="nav-button prev-button"
+        onClick={() => navigateToAdjacentPost(prevPostId)}
+        // disabled={!prevPostId}
+      >
+        <FaChevronLeft />
+      </button>
 
       <div className='detail-div'>
         <h1 className='h1-list'>{walkingTrails.wlktrlName}</h1>
         <button onClick={handleLike} className='button-detail'>
-                {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
+                {isLiked ? '좋아요 취소' : '👍'} {walkingTrails.likeCount}
         </button>&emsp;
         <button className='button-detail' onClick={()=>{
           setWeatherInfo();
@@ -158,7 +255,9 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
             </tr>
             <tr>
               <th>경로레벨</th>
-              <td>{walkingTrails.coursLvNm}</td>
+              <td title='{walkingTrails.coursLvNm}'>
+                {getLevelStars(walkingTrails.coursLvNm)}
+              </td>
               <th>경로길이</th>
               <td>{walkingTrails.coursContent}</td>
             </tr>
@@ -210,7 +309,11 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
       </table>
 
       <div className='detail-div2'>
-        <Kakao />
+        <Kakao
+          latitude={parseFloat(walkingTrails.lcLattd)} 
+          longitude={parseFloat(walkingTrails.lcLongt)}
+          locationName={walkingTrails.wlktrlName}
+        />
       </div>
 
       {/* <table className="detail-table">
@@ -243,15 +346,37 @@ function PostWalkDetail({ isLoggedIn, onAddReview }) {
         </tbody>
       </table>
 
+      {isLoggedIn && (
+        <div className='div-detail'>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            const content = e.target.reviewContent.value;
+            handleAddReview({ content });
+            e.target.reviewContent.value = '';
+          }}>
+            <textarea name="reviewContent" required></textarea>
+            <button type="submit" className="button-detail">후기 작성</button>
+          </form>
+        </div>
+      )}
+
       {/* 후기 작성 버튼 */}
       <div className='div-detail'>
         <button onClick={() => navigate(`/review/${walkingTrails.wid}/walk`)} className="button-detail">후기 작성</button>
       </div>
       
       {/* 목록으로 가기 버튼 */}
-      <div className='div-detail'>
+      {/* <div className='div-detail'>
         <button onClick={() => navigate('/walk')} className="button-detail">뒤로 가기</button>
-      </div>
+      </div> */}
+
+      <button
+        className="nav-button next-button"
+        onClick={() => navigateToAdjacentPost(nextPostId)}
+        // disabled={!nextPostId}
+      >
+        <FaChevronRight />
+      </button>
     </div>
   );
 }

@@ -137,3 +137,8 @@
   text-align: center;
   margin-top: 10px;
 }
+
+.hmpUrl {
+  text-decoration: none;
+  color: #333;
+}

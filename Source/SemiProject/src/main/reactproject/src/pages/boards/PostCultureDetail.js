@@ -1,30 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import '../../assets/PostCultureDetail.css';
 import axios from 'axios';
 import Kakao from '../../data/Kakao';
 import { useDispatch } from 'react-redux';
 import { setCityInfo } from '../../hooks/store';
-
-
-// const initialPostsData = Array.from({ length: 50 }, (_, i) => ({
-//   id: i + 1,
-//   pathType: `문화경로 ${i + 1}`,
-//   district: `시군구 ${i + 1}`,
-//   level: `레벨 ${i + 1}`,
-//   time: `${30 + i}분`,
-//   length: `${3 + i}km`,
-//   address: `지번주소 ${i + 1}`,
-//   description: `경로설명 ${i + 1}`,
-//   photo: `사진 ${i + 1}`,
-//   additionalInfo: `추가설명 ${i + 1}`,
-//   options: `옵션설명 ${i + 1}`,
-//   restroom: `화장실설명 ${i + 1}`,
-//   facilities: `편의시설 ${i + 1}`,
-//   likes: i,
-//   createdAt: `2024-09-01`, // 예시 생성일
-//   updatedAt: `2024-09-01`, // 예시 수정일
-// }));
 
 const initialReviews = [
   {
@@ -99,9 +79,9 @@ function PostCultureDetail({ isLoggedIn }) {
   const setWeatherInfo=()=>{
     dispatch(setCityInfo({
       la : culture.lcLattd,
-        lo : culture.lcLongt,
-        ctprvnNm : culture.ctprvnName,
-        signguNm : culture.signguName
+      lo : culture.lcLongt,
+      ctprvnNm : culture.ctprvnName,
+      signguNm : culture.signguName
     }))
   }
   return (
@@ -110,7 +90,7 @@ function PostCultureDetail({ isLoggedIn }) {
       <div className='detail-div'>
         <h1 className='h1-list'>{culture.fcltyName}</h1>
         <button onClick={handleLike} className='button-detail'>
-                {likedByUser ? '좋아요 취소' : '좋아요'} {likes}
+                {likedByUser ? '좋아요 취소' : '👍좋아요'} {likes}
         </button>&emsp;
         <button className='button-detail' onClick={()=>{
           setWeatherInfo();
@@ -132,7 +112,7 @@ function PostCultureDetail({ isLoggedIn }) {
 
         <tbody>
           <tr>
-            <th>카테고리</th>
+            <th>펫 라이프 케어</th>
             <td>{culture.ctgryTwo}</td>
             <th>반려동물가능여부</th>
             <td>{culture.petYn}</td>
@@ -151,13 +131,15 @@ function PostCultureDetail({ isLoggedIn }) {
             <td>{culture.parkingYn}</td>
           </tr>
           <tr>
-            <th>이용가격내용</th>
+            <th>이용가격</th>
             <td>{culture.utilPriceCN}</td>
+            <th></th>
+            <td></td>
           </tr>
           <tr>
-            <th>입장가능반려동물크기값</th>
+            <th>입장가능반려동물크기</th>
             <td>{culture.entrnPetSize}</td>
-            <th>반려동물동반추가요금값</th>
+            <th>반려동물동반추가요금</th>
             <td>{culture.petAditExtracharge}</td>
           </tr>
           <tr>
@@ -171,8 +153,8 @@ function PostCultureDetail({ isLoggedIn }) {
 
       <table className='table-detail'>
         <colgroup>
-          <col width={15} />
-          <col width={85} />
+          <col width={25} />
+          <col width={75} />
         </colgroup>
         <tbody>
           <tr>
@@ -180,19 +162,19 @@ function PostCultureDetail({ isLoggedIn }) {
             <td>{culture.operTime}</td>
           </tr>
           <tr>
-            <th>휴무일안내내용</th>
+            <th>휴무일안내</th>
             <td>{culture.rstdeContent}</td>
           </tr>
           <tr>
             <th>홈페이지</th>
-            <td>{culture.hmpgUrl}</td>
+            <td><Link className='hmpUrl' to={culture.hmpgUrl}>{culture.hmpgUrl}</Link></td>
           </tr>
           <tr>
-            <th>반려동물정보내용</th>
+            <th>반려동물정보</th>
             <td>{culture.petInfoCn}</td>
           </tr>
           <tr>
-            <th>반려동물제한사항내용</th>
+            <th>반려동물제한사항</th>
             <td>{culture.petCondition}</td>
           </tr>
           <tr>
@@ -203,7 +185,11 @@ function PostCultureDetail({ isLoggedIn }) {
       </table>
 
       <div className='detail-div2'>
-        <Kakao />
+        <Kakao 
+          latitude={parseFloat(culture.lcLattd)} 
+          longitude={parseFloat(culture.lcLongt)}
+          locationName={culture.wlktrlName}
+        />
       </div>
 
       {/* 후기 표시 부분 */}
