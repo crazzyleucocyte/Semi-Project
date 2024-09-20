@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import '../../assets/PostList.css';
 import axios from 'axios';
 
-function PostCultureList() {
+function PostCultureList({ likes, onLike }) {
+  const { id } = useParams();
   const [culture, setCulture] = useState([]);
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
   const [currentPage, setCurrentPage] = useState(1); // 1부터 시작하는 페이지 번호
@@ -17,23 +18,11 @@ function PostCultureList() {
   
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  
-  
-  // const [posts, setPosts] = useState(postsData);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
-  // const [searchTerm, setSearchTerm] = useState('');
-  // const [searchInput, setSearchInput] = useState('');
-  // const [searchCategory, setSearchCategory] = useState('title');
 
-  // // 페이지 번호에 따른 게시글 추출
-  // const indexOfLastPost = currentPage * postsPerPage;
-  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  // const filteredPosts = posts.filter(post =>
-  //   post[searchCategory].toString().toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-  // const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
-
+  // const [isLiked, setIsLiked] = useState(false);
+  const userId = localStorage.getItem('username');
+  const [like, setLike] = useState(false);
+ 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -96,38 +85,47 @@ function PostCultureList() {
     }
   }
 
-  // 좋아요 버튼 클릭 핸들러
-  // const handleLike = (id) => {
-  //   setPosts(posts.map(post =>
-  //     post.id === id
-  //       ? { ...post, 
-  //           likes: post.likedByUser ? post.likes - 1 : post.likes + 1, 
-  //           likedByUser: !post.likedByUser 
-  //         }
-  //       : post
-  //   ));
-  // };
+  const handleLike = async (cid) => {
+    try {
+      const response = await axios.post(`/api/like`,{
+        lId:userId,
+        no:cid
+      });
+      console.log(response.data);
 
-  // 검색 버튼 클릭 핸들러
-  // const handleSearch = () => {
-  //   setSearchTerm(searchInput);
-  //   setCurrentPage(1); // 검색 시 첫 페이지로 이동
-  // };
+      setCulture(prevTrails => prevTrails.map(trail => 
+        trail.cid === cid 
+          ? {
+            ...trail, 
+            likeCount: trail.isLiked ? trail.likeCount - 1 : trail.likeCount + 1,
+            isLiked: !trail.isLiked
+          } 
+          : trail
+      ));
+      } catch (error) {
+        console.error('좋아요 처리 중 오류 발생:', error);
+        alert('좋아요 처리 중 오류가 발생했습니다.');
+      }
+    };
 
-  // const handleSearchInputChange = (event) => {
-  //   setSearchInput(event.target.value);
-  // };
+    useEffect(() => {
+      // 백엔드로부터 게시글 데이터를 가져옴
+      axios.get('/culture/'+ id)
+      .then(response => {
+        console.log(response.data);
+        setCulture(response.data);
+        console.log(culture);
+      })
+      .catch(error => {
+        console.error('Error fetching walkingTrail data: ', error);
+      });
+    }, [like]);
 
-  // const handleCategoryChange = (event) => {
-  //   setSearchCategory(event.target.value);
-  // };
-
-  // const handlePostsPerPageChange = (event) => {
-  //   setPostsPerPage(parseInt(event.target.value, 10));
-  //   setCurrentPage(1); // 한 페이지에 나타낼 글 수를 변경하면 첫 페이지로 이동
-  // };
-
-  // const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+    useEffect(() => {
+      const storedUserId = localStorage.getItem('username');
+      console.log('저장된 사용자 ID:', storedUserId);
+      // userId 상태를 설정하는 로직이 있다면 여기에 추가
+    }, []);
 
   return (
     <div>
@@ -162,7 +160,9 @@ function PostCultureList() {
                 <td>{culture.ctprvnName}&nbsp;{culture.signguName}</td>
                 {/* <td>{culture.signguName}</td> */}
                 <td>
-                  <button className='likeBtn'>👍</button>
+                  <button onClick={()=>handleLike(culture.wid)} className='likeBtn'>
+                    {culture.isLiked ? '💔 취소' : '❤️ 좋아요'} {culture.likeCount || 0}
+                  </button>&emsp;
                 </td>
                 <td className='detail-td'>
                   <Link to={`/culture/${culture.cid}`}>{culture.fcltyName}</Link>
