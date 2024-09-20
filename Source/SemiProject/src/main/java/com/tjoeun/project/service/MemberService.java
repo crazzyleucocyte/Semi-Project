@@ -40,4 +40,34 @@ public class MemberService {
 		else
 			return false;
 	}
+
+
+	   public void updateMember(Member member) {
+	        memberRepository.save(member);  // 수정된 회원 정보 저장 (업데이트 처리)
+	    }
+
+
+	    public boolean deleteMember(String id) {
+	        Optional<Member> memberOptional = memberRepository.findById(id);
+	        if (memberOptional.isPresent()) {
+	            memberRepository.delete(memberOptional.get()); // 회원 정보를 DB에서 삭제
+	            return true; // 삭제 성공
+	        }
+	        return false; // 해당 회원이 존재하지 않음
+	    }
+	    
+	    public boolean checkPassword(String id, String inputPassword) {
+	        Optional<Member> memberOptional = memberRepository.findById(id);
+
+	        if (!memberOptional.isPresent()) {
+	            return false;
+	        }
+
+	        Member member = memberOptional.get();
+
+	        return member.getPwd().equals(inputPassword);
+	    }
 }
+	   
+
+
