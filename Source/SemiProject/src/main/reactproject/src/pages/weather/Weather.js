@@ -122,11 +122,13 @@ const divLoadingStyle = {
     return(
         <>
         {loading ? <div className="loadingDiv" ><img className="loadingImg"src={process.env.PUBLIC_URL+'/img/loading.gif'}/><span>로딩중...</span></div>: ''}
+        <br/><br/>
         <div className ="weatherBody">
 
-        <AreaSelector Caller={Caller} handleSetcityInfo={handleSetcityInfo}  />
-        <h1>{cityInfo.ctprvnNm} {cityInfo.signguNm}의 날씨</h1>
-        {/* <button onClick={Caller}> 예보 호출 버튼</button>&emsp; */}
+        <div className="areaSelectorDiv">
+            <AreaSelector Caller={Caller} handleSetcityInfo={handleSetcityInfo}  /><br/>
+            <h1>{cityInfo.ctprvnNm} {cityInfo.signguNm}의 날씨</h1>
+        </div>
         <div className="weather" style={divStyle}>
 
         <div className="scroll-container"  ref={scrollContainerRef}>

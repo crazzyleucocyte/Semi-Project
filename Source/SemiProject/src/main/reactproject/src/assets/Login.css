@@ -26,7 +26,7 @@
 }
 
 .sign-in__wrapper form img {
-  width: 4rem;  /* 로고 이미지의 너비 설정 */
+  width: 5rem;  /* 로고 이미지의 너비 설정 */
 }
 
 @keyframes showSignInForm {

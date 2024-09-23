@@ -71,13 +71,13 @@ const PasswordChange = () => {
       {/* 비밀번호 변경 폼 */}
       <form 
         className="shadow p-4 bg-white rounded" 
-        style={{ border: '2px solid black' }}  // 검정색 테두리 추가
+        // style={{ border: '2px solid black' }}  // 검정색 테두리 추가
         onSubmit={handleSubmit}
       >
         {/* 로고 이미지 */}
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={process.env.PUBLIC_URL + '/img/member/logo2.png'}
+          src={process.env.PUBLIC_URL + '/img/member/logo5.png'}
           alt="logo"
         />
 
@@ -108,7 +108,7 @@ const PasswordChange = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -124,7 +124,7 @@ const PasswordChange = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -140,7 +140,7 @@ const PasswordChange = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 

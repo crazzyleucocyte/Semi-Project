@@ -1,107 +1,146 @@
-/* 네비게이션 바 스타일 */
-.navbar {
-    background-color: #333;
-    overflow: hidden;
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&family=Nanum+Gothic:wght@400;700;800&display=swap');
+.logo-logout{
+  height: 130px;
+}
+.logo{
+  float: left;
+  margin-left: 15%;
+  cursor: pointer;
+}
+.logoImg{
+  height: 100px;
+  margin: 15px;
+}
+.logout{
+  display: flex;
+  height: 130px;
+  font-family:  'SDGothic';
+  align-items: center;
+}
+.logoutDiv{
+  margin-right: 15%;
+  float: right;
+  height: 130px;
   }
-  
-  .navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  .logoTitle{
+    color: #00bf63;
+    font-size: 60px;
+    line-height: 130px;
+    font-weight: 700;
+    font-family:  "Dongle", sans-serif;
+  }
+  .logoTitleDiv{
+    float: right;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .welcomeMsg{
+    letter-spacing: 0.7px;
+    font-size: 18px;
+  }
+  .userId{
+    font-weight: 700;
+  }
+  .logoutButton{
+    display: flex;
+    font-size: 18px;
+    border: 3px solid #00bf634d;
+    background-color: rgba(0, 0, 0, 0.062);
+    color: rgb(97, 97, 97);
+    height: 45px;
+    width: 90px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .logoutButton:hover{
+    
+    color: rgb(59, 59, 59);
+    background-color: rgba(11, 138, 11, 0.363);
+    
+  }
+  .navBar{
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+    height: 100px;
+  }
+  .navBar>li{
+    display: inline-block;
+    height: 100px;
+    color: black; /* 링크 색상 */
+    font-size: 18px; /* 글자 크기 */
+    margin: 0 15px; /* 좌우 여백 */
+    cursor: pointer;
+    line-height: 100px;
+    transition: all 0.3s;
+    width: 25%;
+  }
+  .navBar>li>span{
+    margin: 0 auto; /* 좌우 여백 */
     display: flex;
     justify-content: center;
   }
-  
-  .navbar ul li {
-    position: relative;
-    display: inline-block;
+  .navBar>li:hover{
+    transform: translateX(1.1);
+    box-shadow: 0px 8px 16px 10px rgba(0,0,0,0.2);
   }
-  
-  .navbar ul li .dropbtn {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  
-  .navbar ul li .dropbtn:hover {
-    background-color: #555;
-  }
-  .navi {
-    background-color: blue;
-  }
-  /* 드롭다운 메뉴 */
-  .dropdown-content {
+  #dropdown:hover .dropdownMenu{
+    opacity: 1;
     display: block;
+    transform: translateY(0);
+  }
+
+  
+  .dropdownMenu{
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease; /* 애니메이션 설정 */
+    opacity: 0;
+    display: none;
+    height: 210px;
+    width: 14.7%;
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 10;
+    background-color: white;
+    margin-top: 100px;
+    list-style-type: none;
+    padding: 0;
+    /* margin: 0; */
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.356);
   }
-  
-  .dropdown-content li {
-    display: block;
+ 
+  /* 드롭다운 메뉴 */
+  .dropdownItem{
+    display: flex;
+    justify-content: center;
+    height: 70px;
+    width: 100%;
+
   }
-  
-  .dropdown-content li a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
+  .dropdownItem>span{
+    font-family:  'SDGothic';
+    line-height: 70px;
   }
-  
-  .dropdown-content li a:hover {
-    background-color: #ddd;
+  .dropdownItem:hover{
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.356);
+    transition: all 0.4s;
   }
+
   .div2 {
   display: flex;
-  justify-content: center; /* 수평 중앙 정렬 */
-  align-items: center; /* 수직 중앙 정렬 */
-  height: 100px; /* 화면 전체 높이 */
-  background-color: aliceblue;
-  margin-right: 190px;
-  
-}
-.div3 { 
-    display: flex;
-    justify-content: center; /* 수평 중앙 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
-    height: 100px; /* 화면 전체 높이 */
-    background-color: aliceblue;
+  justify-content: center; 
+  /* align-items: center;  */
+  height: 100px; 
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.356);
 }
 
-.custom-button:hover {
-    background-color: #45a049; /* 호버 시 배경색 변경 */
-}
- 
-/* 기본 링크 스타일 */
-.custom-link1 {
-    text-decoration: none; /* 밑줄 제거 */
-    color: black; /* 링크 색상 */
-    font-size: 18px; /* 글자 크기 */
-    margin: 0 15px; /* 좌우 여백 */
-  }
-  .custom-link2 {
-    text-decoration: none; /* 밑줄 제거 */
-    color: black; /* 링크 색상 */
-    font-size: 18px; /* 글자 크기 */
-    margin: 0 15px; /* 좌우 여백 */
-  }
-  .custom-link3 {
-    text-decoration: none; /* 밑줄 제거 */
-    color: black; /* 링크 색상 */
-    font-size: 18px; /* 글자 크기 */
-    margin: 0 15px; /* 좌우 여백 */
-  }
-  .custom-link4 {
-    text-decoration: none; /* 밑줄 제거 */
-    color: black; /* 링크 색상 */
-    font-size: 18px; /* 글자 크기 */
-    margin: 0 15px; /* 좌우 여백 */
-  }
   
   /* 링크에 마우스를 올렸을 때 */
   .custom-link1:hover {
@@ -123,7 +162,7 @@
   display: inline-block;
 }
 
-.dropdown-menu {
+/* .dropdown-menu {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -134,70 +173,93 @@
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-}
+} */
 
-.dropdown-item {
-  padding: 10px 20px;
-  text-decoration: none;
-  color: #333;
-  width: 130px;
-  border-bottom: 1px solid #ddd;
-}
 
-.dropdown-item:hover {
-  background-color: white;
-}
 
-.dropdown-item:last-child {
-  border-bottom: none;
-}
 .swiper-container {
   position: relative;
   width: 100%;
-  height: 400px;
+  /* height: 100%; */
 }
 .slide-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 300px;
+  height: 100%;
   background-color: #eee;
   font-size: 24px;
 }
-.custom-prev, .custom-next {
+.banner{
+  height: 600px;
+}
+#banner1{
+  background-color: #1D1915;
+}
+#banner2{
+  background-color: #E2DDD3;
+  
+}
+#banner3{
+  background-color: #C0DDFD;
+
+}
+.headerSwiper{
+  height: 600px;
+  /* padding-top: 300px; */
+}
+.swiper-button-prev, .swiper-button-next  {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 200px 200px 200px 200px; /* 각 모서리를 다른 값으로 설정 */
-  color: white;
+  /* top: 50%; */
+  /* transform: translateY(-50%); */
+  background-color: rgba(131, 131, 131, 0.349);
+  border-radius: 200px; 
+  color: rgba(255, 255, 255, 0.651) !important;
   justify-content: center;
   align-items: center;
-  width: 52px;
-  height: 52px;
+  width:65px !important;;
+  height: 65px !important;
   cursor: pointer;
   text-align: center;
   z-index: 10;
-  
+  border: none;
+  font-size: 25px;
+  font-weight: 500;
+  font-family: "Nanum Gothic", sans-serif;
 }
-.custom-prev {
-  left: 200px;
+.swiper-button-prev{
+  left: max(calc(calc(100% - 1200px)/2 - 52px),0px) !important;
   /* background-image: url('../assets/icon.jpg'); 또는 backgroundImage 변수를 사용할 수 있음 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.custom-next {
-  right: 200px;
+.swiper-button-next {
+  right: max(calc(calc(100% - 1200px)/2 - 52px),0px) !important;
   /* background-image: url('../assets/icon2.jpg'); 또는 backgroundImage 변수를 사용할 수 있음 */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+
   
 }
 
 
-.custom-prev:hover, .custom-next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+
+
+
+.nanum-gothic-regular {
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.nanum-gothic-bold {
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.nanum-gothic-extrabold {
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 800;
+  font-style: normal;
 }

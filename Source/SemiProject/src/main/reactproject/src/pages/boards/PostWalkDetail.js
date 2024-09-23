@@ -13,8 +13,8 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
   const dispatch = useDispatch()
   const [isLiked, setIsLiked] = useState(false);
   const [like, setLike] = useState(false);
-  const [reviews, setReviews] = useState([]);
   const userId = localStorage.getItem('username');
+  const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
 
   // const [prevPostId, setPrevPostId] = useState(null);
   // const [nextPostId, setNextPostId] = useState(null);
@@ -43,7 +43,14 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
   //     console.error('좋아요 처리 중 오류 발생:', error);
   //   }
   // };
-  
+  const initialReviews = [
+    {
+      no: 0,
+      content: "",
+      createDate: "",
+      rid: ""
+    } 
+  ];
   
 
   const handleLike = async () => {
@@ -85,6 +92,15 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
     .catch(error => {
       console.error('Error fetching walkingTrail data: ', error);
     });
+    axios.get(`/review/getList/${id}`)
+         .then((response)=>{
+          console.log(response.data)
+          setReviews([...response.data])
+         })
+         .catch((error)=>{
+          console.log(error)
+          alert(error)
+         })
   }, [like]);
 
 
@@ -243,9 +259,11 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
       <table className="table-detail">
         <tbody>
           {reviews.map((review) => (
-            <tr key={review.id}>
+            <tr key={review.rid}>
+              <td>{review.rid}</td>
               <td>{review.content}</td>
-              <td>{review.createdAt}</td>
+              <td>{review.createDate.substring(0,10)}</td>
+              <td>{review.rid === localStorage.getItem('username') &&<button className="button-detail" onClick={()=>{navigate(`/review/update/${walkingTrails.wid}/walk`)}}>수정</button>}</td>
             </tr>
           ))}
         </tbody>

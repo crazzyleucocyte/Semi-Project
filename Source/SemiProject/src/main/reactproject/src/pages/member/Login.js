@@ -90,13 +90,13 @@ const Login = ({ setIsLoggedIn }) => {
       {/* 로그인 폼 */}
       <form 
         className="shadow p-4 bg-white rounded" 
-        style={{ border: '2px solid black' }}  // 검정색 테두리 추가
+        // style={{ border: '2px solid black' }}  // 검정색 테두리 추가
         onSubmit={handleSubmit}
       >
         {/* 로고 이미지 */}
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={process.env.PUBLIC_URL + '/img/member/logo2.png'}
+          src={process.env.PUBLIC_URL + '/img/member/logo5.png'}
           alt="logo"
         />
         <div className="h4 mb-2 text-center">로그인</div>
@@ -125,7 +125,7 @@ const Login = ({ setIsLoggedIn }) => {
             onChange={handleChange} // 입력된 값을 상태에 반영
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -141,7 +141,7 @@ const Login = ({ setIsLoggedIn }) => {
             onChange={handleChange} // 입력된 값을 상태에 반영
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 

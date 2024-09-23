@@ -1,72 +1,199 @@
-article {
-    border: 1px solid;
+.weatherArticle {
+    /* border: 1px solid; */
     display: flex;
     justify-content: center; /* 수평 중앙 정렬 */
     align-items: center; /* 수직 중앙 정렬 */
     width: 70%;
     height: 300px;
-    margin: 0 auto;
-    border-radius: 5px 5px 5px 5px;
+    margin: auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 5px 4px 15px rgb(1, 20, 0);
+    /* margin-bottom: 20px; */
+    cursor: pointer;
 }
-
-.mainbody {
+.boardContainer {
+    border: 2px solid rgba(128, 128, 128, 0.589);
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    width: 70%;
+    height: 550px;
+    margin: auto;
+    border-radius: 15px;
+    /* box-shadow: 5px 4px 15px rgb(1, 20, 0); */
+    cursor: pointer;
+    overflow: hidden; 
+    white-space: nowrap; /* 모든 요소를 한 줄로 정렬 */
+    scroll-behavior: smooth;
+    /* background-color: #cccccc; */
+}
+.boardArticle {
+    /* display: none; */
+    width: 100%;
+    height: 550px;
+    /*  */
+    display: flex;
+    /* width: 70%; 원하는 너비를 설정하세요 */
+    overflow-x: scroll; 
+    white-space: nowrap; /* 모든 요소를 한 줄로 정렬 */
+    align-items: center;
+    /* scroll-behavior: smooth; */
+}
+.board-content{
+    /* width: 70%; */
+    height: 500px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.cultureDiv{
+    /* border: 1px solid black; */
+    width: 500px;
+    margin: 10px;
+}
+.cultureImgDiv{
+    height: 70%;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.671);
+}
+.cultureImgDiv:hover .cultureImg{
+    scale: 1.1;
+}
+.cultureImg{
     height: 100%;
     width: 100%;
-    background-color: aliceblue;
+    transition: all 0.4s;
 }
-.main1 {
+.cultureDescDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 10px;
+    font-family:  'SDGothic';
+    /* margin-top: 20px; */
+}
+.cultureCategory{
+    margin-bottom: 3px;
+    color: gray;
+}
+.culturename{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.culturePetEnter{
+    margin-top: 3px;
+    font-weight: 500;
+}
+.cultureLike{
+    color: gray;
+}
+.bodyBackground{
+    background-color: #e0f0e0;
+}
+.mainTitle{
     display: flex;
     justify-content: center; /* 수평 중앙 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
-    height: 100px;
-    width: 100%;
-    background-color: aliceblue;
 
 }
-.main2 {
-    display: flex;
-    justify-content: center; /* 수평 중앙 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
-    height: 100px;
-    width: 100%;
-    background-color: aliceblue;
-    
-}
-.main3 {
-    display: flex;
-    justify-content: center; /* 수평 중앙 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
-    height: 100px;
-    width: 100%;
-    background-color: aliceblue;
-}
-.maindiv1 {
-    width: 100%;
-    height: auto;
-    margin-bottom: 52px;
-}
-.maindiv2 {
-    width: 100%;
-    height: auto;
-    margin-bottom: 52px;
-}
-.maindiv3 {
-    width: 100%;
-    height: auto;
-    margin-bottom: 52px;
-}
+
+
+
 .mainlink1 {
     text-decoration: none; /* 밑줄 제거 */
     color: black; /* 링크 색상 */
-    font-size: 18px; /* 글자 크기 */
 }
 .mainlink2 {
     text-decoration: none; /* 밑줄 제거 */
     color: black; /* 링크 색상 */
-    font-size: 18px; /* 글자 크기 */
 }
 .mainlink3 {
     text-decoration: none; /* 밑줄 제거 */
     color: black; /* 링크 색상 */
-    font-size: 18px; /* 글자 크기 */
+}
+
+.weather{
+    text-align: center;
+    display: grid; /* Grid 사용 */
+  place-items: center; /* 수평 및 수직 가운데 정렬 */
+}
+
+.scroll-container {
+    display: flex;
+    width: 70%; /* 원하는 너비를 설정하세요 */
+    overflow-x: scroll; 
+    white-space: nowrap; /* 모든 요소를 한 줄로 정렬 */
+    align-items: center;
+    scroll-behavior: smooth;
+}
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-content {
+    display: inline-block; /* 가로로 스크롤 가능한 콘텐츠 컨테이너 */
+}
+.itemDetail{
+    /* display: inline-block; 모든 아이템이 한 줄로 표시되도록 설정 */
+    /* border: 1px solid black; */
+    background-color: white;
+    display: flex;
+    /* padding: 10px; */
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+    height: 220px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 20px;
+    font-family:  'SDGothic';
+}
+
+
+.item {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: inline-block; /* 모든 아이템이 한 줄로 표시되도록 설정 */
+    width: 220px; /* 각 아이템의 너비 */
+    height: 220px; /* 각 아이템의 높이 */
+    margin-right: 15px; /* 아이템 사이의 간격 */
+    /* border-left: 1px solid rgba(128, 128, 128, 0.514); */
+    
+    border-radius: 8px;
+    /* background-color: lightblue; 배경색 설정 */
+    /* text-align: center; */
+    /* line-height: 200px; 아이템을 가운데 정렬 */
+}
+
+.weatherImg{
+    padding-left: 0px; /* 아이템 사이의 간격 */
+    padding-top: 5px;
+    width: 100%;
+    /* border: 1px solid blue; */
+}
+.imgDiv{
+    /* border: 1px solid blue; */
+    width: 100px;
+}
+.time{
+    /* border: 1px solid blue; */
+    margin-top: -20px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    
+}
+.date{
+    padding-top: 10px;
+    /* border: 1px solid blue; */
+    font-weight: 700;
+    margin-top: -9px;
+}
+.tmpPop{
+    /* border: 1px solid blue; */
+    font-weight: 600;
+    margin-top: -15px;
+}
+.tmpPop>span{
+    /* border: 1px solid blue; */
+    font-weight: 400;
+    margin-top: -15px;
 }

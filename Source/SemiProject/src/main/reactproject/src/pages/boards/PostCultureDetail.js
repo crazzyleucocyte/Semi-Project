@@ -8,15 +8,11 @@ import { setCityInfo } from '../../hooks/store';
 
 const initialReviews = [
   {
-    id: 1,
-    content: '이 경로는 정말 아름답고 평화로워요!',
-    createdAt: '2024-09-02',
-  },
-  {
-    id: 2,
-    content: '산책하기에 최적의 장소였습니다.',
-    createdAt: '2024-09-03',
-  },
+    no: 0,
+    content: "",
+    createDate: "",
+    rid: ""
+  } 
 ];
 
 function PostCultureDetail({ isLoggedIn, likes, onLike }) {
@@ -42,6 +38,15 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
     .catch(error => {
       console.error('Error fetching culture data: ', error);
     });
+    axios.get(`/review/getList/${id}`)
+    .then((response)=>{
+     console.log(response.data)
+     setReviews([...response.data])
+    })
+    .catch((error)=>{
+     console.log(error)
+     alert(error)
+    })
   }, [like]);
 
   // const [post, setPost] = useState(null);
@@ -211,17 +216,20 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
       <h1 className='h1-list'>후기</h1>
       <table className="table-detail">
         <tbody>
-          {reviews.map((review) => (
-            <tr key={review.id}>
+        {reviews.map((review) => (
+            <tr key={review.rid}>
+              <td>{review.rid}</td>
               <td>{review.content}</td>
-              <td>{review.createdAt}</td>
+              <td>{review.createDate.substring(0,10)}</td>
+              <td>{review.rid === localStorage.getItem('username') &&<button className="button-detail" onClick={()=>{navigate(`/review/update/${culture.cid}/walk`)}}>수정</button>}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <div className="div-detail">
-        <button onClick={() => navigate(`/review/${culture.cid}/culture`)} className='button-detail'>후기 작성</button>
+      {/* 후기 작성 버튼 */}
+        <div className='div-detail'>
+        <button onClick={() => navigate(`/review/${culture.cid}/walk`)} className="button-detail">후기 작성</button>
       </div>
 
       {/* 목록으로 가기 버튼 */}

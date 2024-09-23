@@ -1,22 +1,23 @@
 import React, { useState, useEffect,useRef } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import '../assets/Header.css';
 import '../assets/Main.css';
 import '../assets/Footer.css';
 import '../assets/Weather.css'
-// import main1 from '../assets/main1.jpg';
-// import main2 from '../assets/main2.jpg';
-// import main3 from '../assets/main3.jpg';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { Swiper, SwiperSlide } from "swiper/react"; // Swiper 관련 컴포넌트
+import { Autoplay, Navigation } from "swiper/modules";
+import 'swiper/css/navigation';
+import 'swiper/css';
 
 function Main() { 
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
   const [shortWeather, setShortWeather] = useState([]);
   const [loading, setLoading] = useState(true); // 로딩 상태 관리
+  const [cultureBoard, setCultureBoard]= useState([]);
   const scrollContainerRef = useRef(null); // 스크롤 컨테이너를 참조하기 위한 useRef 훅
+  const navigate = useNavigate();
   const mainWeather={
     la : "37.5635694444444",
     lo : "126.980008333333",
@@ -43,6 +44,18 @@ function Main() {
     .catch((error)=>{
         window.alert(error)
     })
+    //사진이 있는 게시물 가져오는 axios
+    axios.get('/culture/main/data')
+         .then((response)=>{
+          console.log(response.data)
+          setCultureBoard(response.data)
+          console.log(cultureBoard)
+         })
+         .catch((error)=>{
+          window.alert(error)
+         })
+
+
 
 }
   useEffect(()=>{
@@ -57,19 +70,9 @@ function Main() {
     //날씨 API호출
     Caller();
 
-    // 서버에서 사용자 데이터를 가져옵니다.
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('/api/user/data', { params: { username: savedUsername } });
-        setUserData(response.data);
-      } catch (error) {
-        console.error("서버에서 사용자 데이터를 가져오는 데 실패했습니다:", error);
-      }
-    };
+    
 
-    if (savedUsername) {
-      fetchUserData();
-    }
+    
 
     //횡스크롤을 위한 useRef
     const container = scrollContainerRef.current;
@@ -80,6 +83,7 @@ function Main() {
         event.preventDefault(); // 기본 수직 스크롤 방지
         container.scrollLeft += event.deltaY*1.5; // 세로 스크롤을 가로 스크롤로 변환
       };
+    
       
       // 이벤트 리스너 추가
       container.addEventListener("wheel", handleWheel);
@@ -94,7 +98,7 @@ function Main() {
   const divStyle = {
     backgroundImage: `url(${process.env.PUBLIC_URL}/img/weather/weatherBackImg.jpg)`,
     backgroundSize: "cover", // 이미지를 전체 배경으로 설정
-    
+    height : "300px"
   };
   const handleshortWeather = (newWeather) => {
     setShortWeather(prevWeather => ({
@@ -104,42 +108,31 @@ function Main() {
   };
   
   return (
-    <div className="mainbody"> 
-      {/* <Header/>  */}
-
-      {/* 환영 메시지 */}
-      {username && <div className="welcome-message">안녕하세요, {username}님!</div>}
+    <div > 
+      <br/><br/><br/><br/>
       
-      {/* 서버에서 받아온 사용자 데이터 표시 */}
-      {userData && (
-        <div className="user-data">
-          <p>최근 산책 경로: {userData.recentWalk}</p>
-          <p>총 산책 거리: {userData.totalDistance} km</p>
-        </div>
-      )}
+      
+      
 
       {/* 1번째 article */}
-      <div className="main1">  
-        <Link className="mainlink1" to="/weather">
-        </Link>
-      </div>  
-        <h3>서울의 날씨</h3>
-      <article>
+        <span  className='mainTitle'><h3>서울의 날씨</h3></span>
+        <br/>
+
+      <article onClick={()=>{navigate('/weather')}} className='weatherArticle'>
         {/* <div className="maindiv1">     */}
-          <Link className="mainlink1" to="/weather">
             {/* <img src={process.env.PUBLIC_URL+'/img/main/main1.jpg'} alt="1번사진" width="100%" height="220"/> */}
             <div className="weather" style={divStyle}>
         <div className="scroll-container"  ref={scrollContainerRef}>
             <div className="scroll-content">
 
                 {shortWeather.map((value, i) => {
-                    let img = value.ptyValue ==0 ? skyImg[value.skyValue] : ptyImg[value.ptyValue];
-                    let date = value.fcstDate.substr(4,2) +' / '+ value.fcstDate.substr(6,2);
-                    let fcstTime = parseInt(value.fcstTime.substr(0,2));
-                    let time =  fcstTime == 0? '오전 12': fcstTime <12 ? '오전'+fcstTime : fcstTime==12 ? '오후'+ fcstTime :'오후' + (fcstTime-12);
-                    return(
-                        
-                        <div className="item">
+                  let img = value.ptyValue ==0 ? skyImg[value.skyValue] : ptyImg[value.ptyValue];
+                  let date = value.fcstDate.substr(4,2) +' / '+ value.fcstDate.substr(6,2);
+                  let fcstTime = parseInt(value.fcstTime.substr(0,2));
+                  let time =  fcstTime == 0? '오전 12': fcstTime <12 ? '오전'+fcstTime : fcstTime==12 ? '오후'+ fcstTime :'오후' + (fcstTime-12);
+                  return(
+                    
+                    <div className="item">
                             <div className="itemDetail">
                                 <span className="date">{date}</span>
                                 <span className="imgDiv"><img className = "weatherImg" src ={img}/></span>&emsp;
@@ -150,50 +143,66 @@ function Main() {
                             </div>
                         </div>
                         )
-                    })}
+                      })}
             </div>
             </div>
         </div>
-          </Link>
           
-        {/* </div> */}
       </article>
 
       {/* 2번째 article */}
-      <div className="main2">
-        <Link className="mainlink2" to="/walk">
-          산책 경로 목록
-        </Link>
+      <br/><br/><br/><br/>
+      <span  className='mainTitle'><h3>인기 산책로</h3></span><br/>
+      
+      <article className='boardContainer' >
+
+      <div className='boardArticle'  >
+       
+        
+          <div className='board-content'>
+                {cultureBoard.map((value)=>{
+                  const petEnterYN=value.petEntrYn==='Y'?'반려동물 입장 가능' : '반려동물 입장 불가';
+                  return(
+
+                    <div className='cultureDiv'>
+
+               
+                  <div className='cultureImgDiv' onClick={()=>{navigate(`/culture/${value.cid}`)}}>
+                    <img className='cultureImg' src={value.picturePath}/>
+                  </div>
+                  <div className='cultureDescDiv'>
+                    
+                    <span className='cultureCategory'>{value.ctgryTwo}</span>
+                    <span className='culturename'>{value.fcltyName}({value.ctprvnName})</span>
+                    <span className='culturePetEnter'>{petEnterYN}</span>
+                    <span className='cultureLike'>👍{value.likeCount}</span>
+                    {/* 
+                    ctprvnName : 지역
+                    ctgryTwo : 카테고리
+                    fcltyName : 시설 이름
+                    likeCount  : 좋아요 수
+                    petEntrYn : 반려동물 입장 가능 여부
+
+                    */}
+
+                  </div>
+             
+                </div>
+               
+                )
+              })}
+       
+          </div>
       </div>
-      <article>
-        <div className="maindiv2">              
-          <Link className="mainlink2" to="/walk">
-            <img src={process.env.PUBLIC_URL+'/img/main/main2.jpg'} alt="2번사진" width="100%" height="220"/>
-          </Link>
-          <div>
-            후기 : 
-          </div>    
-        </div>    
       </article>
 
-      {/* 3번째 article */}   
-      <div className="main3">
-        <Link className="mainlink3" to="/culture">
-          문화 경로 목록
-        </Link>
-      </div>
-      <article>
-        <div className="maindiv3">   
-          <Link className="mainlink3" to="/culture">
-            <img src={process.env.PUBLIC_URL+'/img/main/main3.jpg'} alt="3번사진" width="100%" height="220"/>
-          </Link>
-          <div>
-            후기 : 
-          </div>   
-        </div>
-      </article>
 
-      <Footer />
+
+
+
+
+     
+
     </div>
   );
 }

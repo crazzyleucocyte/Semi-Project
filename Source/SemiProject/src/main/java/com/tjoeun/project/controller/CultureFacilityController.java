@@ -1,7 +1,11 @@
 package com.tjoeun.project.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -84,4 +88,23 @@ public class CultureFacilityController {
 		return cultureFacilityService.getCultureFacilityById(cId);
 	}
 
+	@GetMapping("/main/data")
+	public List<CultureFacility> getMainData(){
+		List<CultureFacility> temp = cultureFacilityService.findByPicturePath();
+		Set<Integer> random = new HashSet<Integer>();
+		Math.floor(Math.random()*11);
+		while(random.size()!=10) {
+			random.add((int)Math.floor(Math.random()*11));
+		}
+		
+		List<CultureFacility> result= new ArrayList<>();
+		for (Integer number : random) {
+		    System.out.println(number);
+		    result.add(temp.get(number));
+		}
+		
+		System.out.println(result);
+		return result;
+		
+	}
 }

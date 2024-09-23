@@ -61,21 +61,22 @@ const AreaSelector = ({weatherResult,setWeatherResult, handleSetcityInfo}) => {
   return (
     <div>
       {/* 첫 번째 선택 필드 */}
-      <select name="ctprvnNm"  onChange={handleProvinceChange}>
+      <select name="ctprvnNm" id="postsPerPageSelect"  onChange={handleProvinceChange}>
         <option value="">-- 시/도 선택 --</option>
         {Object.keys(data).map((province) => (
           <option key={province} value={province}>{province}</option>
         ))}
       </select>
-
+        &emsp;
       {/* 두 번째 선택 필드 */}
-      <select name="signguNm" value={selectedCity} onChange={handleCityChange} disabled={!selectedProvince}>
+      <select name="signguNm" id="postsPerPageSelect"  value={selectedCity} onChange={handleCityChange} disabled={!selectedProvince}>
         <option value="">-- 시/군/구 선택 --</option>
         {selectedProvince && data[selectedProvince].map((city) => (
           <option key={city} value={city}>{city}</option>
         ))}
       </select>
-        <button onClick={searchWeatherByCity}>검색</button>
+      &emsp;
+        <button onClick={searchWeatherByCity} className="search-button">검색</button>
 
     </div>
   );

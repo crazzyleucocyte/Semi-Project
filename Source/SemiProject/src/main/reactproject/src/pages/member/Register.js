@@ -168,7 +168,7 @@ const Signup = () => {
       <form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={process.env.PUBLIC_URL+'/img/member/logo.png'} // 로고 이미지 설정
+          src={process.env.PUBLIC_URL+'/img/member/logo5.png'} // 로고 이미지 설정
           alt="logo"
         />
 
@@ -200,7 +200,7 @@ const Signup = () => {
               onChange={handleChange}
               required
               className="form-control me-2"
-              style={{ border: '2px solid black' }}
+              // style={{ border: '2px solid black' }}
             />
             //아이디 중복확인 
             <Button
@@ -233,7 +233,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -249,7 +249,7 @@ const Signup = () => {
             onChange={handlePhoneChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -265,7 +265,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -279,7 +279,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           >
             <option value="">성별을 선택하세요</option>
             <option value="M">남성</option>
@@ -302,7 +302,7 @@ const Signup = () => {
               onChange={handleChange}
               required
               className="form-control me-2"
-              style={{ border: '2px solid black' }}
+              // style={{ border: '2px solid black' }}
             />
             <input
               type="password"
@@ -314,7 +314,7 @@ const Signup = () => {
               onChange={handleChange}
               required
               className="form-control"
-              style={{ border: '2px solid black' }}
+              // style={{ border: '2px solid black' }}
             />
           </div>
         </div>
@@ -331,7 +331,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -347,7 +347,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 

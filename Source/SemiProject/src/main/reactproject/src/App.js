@@ -13,16 +13,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import IntroPage from './pages/IntroPage';
 import Boards from './pages/boards/Boards';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [reviews, setReviews] = useState({}); // 리뷰 상태 추가
 
-  const toggleLogin = () => {
-    setIsLoggedIn(!isLoggedIn);
-  };
-  // 리뷰 추가 함수npm i react-router-dom
+ 
   const handleAddReview = (postId, newReview) => {
     setReviews(prevReviews => ({
       ...prevReviews,
@@ -32,16 +30,16 @@ function App() {
   const location = useLocation();
   const hideHeader = location.pathname === '/' || location.pathname === '/register';
   return (
-    <>
+    <div className='bodyBackground'>
     
       <div>
     {!hideHeader && <Header />}
         
-      <Boards isLoggedIn={isLoggedIn} handleAddReview={handleAddReview} reviews={reviews}/>
+      <Boards handleAddReview={handleAddReview} reviews={reviews}/>
         <Routes>
 
 
-          <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn}/>} /> 
+          <Route path="/" element={<Login  setIsLoggedIn={setIsLoggedIn} />} /> 
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/password-change" element={<PasswordChange />} />
@@ -56,10 +54,9 @@ function App() {
           <Route path="/intro" element={<IntroPage />} />
         </Routes>
       </div>
-      <button onClick={toggleLogin}>
-      {isLoggedIn ? '로그아웃' : '로그인'}
-      </button>
-    </>
+      <Footer/>
+      
+    </div>
   );
 }
 

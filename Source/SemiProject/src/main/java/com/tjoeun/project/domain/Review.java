@@ -8,14 +8,18 @@ import org.springframework.data.annotation.CreatedDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity(name="REVIEW")
 @NoArgsConstructor
 @AllArgsConstructor
+@IdClass(ReviewId.class)
+@ToString
 public class Review {
 	
 	@Id
@@ -25,16 +29,12 @@ public class Review {
 	@Id
 	@Column(name="NO")
 	private Long no;
-	
-	@Column(name="PHOTO_NM")
-	private List<String> photoName;
-	
-	@Column(name="PHOTO_PT")
-	private List<String> photoPath;
-	
+		
+	@Column(name="RV_CN", length=4000)
+	private String content;
 	
 	@CreatedDate
-	@Column(name="LikeDate", insertable=false, updatable=false, columnDefinition="DATE DEFAULT SYSDATE")
-	private LocalDateTime likeDate;
+	@Column(name="CREATE_DATE", insertable=false, updatable=false, columnDefinition="DATE DEFAULT SYSDATE")
+	private LocalDateTime createDate;
 
 }

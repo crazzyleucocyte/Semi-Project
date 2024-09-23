@@ -100,13 +100,13 @@ const Profile = () => {
       {/* 회원 정보 수정 폼 */}
       <form 
         className="shadow p-4 bg-white rounded" 
-        style={{ border: '2px solid black' }}  // 검정색 테두리 추가
+        // style={{ border: '2px solid black' }}  // 검정색 테두리 추가
         onSubmit={handleSave}
       >
         {/* 로고 이미지 */}
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={process.env.PUBLIC_URL + '/img/member/logo2.png'}
+          src={process.env.PUBLIC_URL + '/img/member/logo5.png'}
           alt="logo"
         />
 
@@ -136,7 +136,7 @@ const Profile = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           ></input>
         </div>
 
@@ -152,7 +152,7 @@ const Profile = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -168,7 +168,7 @@ const Profile = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -182,7 +182,7 @@ const Profile = () => {
             onChange={handleChange}
             required
             className="form-control"
-            style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
           >
             <option value="">성별을 선택하세요</option>
             <option value="M">남자</option>

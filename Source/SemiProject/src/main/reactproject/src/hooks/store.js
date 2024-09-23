@@ -7,7 +7,7 @@ let cityInfo = createSlice({
         la : "37.5635694444444",
         lo : "126.980008333333",
         ctprvnNm : "서울특별시",
-        signguNm : "서울"
+        signguNm : ""
     },
     reducers : {
         setCityInfo(state, {payload} ){
