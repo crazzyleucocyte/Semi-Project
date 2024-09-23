@@ -31,6 +31,7 @@ public class CultureFacilityController {
 		int page = Integer.parseInt(map.get("page"));
 		int numPerPage = Integer.parseInt(map.get("numPerPage"));
 		
+		
 		String keyField = map.get("keyField");
 		String keyWord = map.get("keyWord");
 		

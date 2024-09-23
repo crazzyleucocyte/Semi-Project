@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import '../../assets/PostList.css';
 // import * as FaqStyle from '../assets/FaqStyle';
 
 function WalkingTrailsList({ likes, onLike }) {
-  const { id } = useParams();
+  // const { id } = useParams();
   const [walkingTrails, setWalkingTrails] = useState([]);
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
   const [currentPage, setCurrentPage] = useState(1); // 1부터 시작하는 페이지 번호
@@ -16,13 +16,14 @@ function WalkingTrailsList({ likes, onLike }) {
   const [currentBlock, setCurrentBlock] = useState(0);    // 현재 페이지 블록
   const [searchCategory, setSearchCategory] = useState('null');
   const [searchTerm, setSearchTerm] = useState('');
+  const [likedPosts, setLikedPosts] = useState({});
 
   // const [isLiked, setIsLiked] = useState(false);
   const userId = localStorage.getItem('username');
   const [like, setLike] = useState(false);
   
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const indexOfLastPost = currentPage * postsPerPage;
+  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
   
   // 페이지 변경 처리
   const handlePageChange = (pageNumber) => {
@@ -61,13 +62,34 @@ function WalkingTrailsList({ likes, onLike }) {
       setWalkingTrails(response.data.list);
       setTotalRecord(response.data.totalRecord);
       setTotalPages(response.data.totalPages);
-      console.log(totalBlock);
-      setTotalBlock(Math.ceil(response.data.totalRecord / postsPerPage));
+      // console.log(totalBlock);
+      // setTotalBlock(Math.ceil(response.data.totalRecord / postsPerPage));
+
+      // totalPages를 클라이언트에서 계산
+      const calculatedTotalPages = Math.floor(response.data.totalRecord / postsPerPage);
+      setTotalPages(calculatedTotalPages);
+      
+      // totalBlock도 새로 계산된 totalPages를 기반으로 계산
+      setTotalBlock(Math.ceil(calculatedTotalPages / 10));
+
     })
     .catch(error => {
       console.error('Error fetching walkingTrail data: ', error);
     });
   }
+
+  // postsPerPage가 변경될 때마다 totalPages와 totalBlock을 재계산
+  // useEffect(() => {
+  //   if (totalRecord > 0) {
+  //     const calculatedTotalPages = Math.floor(totalRecord / postsPerPage);
+  //     setTotalPages(calculatedTotalPages);
+  //     console.log("totalRecord : ",totalRecord)
+  //     console.log("postsPerPage : ", postsPerPage)
+  //     console.log("calculatedTotalPages : ", calculatedTotalPages)
+  //     setTotalBlock(Math.ceil(calculatedTotalPages / 10));
+  //   }
+  // }, [totalRecord, postsPerPage]);
+
   useEffect(() => {
     listCaller()
   }, [currentPage, postsPerPage ]);
@@ -111,6 +133,39 @@ function WalkingTrailsList({ likes, onLike }) {
     }
   };
 
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await axios.post('/walking/list', {
+        'page': currentPage,
+        'numPerPage': postsPerPage,
+        'keyField': searchCategory,
+        'keyWord': searchInput
+      });
+      
+      const storedLikes = JSON.parse(localStorage.getItem('likedPosts') || '{}');
+      
+      const updatedTrails = response.data.list.map(trail => ({
+        ...trail,
+        isLiked: storedLikes[trail.wid] || false
+      }));
+
+      setWalkingTrails(updatedTrails);
+      setTotalRecord(response.data.totalRecord);
+      
+      const calculatedTotalPages = Math.floor(response.data.totalRecord / postsPerPage);
+      setTotalPages(calculatedTotalPages);
+      setTotalBlock(Math.ceil(calculatedTotalPages / 10));
+    } catch (error) {
+      console.error('Error fetching walkingTrail data: ', error);
+    }
+  }, [currentPage, postsPerPage, searchCategory, searchInput]);
+
+  useEffect(() => {
+    const storedLikes = JSON.parse(localStorage.getItem('likedPosts') || '{}');
+    setLikedPosts(storedLikes);
+    fetchData();
+  }, [fetchData]);
+
   const handleLike = async (wid) => {
     try {
       const response = await axios.post(`/api/like`,{
@@ -119,35 +174,45 @@ function WalkingTrailsList({ likes, onLike }) {
       });
       console.log(response.data);
 
+      const newLikedStatus = response.data.isLiked;
+      const newLikeCount = response.data.likeCount;
+
       setWalkingTrails(prevTrails => prevTrails.map(trail => 
         trail.wid === wid 
           ? {
             ...trail, 
-            likeCount: trail.isLiked ? trail.likeCount - 1 : trail.likeCount + 1,
-            isLiked: !trail.isLiked
+            likeCount: newLikeCount,
+            isLiked: newLikedStatus
           } 
           : trail
       ));
+
+      // 로컬 스토리지 업데이트
+      const updatedLikedPosts = { ...likedPosts, [wid]: newLikedStatus };
+      setLikedPosts(updatedLikedPosts);
+      localStorage.setItem('likedPosts', JSON.stringify(updatedLikedPosts));
+
     } catch (error) {
       console.error('좋아요 처리 중 오류 발생:', error);
       alert('좋아요 처리 중 오류가 발생했습니다.');
     }
   };
 
-  useEffect(() => {
+
+  // useEffect(() => {
+    // console.log('id: ', id)
     // 백엔드로부터 게시글 데이터를 가져옴
-    axios.get('/walking/'+ id)
-    .then(response => {
-      console.log(response.data);
-      setWalkingTrails(response.data);
-      // fetchReviews();
-      // fetchAdjacentPosts();
-      console.log(walkingTrails);
-    })
-    .catch(error => {
-      console.error('Error fetching walkingTrail data: ', error);
-    });
-  }, [like]);
+    // axios.get(`/walking/${id}`)
+    //   .then(response => {
+    //     console.log(response.data);
+    //     setWalkingTrails(response.data);
+    //     console.log(walkingTrails);
+    // })
+    // .catch(error => {
+    //   console.error('Error fetching walkingTrail data: ', error);
+    // });
+    // listCaller();
+  // }, [like, currentPage, postsPerPage]);
   
   return (
     <div>
@@ -180,7 +245,7 @@ function WalkingTrailsList({ likes, onLike }) {
               <td>{walkingTrails.signguNm}</td>
               <td>
                 <button onClick={()=>handleLike(walkingTrails.wid)} className='likeBtn'>
-                  {walkingTrails.isLiked ? '💔 취소' : '❤️ 좋아요'} {walkingTrails.likeCount || 0}
+                  {walkingTrails.isLiked ? '❤️' : '🤍'} {walkingTrails.likeCount || 0}
                 </button>&emsp;
               </td>
               <td className='detail-td'>
@@ -197,34 +262,34 @@ function WalkingTrailsList({ likes, onLike }) {
 
       {/* 페이지네이션 */}
       <div className="pagination">
-      {currentBlock > 0 ? (
-        <button onClick={() => {
-          setCurrentPage((currentBlock - 1) * 10 + 1);
-          setCurrentBlock(currentBlock - 1);
-        }}>Prev...</button>
-      ) : null}
+        {currentBlock > 0 && (
+          <button onClick={() => {
+            const newPage = (currentBlock - 1) * 10 + 1;
+            setCurrentPage(newPage);
+            setCurrentBlock(currentBlock - 1);
+          }}>Prev...</button>
+        )}
 
-      {/* 현재 블록에서 보여줄 페이지 버튼 생성 */}
-      {totalPages > 0 && 
-        Array.from({ length: Math.min(10, totalPages - currentBlock * 10) }, (_, i) => i + 1 + (currentBlock * 10))
-        .map((pageNumber) => (
-          <button
-            key={pageNumber}
-            onClick={() => handlePageChange(pageNumber)}
-            className={currentPage === pageNumber ? 'active' : ''}
-          >
-            {pageNumber}
-          </button>
-      ))}
+        {Array.from({ length: Math.min(10, totalPages - currentBlock * 10) }, (_, i) => i +1 + (currentBlock * 10))
+          .map((pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              className={currentPage === pageNumber ? 'active' : ''}
+            >
+              {pageNumber}
+            </button>
+        ))}
 
-      {/* 다음 블록으로 이동하는 버튼 */}
-      {currentPage < totalPages ? (
-        <button onClick={() => {
-          setCurrentBlock(currentBlock + 1);
-          setCurrentPage(currentBlock * 10 + 1);
-        }}>...Next</button>
-      ) : null}
-    </div>
+        {currentBlock < totalBlock - 1 && (
+          <button onClick={() => {
+            const newBlock = currentBlock + 1;
+            const newPage = newBlock * 10 + 1;
+            setCurrentBlock(newBlock);
+            setCurrentPage(newPage);
+          }}>...Next</button>
+        )}
+      </div>
 
 
 

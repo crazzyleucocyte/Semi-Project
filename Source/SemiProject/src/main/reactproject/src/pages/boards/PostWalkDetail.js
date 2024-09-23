@@ -44,7 +44,7 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
   //   }
   // };
   
-
+  
 
   const handleLike = async () => {
     try {
@@ -87,78 +87,9 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
     });
   }, [like]);
 
-  // const fetchReviews = () => {
-  //   axios.get(`/api/reviews/${id}`)
-  //     .then(response => {
-  //       setReviews(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching reviews: ', error);
-  //     });
-  // };
 
-  // const handleAddReview = (newReview) => {
-  //   axios.post(`/api/reviews`, {
-  //     walkId: id,
-  //     content: newReview.content,
-  //     userId: userId
-  //   })
-  //     .then(response => {
-  //       fetchReviews(); // 새로운 후기를 포함하여 모든 후기를 다시 가져옵니다
-  //     })
-  //     .catch(error => {
-  //       console.error('Error adding review: ', error);
-  //     });
-  // };
-
-  
-  // const [post, setPost] = useState(null);
-  // const [likes, setLikes] = useState(0);
-  // const [likedByUser, setLikedByUser] = useState(false);
-  // const [views, setViews] = useState(0);
-  // const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
   
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   // 데이터 초기화
-  //   const postId = parseInt(id, 10);
-  //   // const foundPost = initialPostsData.find((p) => p.id === postId);
-
-  //   if (foundPost) {
-  //     const storedViews = localStorage.getItem(`post-${id}-views`);
-  //     const initialViews = storedViews ? parseInt(storedViews, 10) : foundPost.views;
-
-  //     setPost(foundPost);
-  //     setLikes(foundPost.likes);
-  //     setLikedByUser(foundPost.likedByUser || false);
-  //     setViews(initialViews);
-
-  //     if (!storedViews) {
-  //       localStorage.setItem(`post-${id}-views`, initialViews + 1);
-  //       setViews(initialViews + 1);
-  //     }
-  //   } else {
-  //     setPost(null); // 게시글이 없는 경우
-  //   }
-  // }, [id]);
-
-  // const handleLike = () => {
-  //   if (isLoggedIn) {
-  //     if (likedByUser) {
-  //       setLikes(likes - 1);
-  //     } else {
-  //       setLikes(likes + 1);
-  //     }
-  //     setLikedByUser(!likedByUser);
-  //   } else {
-  //     alert('로그인 후 좋아요를 누를 수 있습니다.');
-  //   }
-  // };
-
-  // const handleAddReview = (newReview) => {
-  //   setReviews([...reviews, newReview]);
-  // };
 
   const setWeatherInfo=()=>{
     dispatch(setCityInfo({
@@ -186,26 +117,6 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
     }
   };
 
-  // const fetchAdjacentPosts = async () => {
-  //   try {
-  //     console.log('요청 URL:', `/api/walking/adjacent/${id}`);
-  //     const response = await axios.get(`/api/walking/adjacent/${id}`);
-  //     console.log('인접 게시물 데이터:', response.data);
-  //     setPrevPostId(response.data.prevId);
-  //     setNextPostId(response.data.nextId);
-  //   } catch (error) {
-  //     console.error('인접 게시물 가져오기 오류:', error);
-  //   }
-  // };
-
-  // const navigateToAdjacentPost = (postId) => {
-  //   console.log('이동할 게시물 ID:', postId);
-  //   if (postId) {
-  //     navigate(`/walk/${postId}`);
-  //     console.log('이동할 게시물이 없습니다.');
-  //   }
-  // };
-
   return (
     <div className="post-detail">
       {/* 이전글 버튼 */}
@@ -220,7 +131,7 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
       <div className='detail-div'>
         <h1 className='h1-list'>{walkingTrails.wlktrlName}</h1>
         <button onClick={()=>handleLike()} className='button-detail'>
-                {isLiked ? '💔 취소' : '❤️ 좋아요'} {walkingTrails.likeCount}
+                {isLiked ? '❤️' : '🤍'} {walkingTrails.likeCount}
         </button>&emsp;
         <button className='button-detail' onClick={()=>{
           setWeatherInfo();
