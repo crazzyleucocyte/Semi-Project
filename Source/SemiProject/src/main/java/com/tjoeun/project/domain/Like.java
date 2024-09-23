@@ -34,4 +34,5 @@ public class Like {
 	@Column(name="LikeDate", insertable=false, updatable=false, columnDefinition="DATE DEFAULT SYSDATE")
 	private LocalDateTime likeDate;
 	
+	
 }

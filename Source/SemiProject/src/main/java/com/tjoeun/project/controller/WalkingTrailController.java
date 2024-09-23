@@ -38,6 +38,7 @@ public class WalkingTrailController {
 	public Map<String, Object> getAllWalkingList(@RequestBody Map<String, String> map) {
 		int page = Integer.parseInt(map.get("page"));
 		int numPerPage = Integer.parseInt(map.get("numPerPage"));
+		System.out.println("numPerPage : "+ numPerPage);
 		
 		String keyField = map.get("keyField");
 		String keyWord = map.get("keyWord");

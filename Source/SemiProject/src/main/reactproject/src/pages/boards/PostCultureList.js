@@ -22,13 +22,26 @@ function PostCultureList({ likes, onLike }) {
   // const [isLiked, setIsLiked] = useState(false);
   const userId = localStorage.getItem('username');
   const [like, setLike] = useState(false);
- 
-  // 페이지 변경 핸들러
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
   
+  // 페이지 변경 핸들러
+  // const handlePageChange = (pageNumber) => {
+    //   setCurrentPage(pageNumber);
+    // };
+
+    // 페이지 변경 처리
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber); // Spring Boot는 페이지 번호가 0부터 시작
+  };
+    
+    const handlePostsPerPageChange = (event) => {
+      setPostsPerPage(parseInt(event.target.value, 10));
+      if(currentPage === 1){
+        listCaller()
+      }else{
+        setCurrentPage(1); // 한 페이지에 나타낼 글 수를 변경하면 첫 페이지로 이동
+      }
+    };
+    
   function listCaller(){
     axios.post('/culture/list', {
       'page' : currentPage,
@@ -42,26 +55,34 @@ function PostCultureList({ likes, onLike }) {
       setCulture(response.data.list);
       setTotalRecord(response.data.totalRecord);
       setTotalPages(response.data.totalPages);
-      console.log(totalBlock);
-      setTotalBlock(Math.ceil(response.data.totalRecord / 10));
+      // console.log(totalBlock);
+      // setTotalBlock(Math.ceil(response.data.totalRecord / 10));
+
+      // totalPages를 클라이언트에서 계산
+      const calculatedTotalPages = Math.ceil(response.data.totalRecord / postsPerPage);
+      setTotalPages(calculatedTotalPages);
+      
+      // totalBlock도 새로 계산된 totalPages를 기반으로 계산
+      setTotalBlock(Math.ceil(calculatedTotalPages / 10));
     })
     .catch(error => {
       console.error('Error fetching culture data: ', error);
     });
   }
+
+  // postsPerPage가 변경될 때마다 totalPages와 totalBlock을 재계산
+  useEffect(() => {
+    if (totalRecord > 0) {
+      const calculatedTotalPages = Math.ceil(totalRecord / postsPerPage);
+      setTotalPages(calculatedTotalPages);
+      setTotalBlock(Math.ceil(calculatedTotalPages / 10));
+    }
+  }, [totalRecord, postsPerPage]);
   
   useEffect(() => {
     listCaller()
   }, [currentPage, postsPerPage, searchInput, searchCategory]);
   
-  const handlePostsPerPageChange = (event) => {
-    setPostsPerPage(parseInt(event.target.value, 10));
-    if(currentPage === 1){
-      listCaller()
-    }else{
-      setCurrentPage(1); // 한 페이지에 나타낼 글 수를 변경하면 첫 페이지로 이동
-    }
-  };
 
   const handleSearch = () => {
     setSearchTerm(searchInput);
@@ -87,38 +108,44 @@ function PostCultureList({ likes, onLike }) {
 
   const handleLike = async (cid) => {
     try {
-      const response = await axios.post(`/api/like`,{
-        lId:userId,
-        no:cid
+      const response = await axios.post(`/api/like`, {
+        lId: userId,
+        no: cid
       });
       console.log(response.data);
-
-      setCulture(prevTrails => prevTrails.map(trail => 
-        trail.cid === cid 
-          ? {
-            ...trail, 
-            likeCount: trail.isLiked ? trail.likeCount - 1 : trail.likeCount + 1,
-            isLiked: !trail.isLiked
-          } 
-          : trail
-      ));
-      } catch (error) {
-        console.error('좋아요 처리 중 오류 발생:', error);
-        alert('좋아요 처리 중 오류가 발생했습니다.');
+  
+      // 서버 응답을 기반으로 상태 업데이트
+      if (response.data === true) {
+        setCulture(prevCultures => prevCultures.map(culture => 
+          culture.cid === cid 
+            ? { ...culture, likeCount: culture.likeCount + 1, isLiked: true }
+            : culture
+        ));
+      } else {
+        setCulture(prevCultures => prevCultures.map(culture => 
+          culture.cid === cid 
+            ? { ...culture, likeCount: culture.likeCount - 1, isLiked: false }
+            : culture
+        ));
       }
-    };
+    } catch (error) {
+      console.error('좋아요 처리 중 오류 발생:', error);
+      alert('좋아요 처리 중 오류가 발생했습니다.');
+    }
+  };
 
     useEffect(() => {
       // 백엔드로부터 게시글 데이터를 가져옴
-      axios.get('/culture/'+ id)
-      .then(response => {
-        console.log(response.data);
-        setCulture(response.data);
-        console.log(culture);
-      })
-      .catch(error => {
-        console.error('Error fetching walkingTrail data: ', error);
-      });
+      // axios.get('/culture/'+ id)
+      // .then(response => {
+      //   console.log(response.data);
+      //   setCulture(response.data);
+      //   console.log(culture);
+      // })
+      // .catch(error => {
+      //   console.error('Error fetching walkingTrail data: ', error);
+      // });
+      listCaller();
     }, [like]);
 
     useEffect(() => {
@@ -161,7 +188,7 @@ function PostCultureList({ likes, onLike }) {
                 {/* <td>{culture.signguName}</td> */}
                 <td>
                   <button onClick={()=>handleLike(culture.wid)} className='likeBtn'>
-                    {culture.isLiked ? '💔 취소' : '❤️ 좋아요'} {culture.likeCount || 0}
+                    {culture.isLiked ? '❤️' : '🤍'} {culture.likeCount || 0}
                   </button>&emsp;
                 </td>
                 <td className='detail-td'>
@@ -177,16 +204,15 @@ function PostCultureList({ likes, onLike }) {
         
         {/* 페이지네이션 */}
         <div className="pagination">
-          {currentBlock > 0 ? (
+          {currentBlock > 0 && (
             <button onClick={() => {
-              setCurrentPage((currentBlock - 1) * 10 + 1);
+              const newPage = (currentBlock - 1) * 10 + 1;
+              setCurrentPage(newPage);
               setCurrentBlock(currentBlock - 1);
             }}>Prev...</button>
-          ) : null}
+          )}
 
-          {/* 현재 블록에서 보여줄 페이지 버튼 생성 */}
-          {totalPages > 0 && 
-            Array.from({ length: Math.min(10, totalPages - currentBlock * 10) }, (_, i) => i + 1 + (currentBlock * 10))
+          {Array.from({ length: Math.min(10, totalPages - currentBlock * 10) }, (_, i) => i + 1 + (currentBlock * 10))
             .map((pageNumber) => (
               <button
                 key={pageNumber}
@@ -197,14 +223,14 @@ function PostCultureList({ likes, onLike }) {
               </button>
           ))}
 
-          {/* 다음 블록으로 이동하는 버튼 */}
-          {currentPage < totalPages ? (
+          {currentBlock < totalBlock - 1 && (
             <button onClick={() => {
-              setCurrentBlock(currentBlock + 1);
-              setCurrentPage(currentBlock * 10 + 1);
+              const newBlock = currentBlock + 1;
+              const newPage = newBlock * 10 + 1;
+              setCurrentBlock(newBlock);
+              setCurrentPage(newPage);
             }}>...Next</button>
-          ) : null}
-          {/* <p>{currentPage}</p> */}
+          )}
         </div>
 
         <div className="search">

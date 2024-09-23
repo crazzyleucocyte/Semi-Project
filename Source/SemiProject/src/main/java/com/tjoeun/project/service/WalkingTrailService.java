@@ -78,5 +78,4 @@ public class WalkingTrailService {
 		return walkingTrailRepository.save(walkingTrail);
 	}
 
-
 	}

@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.tjoeun.project.domain.CultureFacility;
+import com.tjoeun.project.domain.WalkingTrail;
 import com.tjoeun.project.repository.CultureFacilityRepository;
 
 @Service

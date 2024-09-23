@@ -105,7 +105,7 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
       <div className='detail-div'>
         <h1 className='h1-list'>{culture.fcltyName}</h1>
         <button onClick={()=>handleLike()} className='button-detail'>
-                {isLiked ? '💔 취소' : '❤️ 좋아요'} {culture.likeCount}
+                {isLiked ? '❤️' : '🤍'} {culture.likeCount}
         </button>&emsp;
         <button className='button-detail' onClick={()=>{
           setWeatherInfo();
