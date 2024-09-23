@@ -47,7 +47,7 @@ public class CultureFacilityService {
 	}
 
 	public CultureFacility findById(Long no) {
-		return cultureFacilityRepository.findById(no).orElseThrow(() -> new RuntimeException("Post not found"));
+		return cultureFacilityRepository.findById(no).get();
 	}
 
 	public CultureFacility save(CultureFacility cultureFacility) {

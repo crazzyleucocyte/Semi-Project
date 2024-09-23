@@ -1,6 +1,7 @@
 package com.tjoeun.project.service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +33,19 @@ public class LikeService {
 		return likeRepository.existsByLidAndNo(lId, no);
 	}
 
-	public void deleteLike(String lId, Long no) {
-		
+	public void deleteLike(Like like) {
+		likeRepository.delete(like);
 	}
 
-	public void addLike(String lId, Long no) {
-		
+	public void addLike(Like like) {
+		likeRepository.save(like);
+	}
+
+	public Optional<Like> findByIdAndNo(String lId, Long no) {
+		return likeRepository.findByLidAndNo(lId, no);
+	}
+
+	public Like deleteLike(String lId, Long no) {
+		return likeRepository.deleteByLidAndNo(lId, no);
 	}
 }

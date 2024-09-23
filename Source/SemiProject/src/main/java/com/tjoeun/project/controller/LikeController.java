@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tjoeun.project.domain.CultureFacility;
+import com.tjoeun.project.domain.Like;
 import com.tjoeun.project.domain.WalkingTrail;
 import com.tjoeun.project.service.CultureFacilityService;
 import com.tjoeun.project.service.LikeService;
@@ -43,23 +44,34 @@ public class LikeController {
 	    try {
 	        String lId = String.valueOf(boardInfo.get("lId"));
 	        Long no = Long.parseLong(String.valueOf(boardInfo.get("no")));
-	        
-	        if (no > 20000) {
+	        System.out.println("1. no : " + no);
+	        if (no < 200000) {
+	        	 System.out.println("1-1. no : " + no);
 	            WalkingTrail walkingTrail = walkingTrailService.findById(no);
 	            if (walkingTrail == null) {
 	                return ResponseEntity.notFound().build();
 	            }
 	            
 	            boolean currentLikeStatus = likeService.isLiked(lId, no);
+	            System.out.println("currentLikeStatus : " + currentLikeStatus);
+	            
 	            if (currentLikeStatus) {
 	                walkingTrail.setLikeCount(walkingTrail.getLikeCount() - 1);
-	                likeService.deleteLike(lId, no);
+	                Like likeObj = likeService.findByIdAndNo(lId, no).get();
+	                System.out.println("2-1. no : " + no);
+	                likeService.deleteLike(likeObj);
+	                System.out.println("3-1. no : " + no);
 	            } else {
 	                walkingTrail.setLikeCount(walkingTrail.getLikeCount() + 1);
-	                likeService.addLike(lId, no);
+	                Like likeObj=new Like().builder()
+	                					   .lid(lId)
+	                					   .no(no)
+	                					   .build();
+	                likeService.addLike(likeObj);
 	            }
 	            walkingTrailService.save(walkingTrail);
 	        } else {
+	        	 System.out.println("1-2. no : " + no);
 	        	CultureFacility cultureFacility = cultureFacilityService.findById(no);
 	            if (cultureFacility == null) {
 	                return ResponseEntity.notFound().build();
@@ -67,17 +79,29 @@ public class LikeController {
 	            
 	            boolean currentLikeStatus = likeService.isLiked(lId, no);
 	            if (currentLikeStatus) {
+	            	
 	            	cultureFacility.setLikeCount(cultureFacility.getLikeCount() - 1);
-	                likeService.deleteLike(lId, no);
+//	                likeService.deleteLike(lId, no);
+	            	 System.out.println("2-2. no : " + no);
+	            	Like likeObj = likeService.findByIdAndNo(lId, no).get();
+	            	System.out.println("3-2. likeObj : " + likeObj);
+	                likeService.deleteLike(likeObj);
+	                System.out.println("3-3. no : " + no);
 	            } else {
 	            	cultureFacility.setLikeCount(cultureFacility.getLikeCount() + 1);
-	                likeService.addLike(lId, no);
+//	                likeService.addLike(lId, no);
+	            	Like likeObj = new Like().builder()
+	            							 .lid(lId)
+	            							 .no(no)
+	            							 .build();
+	            	likeService.addLike(likeObj);
 	            }
 	            cultureFacilityService.save(cultureFacility);
 	        }
 
 	        // 최종 좋아요 상태를 확인합니다.
 	        boolean finalLikeStatus = likeService.isLiked(lId, no);
+	        System.out.println("4. no : " + no);
 	        return ResponseEntity.ok(finalLikeStatus);
 	    } catch (Exception e) {
 	        // 예외가 발생하면 로그를 출력하고 500 에러를 반환합니다.
@@ -88,7 +112,7 @@ public class LikeController {
 	}
 	
 
-@PostMapping("/like/status")
+	@PostMapping("/like/status")
 	public ResponseEntity<Boolean> getLikeStatus(@RequestBody Map<String, Object> boardInfo) {
 		
 		//like테이블에 해당 게시물 번호와 사용자 id가 있는지 없는 지 검사
@@ -96,7 +120,7 @@ public class LikeController {
 		String lId = String.valueOf(boardInfo.get("lId"));
 		Long no = Long.parseLong(String.valueOf(boardInfo.get("no")));
 		boolean isLiked= false;
-		if(no > 20000) {
+		if(no < 20000) {
 			//산책로
 			isLiked = likeService.isLiked((String)boardInfo.get("lId"), (Long)boardInfo.get("no"));
 			if(isLiked/*like테이블에 사용자 아이디와 게시물 아이디가 있는지 없는지*/) {
@@ -104,7 +128,7 @@ public class LikeController {
 				WalkingTrail walkingTrail = walkingTrailService.findById(no);
 				walkingTrail.setLikeCount(walkingTrail.getLikeCount() - 1);
 				walkingTrailService.save(walkingTrail);
-				likeService.deleteLike(lId, no);
+//				likeService.deleteLike(lId, no);
 				/*
 				 * 산책로 객체=산책로 번호로 검색(findById)
 				 * 산책로 객체.setLiked(산책로 객체.getLike-1)
@@ -122,7 +146,7 @@ public class LikeController {
 				WalkingTrail walkingTrail = walkingTrailService.findById(no);
 				walkingTrail.setLikeCount(walkingTrail.getLikeCount() + 1);
 				walkingTrailService.save(walkingTrail);
-				likeService.addLike(lId, no);
+//				likeService.addLike(lId, no);
 			}
 		}else {
 			//문화시설
@@ -131,12 +155,12 @@ public class LikeController {
 				CultureFacility cultureFacility = cultureFacilityService.findById(no);
 				cultureFacility.setLikeCount(cultureFacility.getLikeCount() - 1);
 				cultureFacilityService.save(cultureFacility);
-				likeService.deleteLike(lId, no);
+//				likeService.deleteLike(lId, no);
 			}else {
 				CultureFacility cultureFacility = cultureFacilityService.findById(no);
 				cultureFacility.setLikeCount(cultureFacility.getLikeCount() + 1);
 				cultureFacilityService.save(cultureFacility);
-				likeService.addLike(lId, no);
+//				likeService.addLike(lId, no);
 			}
 		}
 		

@@ -87,10 +87,5 @@ public class WalkingTrailController {
 		return walkingTrailService.getWalkingTrailById(wId);
 	}
     
-    @GetMapping("/adjacent/{wId}")
-    public ResponseEntity<Map<String, Long>> getAdjacentPosts(@PathVariable(name="wId") Long wId) {
-        Map<String, Long> adjacentIds = walkingTrailService.getAdjacentPostIds(wId);
-        return ResponseEntity.ok(adjacentIds);
-    }
     
 }

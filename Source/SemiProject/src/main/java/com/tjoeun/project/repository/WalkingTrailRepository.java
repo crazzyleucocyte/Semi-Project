@@ -31,18 +31,5 @@ public interface WalkingTrailRepository extends JpaRepository<WalkingTrail, Long
 	
 	Page<WalkingTrail> findByCoursTmContentLike(PageRequest of, String keyWord);
 	
-//	@Query("SELECT w FROM WALKING_TRAIL w WHERE w.wId < :wId ORDER BY w.wId DESC")
-//    Optional<WalkingTrail> findPreviousWalkingTrail(@Param("wId") Long wId);
-//
-//    @Query("SELECT w FROM WALKING_TRAIL w WHERE w.wId > :wId ORDER BY w.wId ASC")
-//    Optional<WalkingTrail> findNextWalkingTrail(@Param("wId") Long wId);
-
-	@Query("SELECT w FROM WALKING_TRAIL w WHERE w.wId < :wId ORDER BY w.wId DESC")
-	Optional<WalkingTrail> findFirstByWIdLessThanOrderByWIdDesc(Long currentId);
-
-	@Query("SELECT w FROM WALKING_TRAIL w WHERE w.wId > :wId ORDER BY w.wId ASC")
-	Optional<WalkingTrail> findFirstByWIdGreaterThanOrderByWIdAsc(Long currentId);
-	
-	
 	
 }

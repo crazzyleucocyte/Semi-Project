@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import '../../assets/PostList.css';
 // import * as FaqStyle from '../assets/FaqStyle';
 
-function WalkingTrailsList() {
+function WalkingTrailsList({ likes, onLike }) {
+  const { id } = useParams();
   const [walkingTrails, setWalkingTrails] = useState([]);
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
   const [currentPage, setCurrentPage] = useState(1); // 1부터 시작하는 페이지 번호
@@ -15,12 +16,13 @@ function WalkingTrailsList() {
   const [currentBlock, setCurrentBlock] = useState(0);    // 현재 페이지 블록
   const [searchCategory, setSearchCategory] = useState('null');
   const [searchTerm, setSearchTerm] = useState('');
+
+  // const [isLiked, setIsLiked] = useState(false);
+  const userId = localStorage.getItem('username');
+  const [like, setLike] = useState(false);
   
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-  const [sortField, setSortField] = useState(null);
-  const [sortDirection, setSortDirection] = useState('asc');
   
   // 페이지 변경 처리
   const handlePageChange = (pageNumber) => {
@@ -109,35 +111,43 @@ function WalkingTrailsList() {
     }
   };
 
-  const handleSort = (field) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortDirection('asc');
+  const handleLike = async (wid) => {
+    try {
+      const response = await axios.post(`/api/like`,{
+        lId:userId,
+        no:wid
+      });
+      console.log(response.data);
+
+      setWalkingTrails(prevTrails => prevTrails.map(trail => 
+        trail.wid === wid 
+          ? {
+            ...trail, 
+            likeCount: trail.isLiked ? trail.likeCount - 1 : trail.likeCount + 1,
+            isLiked: !trail.isLiked
+          } 
+          : trail
+      ));
+    } catch (error) {
+      console.error('좋아요 처리 중 오류 발생:', error);
+      alert('좋아요 처리 중 오류가 발생했습니다.');
     }
   };
 
-  const sortedWalkingTrails = [...walkingTrails].sort((a, b) => {
-    if (sortField === null) return 0;
-    
-    let aValue = a[sortField];
-    let bValue = b[sortField];
-
-    if (sortField === 'coursLvNm') {
-      const levelOrder = { '매우쉬움': 1, '쉬움': 2, '보통': 3, '어려움': 4, '매우어려움': 5 };
-      aValue = levelOrder[a.coursLvNm] || 0;
-      bValue = levelOrder[b.coursLvNm] || 0;
-    } else if (sortField === 'coursTmContent') {
-      aValue = parseInt(a.coursTmContent) || 0;
-      bValue = parseInt(b.coursTmContent) || 0;
-    }
-
-    if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-    if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
-    return 0;
-  });
-
+  useEffect(() => {
+    // 백엔드로부터 게시글 데이터를 가져옴
+    axios.get('/walking/'+ id)
+    .then(response => {
+      console.log(response.data);
+      setWalkingTrails(response.data);
+      // fetchReviews();
+      // fetchAdjacentPosts();
+      console.log(walkingTrails);
+    })
+    .catch(error => {
+      console.error('Error fetching walkingTrail data: ', error);
+    });
+  }, [like]);
   
   return (
     <div>
@@ -157,16 +167,10 @@ function WalkingTrailsList() {
           <tr>
             {/* <th>글번호</th> */}
             <th>시군구</th>
-            <th onClick={() => handleSort('likes')} style={{cursor: 'pointer'}}>
-              좋아요 {sortField === 'likes' && (sortDirection === 'asc' ? '▲' : '▼')}
-            </th>
+            <th>좋아요</th>
             <th>산책길 이름</th>
-            <th onClick={() => handleSort('coursLvNm')} style={{cursor: 'pointer'}}>
-              경로레벨 {sortField === 'coursLvNm' && (sortDirection === 'asc' ? '▲' : '▼')}
-            </th>
-            <th onClick={() => handleSort('coursTmContent')} style={{cursor: 'pointer'}}>
-              산책 시간 {sortField === 'coursTmContent' && (sortDirection === 'asc' ? '▲' : '▼')}
-            </th>
+            <th>경로레벨</th>
+            <th>산책 시간</th>
           </tr>
         </thead>
         <tbody>
@@ -175,7 +179,9 @@ function WalkingTrailsList() {
               {/* <td>{walkingTrails.wid}</td> */}
               <td>{walkingTrails.signguNm}</td>
               <td>
-                <button className='likeBtn'>👍</button>
+                <button onClick={()=>handleLike(walkingTrails.wid)} className='likeBtn'>
+                  {walkingTrails.isLiked ? '💔 취소' : '❤️ 좋아요'} {walkingTrails.likeCount || 0}
+                </button>&emsp;
               </td>
               <td className='detail-td'>
                 <Link to={`/walk/${walkingTrails.wid}`}>{walkingTrails.wlktrlName}</Link>
