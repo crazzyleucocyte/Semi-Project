@@ -34,6 +34,8 @@ function PostReviewDetail({ onAddReview }) {
   };
 
   return (
+    <>
+    <br/><br/>
     <div className="review-detail">
       <h1>후기 작성</h1>
      {/* <form onSubmit={handleSubmit}> */}
@@ -43,7 +45,7 @@ function PostReviewDetail({ onAddReview }) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           required
-        ></textarea>
+          ></textarea>
 
         {/* 사진 첨부 입력 필드 */}
        
@@ -54,6 +56,7 @@ function PostReviewDetail({ onAddReview }) {
         <button onClick={() => navigate(`/${category}/${id}/`)}>목록으로 가기</button>
       </div>
     </div>
+  </>
   );
 }
 

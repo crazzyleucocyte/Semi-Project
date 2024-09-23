@@ -162,6 +162,7 @@ function WalkingTrailsList({ likes, onLike }) {
 
   useEffect(() => {
     const storedLikes = JSON.parse(localStorage.getItem('likedPosts') || '{}');
+    console.log(1)
     setLikedPosts(storedLikes);
     fetchData();
   }, [fetchData]);

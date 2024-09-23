@@ -14,45 +14,45 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
   const [isLiked, setIsLiked] = useState(false);
   const [like, setLike] = useState(false);
   const userId = localStorage.getItem('username');
-  const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
-
+  
   // const [prevPostId, setPrevPostId] = useState(null);
   // const [nextPostId, setNextPostId] = useState(null);
-
-  // useEffect(() => {
-  //   // 초기 좋아요 상태 확인
-  //   checkLikeStatus();
-  // }, []);
-
-  // const checkLikeStatus = async () => {
-  //   try {
-  //     const response = await axios.get(`/api/like/status?userId=${userId}&postNo=${postId}`);
-  //     setIsLiked(response.data);
-  //   } catch (error) {
-  //     console.error('좋아요 상태 확인 중 오류 발생:', error);
-  //   }
-  // };
-
-  // const handleLike = async () => {
-  //   try {
-  //     const response = await axios.post(`/api/like?userId=${userId}&postNo=${postId}`);
-  //     const newLikeStatus = response.data;
-  //     setIsLiked(newLikeStatus);
-  //     setLikeCount(prevCount => newLikeStatus ? prevCount + 1 : prevCount - 1);
-  //   } catch (error) {
-  //     console.error('좋아요 처리 중 오류 발생:', error);
-  //   }
-  // };
-  const initialReviews = [
-    {
-      no: 0,
-      content: "",
-      createDate: "",
-      rid: ""
-    } 
-  ];
   
-
+  // useEffect(() => {
+    //   // 초기 좋아요 상태 확인
+    //   checkLikeStatus();
+    // }, []);
+    
+    // const checkLikeStatus = async () => {
+      //   try {
+        //     const response = await axios.get(`/api/like/status?userId=${userId}&postNo=${postId}`);
+        //     setIsLiked(response.data);
+  //   } catch (error) {
+    //     console.error('좋아요 상태 확인 중 오류 발생:', error);
+    //   }
+    // };
+    
+    // const handleLike = async () => {
+      //   try {
+        //     const response = await axios.post(`/api/like?userId=${userId}&postNo=${postId}`);
+        //     const newLikeStatus = response.data;
+        //     setIsLiked(newLikeStatus);
+        //     setLikeCount(prevCount => newLikeStatus ? prevCount + 1 : prevCount - 1);
+        //   } catch (error) {
+          //     console.error('좋아요 처리 중 오류 발생:', error);
+          //   }
+          // };
+          const initialReviews = [
+            {
+              no: 0,
+              content: "",
+              createDate: "",
+              rid: ""
+            } 
+          ];
+          const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
+          
+          
   const handleLike = async () => {
     try {
       const postId = walkingTrails.wid;
@@ -271,15 +271,7 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
 
       {isLoggedIn && (
         <div className='div-detail'>
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            const content = e.target.reviewContent.value;
-            // handleAddReview({ content });
-            e.target.reviewContent.value = '';
-          }}>
-            <textarea name="reviewContent" required></textarea>
-            <button type="submit" className="button-detail">후기 작성</button>
-          </form>
+          <button onClick={() => navigate(`/review/${walkingTrails.wid}/walk`)} className="button-detail">후기 작성</button>
         </div>
       )}
 
