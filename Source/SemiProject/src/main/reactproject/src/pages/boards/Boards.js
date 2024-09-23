@@ -7,18 +7,29 @@ import PostCultureDetail from './PostCultureDetail'; // PostCultureDetail import
 import PostReviewDetail from './PostReviewDetail';
 import Weather from "../weather/Weather";
 
-export default function Boards({isLoggedIn, handleAddReview,reviews}){
-   
+export default function Boards({ handleAddReview }){
+  const [likes, setLikes] = useState({});
+
+  const handleLike = (postId, newStatus) => {
+    setLikes(prevLikes => ({
+      ...prevLikes,
+      [postId]: newStatus
+    }));
+  };
 
     return(
         <>
         <Routes>
-            {/* <Route path="/api" element={<Test  handleSetcityInfo={handleSetcityInfo}/>} />  */}
-            <Route path='/weather' element={<div><Weather /></div>}/>
-            <Route path="/walk" element={<PostWalkList isLoggedIn={isLoggedIn} />} />
-            <Route path="/walk/:id" element={<PostWalkDetail onAddReview={handleAddReview} isLoggedIn={isLoggedIn} reviews={reviews}  />} />
-            <Route path="/culture" element={<PostCultureList isLoggedIn={isLoggedIn} />} />
-          <Route path="/culture/:id" element={<PostCultureDetail isLoggedIn={isLoggedIn} />} />
+          
+          <Route path="/walk" element={<PostWalkList likes={likes} />} />
+          <Route path="/walk/:id" element={<PostWalkDetail likes={likes} onLike={handleLike} />} />
+          
+          {/* <Route path="/api" element={<Test  handleSetcityInfo={handleSetcityInfo}/>} />  */}
+          <Route path='/weather' element={<div><Weather /></div>}/>
+          <Route path="/walk" element={<PostWalkList />} />
+          <Route path="/walk/:id" element={<PostWalkDetail />} />
+          <Route path="/culture" element={<PostCultureList />} />
+          <Route path="/culture/:id" element={<PostCultureDetail />} />
           <Route
             path="/review/:id/:category"
             element={<PostReviewDetail onAddReview={handleAddReview} />}

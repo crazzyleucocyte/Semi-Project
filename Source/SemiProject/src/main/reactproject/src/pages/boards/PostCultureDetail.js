@@ -19,30 +19,33 @@ const initialReviews = [
   },
 ];
 
-function PostCultureDetail({ isLoggedIn }) {
+function PostCultureDetail({ isLoggedIn, likes, onLike }) {
   const { id } = useParams();
   const [culture, setCulture] = useState([]);
   const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
   const dispatch =useDispatch()
 
+  const userId = localStorage.getItem('username');
+  const [like, setLike] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  // const [likes, setLikes] = useState(0);
+  const [likeCount, setLikeCount] = useState(0);
+
 
   useEffect(() => {
-    axios.get('/culture/' + id, {
-
-    })
+    console.log(like);
+    axios.get('/culture/' + id)
     .then(response => {
       console.log(response.data);
       setCulture(response.data);
-      
     })
     .catch(error => {
       console.error('Error fetching culture data: ', error);
     });
-  }, []);
+  }, [like]);
 
-  const [post, setPost] = useState(null);
-  const [likes, setLikes] = useState(0);
-  const [likedByUser, setLikedByUser] = useState(false);
+  // const [post, setPost] = useState(null);
+  // const [likedByUser, setLikedByUser] = useState(false);
   const navigate = useNavigate();
 
   // useEffect(() => {
@@ -60,19 +63,6 @@ function PostCultureDetail({ isLoggedIn }) {
   //   }
   // }, [id]);
 
-  const handleLike = () => {
-    if (isLoggedIn) {
-      if (likedByUser) {
-        setLikes(likes - 1);
-      } else {
-        setLikes(likes + 1);
-      }
-      setLikedByUser(!likedByUser);
-    } else {
-      alert('로그인 후 좋아요를 누를 수 있습니다.');
-    }
-  };
-
   // if (!post) {
   //   return <div>게시글을 찾을 수 없습니다.</div>;
   // }
@@ -84,13 +74,38 @@ function PostCultureDetail({ isLoggedIn }) {
       signguNm : culture.signguName
     }))
   }
+
+  const handleLike = async () => {
+    try {
+      const postId = culture.cid;
+      const response = await axios.post(`/api/like`,{
+        lId:userId,
+        no:postId
+      });
+      console.log(response.data);
+      
+      // const newLikeStatus = !isLiked;
+      // setIsLiked(newLikeStatus);
+      // setLike(!like)
+      // const newLikeStatus = !likes;
+      console.log(response.data);
+      // onLike(postId, newLikeStatus);
+      console.log(response.data);
+      // setLike(newLikeStatus);
+      setLike(!like)
+      console.log(response.data);
+    } catch (error) {
+      console.error('좋아요 처리 중 오류 발생:', error);
+    }
+  };
+
   return (
     <div className="post-detail">
 
       <div className='detail-div'>
         <h1 className='h1-list'>{culture.fcltyName}</h1>
-        <button onClick={handleLike} className='button-detail'>
-                {likedByUser ? '좋아요 취소' : '👍좋아요'} {likes}
+        <button onClick={()=>handleLike()} className='button-detail'>
+                {isLiked ? '❤️' : '🤍'} {culture.likeCount}
         </button>&emsp;
         <button className='button-detail' onClick={()=>{
           setWeatherInfo();

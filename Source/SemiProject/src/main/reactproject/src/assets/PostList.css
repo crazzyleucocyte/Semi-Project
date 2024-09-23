@@ -161,7 +161,7 @@ button:hover:not(:disabled) {
   /* background-color: #007bff; */
   /* background-color: #28a745; */
   background-color: #fff;
-  color: #fff;
+  color: #333;
   border: none;
   border-radius: 4px;
   margin-left: 10px;

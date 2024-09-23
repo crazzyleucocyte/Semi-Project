@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.tjoeun.project.domain.CultureFacility;
+import com.tjoeun.project.domain.WalkingTrail;
 import com.tjoeun.project.repository.CultureFacilityRepository;
 
 @Service
@@ -47,7 +48,7 @@ public class CultureFacilityService {
 	}
 
 	public CultureFacility findById(Long no) {
-		return cultureFacilityRepository.findById(no).orElseThrow(() -> new RuntimeException("Post not found"));
+		return cultureFacilityRepository.findById(no).get();
 	}
 
 	public CultureFacility save(CultureFacility cultureFacility) {

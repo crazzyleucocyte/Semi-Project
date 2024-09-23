@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity(name="TB_LIKE")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @IdClass(LikeId.class)
 public class Like {
 
@@ -31,5 +33,6 @@ public class Like {
 	@CreatedDate
 	@Column(name="LikeDate", insertable=false, updatable=false, columnDefinition="DATE DEFAULT SYSDATE")
 	private LocalDateTime likeDate;
+	
 	
 }

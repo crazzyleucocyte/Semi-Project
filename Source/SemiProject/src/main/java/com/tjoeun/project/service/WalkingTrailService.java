@@ -78,30 +78,4 @@ public class WalkingTrailService {
 		return walkingTrailRepository.save(walkingTrail);
 	}
 
-
-	public Map<String, Long> getAdjacentPostIds(Long currentId) {
-        Map<String, Long> result = new HashMap<>();
-        
-        System.out.println("현재 게시물 ID: " + currentId);
-
-        walkingTrailRepository.findFirstByWIdLessThanOrderByWIdDesc(currentId)
-            .ifPresentOrElse(
-                prevTrail -> {
-                    result.put("prevId", prevTrail.getWId());
-                    System.out.println("이전 게시물 ID: " + prevTrail.getWId());
-                },
-                () -> System.out.println("이전 게시물이 없습니다.")
-            );
-
-        walkingTrailRepository.findFirstByWIdGreaterThanOrderByWIdAsc(currentId)
-            .ifPresentOrElse(
-                nextTrail -> {
-                    result.put("nextId", nextTrail.getWId());
-                    System.out.println("다음 게시물 ID: " + nextTrail.getWId());
-                },
-                () -> System.out.println("다음 게시물이 없습니다.")
-            );
-
-        return result;
-		}
 	}
