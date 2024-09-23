@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "../../assets/Profile2.css";
 
 const Profile = () => {
+  // 사용자의 정보를 저장할 상태 선언
   const [userInfo, setUserInfo] = useState({
     id: "",
     pwd: "",
@@ -18,90 +19,100 @@ const Profile = () => {
     isDeleted: "",
   });
 
+  // 성공 메시지 표시를 위한 상태
   const [showSuccess, setShowSuccess] = useState(false); 
+  // 로딩 상태 관리
   const [isLoading, setIsLoading] = useState(false); 
 
+  // 페이지 이동을 위한 navigate 훅
   const navigate = useNavigate(); 
-  const userId = localStorage.getItem("username");  // 현재 로그인된 사용자의 ID를 가져오는 로직이 필요
+  // 현재 로그인된 사용자의 ID를 로컬 스토리지에서 가져옴
+  const userId = localStorage.getItem("username");
 
-  // 회원 정보 가져오기 (axios 사용)
+  // 컴포넌트가 처음 렌더링될 때, 회원 정보를 가져오는 useEffect 훅
   useEffect(() => {
     axios
-      .get(`/member/profile/${userId}`)  // 백엔드에서 회원 정보 가져오기
+      .get(`/member/profile/${userId}`)  // 서버에서 회원 정보를 가져옴
       .then((response) => {
-        setUserInfo(response.data); // 가져온 회원 정보 설정
+        setUserInfo(response.data); // 가져온 정보를 상태에 저장
       })
       .catch((error) => {
         console.error("회원 정보를 가져오는 중 오류 발생:", error);
       });
   }, [userId]);
 
-  // input 필드 값 변경 시 userInfo 상태 업데이트
+  // input 필드 값이 변경될 때 userInfo 상태 업데이트
   const handleChange = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
-  // 회원정보 수정 시 처리하는 함수
+  // 회원 정보 저장(수정) 처리 함수
   const handleSave = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
     console.log(userInfo);
-    setIsLoading(true); 
+    setIsLoading(true); // 로딩 상태 활성화
 
-    axios.put(`/member/profile/${userId}`, userInfo)  // 백엔드에 수정된 정보 전달
+    axios.put(`/member/profile/${userId}`, userInfo)  // 서버에 수정된 회원 정보를 전송
       .then((response) => {
         console.log("response = " , response);
         console.log("수정된 정보:", userInfo);
         setShowSuccess(true);  // 성공 메시지 표시
-        setIsLoading(false);  // 로딩 상태 종료
+        setIsLoading(false);  // 로딩 상태 비활성화
       })
       .catch((error) => {
         console.error("회원 정보를 수정하는 중 오류 발생:", error);
-        setIsLoading(false); 
+        setIsLoading(false);  // 에러 발생 시 로딩 상태 비활성화
       });
   };
 
-  // 비밀번호 변경 버튼 클릭 시 비밀번호 변경 페이지로 이동
+  // 비밀번호 변경 페이지로 이동하는 함수
   const handlePasswordChange = () => {
-    navigate("/password-change");
+    navigate("/password-change"); // 비밀번호 변경 페이지로 이동
   };
 
-  // 회원 탈퇴 버튼 클릭 시 회원 탈퇴 확인 및 처리
+  // 회원 탈퇴 처리 함수
   const handleDeleteAccount = () => {
+    // 탈퇴 여부를 묻는 확인창
     const isConfirmed = window.confirm("정말로 탈퇴하시겠습니까?");
     
     if (isConfirmed) {
       axios
-        .delete(`/member/profile/${userId}`)  // 백엔드에서 회원 탈퇴 처리
+        .delete(`/member/profile/${userId}`)  // 서버에 탈퇴 요청
         .then((response) => {
           console.log("회원 탈퇴 처리:", response.data);
-          localStorage.clear(); //탈퇴 후 localStorage 데이터 삭제 
-          sessionStorage.clear(); // 탈퇴 후 sessionStorage 데이터 삭제
-          navigate("/");  // 탈퇴 후 메인 페이지로 이동
+          // 탈퇴 후 로컬 스토리지와 세션 스토리지를 삭제
+          localStorage.clear(); 
+          sessionStorage.clear(); 
+          // 탈퇴 후 메인 페이지로 이동
+          navigate("/");  
+          window.alert("탈퇴가 완료되었습니다.")
         })
         .catch((error) => {
           console.error("회원 탈퇴 중 오류 발생:", error);
         });
     } else {
-      console.log("회원 탈퇴 취소");
+      console.log("회원 탈퇴 취소"); // 탈퇴 취소 시 로그 출력
     }
   };
 
   return (
-    <div
-      className="profile__wrapper"
-      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/member/background.jpg)` }} 
-    >
-      <div className="profile__backdrop"></div> 
-      
-      <form className="shadow p-4 bg-white rounded" onSubmit={handleSave}>
+    <div className="profile__wrapper">
+      {/* 회원 정보 수정 폼 */}
+      <form 
+        className="shadow p-4 bg-white rounded" 
+        style={{ border: '2px solid black' }}  // 검정색 테두리 추가
+        onSubmit={handleSave}
+      >
+        {/* 로고 이미지 */}
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={process.env.PUBLIC_URL + '/img/member/logo.png'}
+          src={process.env.PUBLIC_URL + '/img/member/logo2.png'}
           alt="logo"
         />
 
         <div className="h4 mb-2 text-center">회원 정보</div>
 
+        {/* 성공 메시지 표시 */}
         {showSuccess && (
           <Alert
             className="mb-2"
@@ -113,7 +124,7 @@ const Profile = () => {
           </Alert>
         )}
 
-        {/* 이름 필드 */}
+        {/* 이름 입력 필드 */}
         <div className="mb-2">
           <label htmlFor="name">이름</label>
           <input
@@ -125,10 +136,11 @@ const Profile = () => {
             onChange={handleChange}
             required
             className="form-control"
+            style={{ border: '2px solid black' }}
           ></input>
         </div>
 
-        {/* 이메일 필드 */}
+        {/* 이메일 입력 필드 */}
         <div className="mb-2">
           <label htmlFor="email">이메일</label>
           <input
@@ -140,10 +152,11 @@ const Profile = () => {
             onChange={handleChange}
             required
             className="form-control"
+            style={{ border: '2px solid black' }}
           />
         </div>
 
-        {/* 전화번호 필드 */}
+        {/* 전화번호 입력 필드 */}
         <div className="mb-2">
           <label htmlFor="phone">전화번호</label>
           <input
@@ -155,10 +168,11 @@ const Profile = () => {
             onChange={handleChange}
             required
             className="form-control"
+            style={{ border: '2px solid black' }}
           />
         </div>
 
-        {/* 성별 필드 - 드롭다운으로 변경 */}
+        {/* 성별 선택 필드 */}
         <div className="mb-2">
           <label htmlFor="gender">성별</label>
           <select
@@ -168,6 +182,7 @@ const Profile = () => {
             onChange={handleChange}
             required
             className="form-control"
+            style={{ border: '2px solid black' }}
           >
             <option value="">성별을 선택하세요</option>
             <option value="M">남자</option>
@@ -176,7 +191,7 @@ const Profile = () => {
           </select>
         </div>
 
-        {/* 가입일 필드 - 숨김 처리 */}
+        {/* 가입일 필드 (숨김 처리) */}
         <div className="mb-2" style={{ display: "none" }}>
           <label htmlFor="createDate">가입일</label>
           <input
@@ -191,7 +206,7 @@ const Profile = () => {
           />
         </div>
 
-        {/* 마지막 수정일 필드 - 숨김 처리 */}
+        {/* 마지막 수정일 필드 (숨김 처리) */}
         <div className="mb-2" style={{ display: "none" }}>
           <label htmlFor="modifiedDate">마지막 수정일</label>
           <input
@@ -206,15 +221,17 @@ const Profile = () => {
           />
         </div>
 
+        {/* 회원 정보 수정 버튼 */}
         <Button
           className="w-100 mb-3"
           variant="primary"
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading}  // 로딩 상태일 때 버튼 비활성화
         >
           {isLoading ? "저장중.." : "수정"}
         </Button>
 
+        {/* 비밀번호 변경 버튼 */}
         <Button
           className="w-100 mb-3"
           variant="secondary"
@@ -223,6 +240,7 @@ const Profile = () => {
           비밀번호 변경
         </Button>
 
+        {/* 회원 탈퇴 버튼 */}
         <Button
           className="w-100"
           variant="danger"
