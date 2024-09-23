@@ -8,7 +8,7 @@ const PasswordCheck = () => {
   const [password, setPassword] = useState(""); // 입력된 비밀번호 상태
   const [showError, setShowError] = useState({ show: false, message: "" }); // 에러 상태
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
-  const userId = localStorage.getItem("username")
+  const userId = localStorage.getItem("username");
   const navigate = useNavigate();
 
   // 비밀번호 입력 시 상태 업데이트
@@ -46,19 +46,17 @@ const PasswordCheck = () => {
   };
 
   return (
-    <div
-      className="profile__wrapper"
-      style={{
-        backgroundImage: `url(${process.env.PUBLIC_URL}/img/member/background.jpg)`,
-      }}
-    >
-      <div className="profile__backdrop"></div> {/* 배경 위에 어두운 레이어 */}
-
-      <form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
+    <div className="profile__wrapper">
+      {/* 배경 관련 요소 삭제 */}
+      <form 
+        className="shadow p-4 bg-white rounded" 
+        style={{ border: '2px solid black' }}  // 검정색 테두리 추가
+        onSubmit={handleSubmit}
+      >
         {/* 로고 이미지 */}
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={process.env.PUBLIC_URL + "/img/member/logo.png"}
+          src={process.env.PUBLIC_URL + "/img/member/logo2.png"}
           alt="logo"
         />
 
@@ -89,6 +87,7 @@ const PasswordCheck = () => {
             onChange={handleChange}
             required
             className="form-control"
+            style={{ border: '2px solid black' }}
           />
         </div>
 

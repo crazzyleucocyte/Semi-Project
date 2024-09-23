@@ -1,29 +1,34 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios"; // axios 임포트 추가
-import { Button, Alert } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; 
-import "../../assets/Profile2.css"; 
+import React, { useState } from "react";
+import axios from "axios"; // axios를 이용한 비동기 통신을 위해 axios 임포트
+import { Button, Alert } from "react-bootstrap"; // Bootstrap 스타일 버튼과 Alert 사용
+import { useNavigate } from "react-router-dom"; // 페이지 이동을 위한 useNavigate 훅 사용
+import "../../assets/Profile2.css"; // CSS 파일 임포트
 
 const PasswordChange = () => {
+  // 비밀번호 입력 필드의 상태 관리
   const [passwords, setPasswords] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    currentPassword: "", // 현재 비밀번호
+    newPassword: "",     // 새 비밀번호
+    confirmPassword: "", // 새 비밀번호 확인
   });
 
+  // 성공 메시지 표시 여부를 관리하는 상태
   const [showSuccess, setShowSuccess] = useState(false); 
+  // 로딩 상태 관리
   const [isLoading, setIsLoading] = useState(false); 
+  // 페이지 이동을 위한 useNavigate 훅 사용
   const navigate = useNavigate(); 
-  const userId = localStorage.getItem("username");  // 현재 로그인된 사용자의 ID 가져오기
+  // 현재 로그인된 사용자의 ID를 로컬 스토리지에서 가져오기
+  const userId = localStorage.getItem("username");  
 
-  // input 필드 값 변경 시 passwords 상태 업데이트
+  // 입력 필드 값이 변경될 때 passwords 상태를 업데이트하는 함수
   const handleChange = (e) => {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
   };
 
-  // 비밀번호 변경 시 처리하는 함수
+  // 비밀번호 변경을 처리하는 함수
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
     
     // 새 비밀번호와 확인 비밀번호가 일치하는지 확인
     if (passwords.newPassword !== passwords.confirmPassword) {
@@ -31,61 +36,67 @@ const PasswordChange = () => {
       return;
     }
 
-    setIsLoading(true); // 로딩 상태 시작
+    setIsLoading(true); // 로딩 상태 활성화
 
     try {
-      // 비밀번호 변경 요청 (axios 사용)
+      // 비밀번호 변경 요청을 서버에 전송 (axios 사용)
       const response = await axios.put(`/member/changePassword/${userId}`, {
-        currentPassword: passwords.currentPassword,
-        newPassword: passwords.newPassword,
+        currentPassword: passwords.currentPassword, // 현재 비밀번호
+        newPassword: passwords.newPassword,         // 새 비밀번호
       });
 
       console.log("비밀번호 변경 성공:", response.data);
 
       setShowSuccess(true); // 성공 메시지 표시
-      setIsLoading(false); // 로딩 상태 종료
-      localStorage.clear();
-      sessionStorage.clear();
-      navigate("/")
+      setIsLoading(false); // 로딩 상태 비활성화
+      localStorage.clear(); // 비밀번호 변경 후 로컬 스토리지 삭제
+      sessionStorage.clear(); // 세션 스토리지 삭제
+      window.alert("비밀번호 변경이 완료되었습니다."); // 변경 완료 알림
+      navigate("/"); // 메인 페이지로 이동
     } catch (error) {
+      // 비밀번호 변경 실패 시 에러 처리
       console.error("비밀번호 변경 중 오류 발생:", error);
-      alert("현재 비밀번호가 일치하지 않습니다.");
-      setIsLoading(false); // 로딩 상태 종료
+      alert("현재 비밀번호가 일치하지 않습니다."); // 에러 메시지 표시
+      setIsLoading(false); // 로딩 상태 비활성화
     }
   };
 
-  // 취소 버튼 클릭 시 프로필 페이지로 이동
+  // 취소 버튼 클릭 시 프로필 페이지로 이동하는 함수
   const handleCancel = () => {
     navigate("/profile");
   };
 
   return (
-    <div
-      className="profile__wrapper"
-      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/member/background.jpg)` }} 
-    >
-      <div className="profile__backdrop"></div> 
-      
-      <form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
+    <div className="profile__wrapper">
+      {/* 비밀번호 변경 폼 */}
+      <form 
+        className="shadow p-4 bg-white rounded" 
+        style={{ border: '2px solid black' }}  // 검정색 테두리 추가
+        onSubmit={handleSubmit}
+      >
+        {/* 로고 이미지 */}
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={process.env.PUBLIC_URL+'/img/member/logo.png'}
+          src={process.env.PUBLIC_URL + '/img/member/logo2.png'}
           alt="logo"
         />
 
+        {/* 비밀번호 변경 제목 */}
         <div className="h4 mb-2 text-center">비밀번호 변경</div>
 
+        {/* 비밀번호 변경 성공 시 성공 메시지 표시 */}
         {showSuccess && (
           <Alert
             className="mb-2"
             variant="success"
-            onClose={() => setShowSuccess(false)} 
+            onClose={() => setShowSuccess(false)} // 닫기 버튼 클릭 시 메시지 숨김
             dismissible
           >
             비밀번호가 성공적으로 변경되었습니다.
           </Alert>
         )}
 
+        {/* 현재 비밀번호 입력 필드 */}
         <div className="mb-2">
           <label htmlFor="currentPassword">현재 비밀번호</label>
           <input
@@ -97,9 +108,11 @@ const PasswordChange = () => {
             onChange={handleChange}
             required
             className="form-control"
+            style={{ border: '2px solid black' }}
           />
         </div>
 
+        {/* 새 비밀번호 입력 필드 */}
         <div className="mb-2">
           <label htmlFor="newPassword">새 비밀번호</label>
           <input
@@ -111,9 +124,11 @@ const PasswordChange = () => {
             onChange={handleChange}
             required
             className="form-control"
+            style={{ border: '2px solid black' }}
           />
         </div>
 
+        {/* 새 비밀번호 확인 입력 필드 */}
         <div className="mb-2">
           <label htmlFor="confirmPassword">새 비밀번호 확인</label>
           <input
@@ -125,22 +140,25 @@ const PasswordChange = () => {
             onChange={handleChange}
             required
             className="form-control"
+            style={{ border: '2px solid black' }}
           />
         </div>
 
+        {/* 비밀번호 변경 버튼 */}
         <Button
           className="w-100 mb-3"
           variant="primary"
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading} // 로딩 중에는 버튼 비활성화
         >
           {isLoading ? "저장중.." : "변경"}
         </Button>
 
+        {/* 취소 버튼 */}
         <Button
           className="w-100"
           variant="secondary"
-          onClick={handleCancel}
+          onClick={handleCancel} // 클릭 시 취소 처리
         >
           취소
         </Button>
