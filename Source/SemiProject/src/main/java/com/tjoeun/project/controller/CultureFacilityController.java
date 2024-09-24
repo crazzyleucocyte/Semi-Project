@@ -32,7 +32,7 @@ public class CultureFacilityController {
 	
 	@PostMapping("/list")
 	public Map<String, Object> getAllCultureFacilityList(@RequestBody Map<String, String> map) {
-		int page = Integer.parseInt(map.get("page"));
+		int page = Integer.parseInt(map.get("page"))-1;
 		int numPerPage = Integer.parseInt(map.get("numPerPage"));
 		
 		
@@ -77,7 +77,8 @@ public class CultureFacilityController {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("list", pageList.getContent());
 		result.put("totalRecord", pageList.getTotalElements());
-		result.put("totalPages", Math.ceil(pageList.getTotalElements()/10));
+		result.put("totalPages",pageList.getTotalPages());
+		result.put("currentPages",pageList.getNumber()+1);
 //		result.put("totalPages", (int) Math.ceil((double) pageList.getTotalElements() / numPerPage));
 		
 		return result;

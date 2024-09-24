@@ -50,6 +50,8 @@ function WalkingTrailsList({ likes, onLike }) {
   // const filteredPosts = walkingTrails.slice(indexOfFirstPost, indexOfLastPost);
 
   function listCaller(){
+    console.log('searchCategory : ', searchCategory)
+    console.log('searchInput : ', searchInput)
     axios.post('/walking/list',{
       'page' : currentPage,
       'numPerPage' : postsPerPage,
@@ -58,7 +60,7 @@ function WalkingTrailsList({ likes, onLike }) {
     })
     .then(response => {
       console.log("currentPage ", currentPage);
-      console.log(response.data);
+      console.log('listCaller : ',response.data);
       setWalkingTrails(response.data.list);
       setTotalRecord(response.data.totalRecord);
       setTotalPages(response.data.totalPages);
@@ -94,12 +96,14 @@ function WalkingTrailsList({ likes, onLike }) {
     listCaller()
   }, [currentPage, postsPerPage ]);
 
+  //검색버튼 클릭
   const handleSearch = () => {
-    setSearchTerm(searchInput);
+    // setSearchTerm(searchInput);
     SearchWalkingTrail();
     setCurrentPage(1);
   };
 
+  //input onChange
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
   };
@@ -133,39 +137,39 @@ function WalkingTrailsList({ likes, onLike }) {
     }
   };
 
-  const fetchData = useCallback(async () => {
-    try {
-      const response = await axios.post('/walking/list', {
-        'page': currentPage,
-        'numPerPage': postsPerPage,
-        'keyField': searchCategory,
-        'keyWord': searchInput
-      });
+  // const fetchData = useCallback(async () => {
+  //   try {
+  //     const response = await axios.post('/walking/list', {
+  //       'page': currentPage,
+  //       'numPerPage': postsPerPage,
+  //       'keyField': searchCategory,
+  //       'keyWord': searchInput
+  //     });
       
-      const storedLikes = JSON.parse(localStorage.getItem('likedPosts') || '{}');
+  //     const storedLikes = JSON.parse(localStorage.getItem('likedPosts') || '{}');
       
-      const updatedTrails = response.data.list.map(trail => ({
-        ...trail,
-        isLiked: storedLikes[trail.wid] || false
-      }));
+  //     const updatedTrails = response.data.list.map(trail => ({
+  //       ...trail,
+  //       isLiked: storedLikes[trail.wid] || false
+  //     }));
 
-      setWalkingTrails(updatedTrails);
-      setTotalRecord(response.data.totalRecord);
+  //     setWalkingTrails(updatedTrails);
+  //     setTotalRecord(response.data.totalRecord);
       
-      const calculatedTotalPages = Math.floor(response.data.totalRecord / postsPerPage);
-      setTotalPages(calculatedTotalPages);
-      setTotalBlock(Math.ceil(calculatedTotalPages / 10));
-    } catch (error) {
-      console.error('Error fetching walkingTrail data: ', error);
-    }
-  }, [currentPage, postsPerPage, searchCategory, searchInput]);
+  //     const calculatedTotalPages = Math.floor(response.data.totalRecord / postsPerPage);
+  //     setTotalPages(calculatedTotalPages);
+  //     setTotalBlock(Math.ceil(calculatedTotalPages / 10));
+  //   } catch (error) {
+  //     console.error('Error fetching walkingTrail data: ', error);
+  //   }
+  // }, [currentPage, postsPerPage, searchCategory]);
 
-  useEffect(() => {
-    const storedLikes = JSON.parse(localStorage.getItem('likedPosts') || '{}');
-    console.log(1)
-    setLikedPosts(storedLikes);
-    fetchData();
-  }, [fetchData]);
+  // useEffect(() => {
+  //   const storedLikes = JSON.parse(localStorage.getItem('likedPosts') || '{}');
+  //   console.log(1)
+  //   setLikedPosts(storedLikes);
+  //   fetchData();
+  // }, [fetchData]);
 
   const handleLike = async (wid) => {
     try {

@@ -71,25 +71,25 @@ function PostCultureList({ likes, onLike }) {
   }
 
   // postsPerPage가 변경될 때마다 totalPages와 totalBlock을 재계산
-  useEffect(() => {
-    if (totalRecord > 0) {
-      const calculatedTotalPages = Math.ceil(totalRecord / postsPerPage);
-      setTotalPages(calculatedTotalPages);
-      setTotalBlock(Math.ceil(calculatedTotalPages / 10));
-    }
-  }, [totalRecord, postsPerPage]);
+  // useEffect(() => {
+  //   if (totalRecord > 0) {
+  //     const calculatedTotalPages = Math.ceil(totalRecord / postsPerPage);
+  //     setTotalPages(calculatedTotalPages);
+  //     setTotalBlock(Math.ceil(calculatedTotalPages / 10));
+  //   }
+  // }, [totalRecord, postsPerPage]);
   
   useEffect(() => {
     listCaller()
-  }, [currentPage, postsPerPage, searchInput, searchCategory]);
+  }, [currentPage, postsPerPage ]);
   
-
+  //검색버튼 누를떄
   const handleSearch = () => {
-    setSearchTerm(searchInput);
+    // setSearchTerm(searchInput);
     SearchCulture();
     setCurrentPage(1);
   };
-
+  // input onChange
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
   };
@@ -102,7 +102,11 @@ function PostCultureList({ likes, onLike }) {
     if(searchCategory == 'null'){
       alert('카테고리를 선택하십시오')
     }else{
-      listCaller();
+      if(currentPage === 1){
+        listCaller()
+      }else{
+        setCurrentPage(1); // 한 페이지에 나타낼 글 수를 변경하면 첫 페이지로 이동
+      }
     }
   }
 

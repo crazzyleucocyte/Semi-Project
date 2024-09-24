@@ -65,6 +65,8 @@
     
   }
   .navBar{
+    font-family: 'SDGothic';
+    font-weight: 500;
     width: 70%;
     display: flex;
     justify-content: space-around;

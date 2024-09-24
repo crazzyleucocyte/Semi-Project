@@ -36,12 +36,14 @@ public class WalkingTrailController {
     
     @PostMapping("/list")
 	public Map<String, Object> getAllWalkingList(@RequestBody Map<String, String> map) {
-		int page = Integer.parseInt(map.get("page"));
+		int page = Integer.parseInt(map.get("page"))-1;
 		int numPerPage = Integer.parseInt(map.get("numPerPage"));
-		System.out.println("numPerPage : "+ numPerPage);
-		
 		String keyField = map.get("keyField");
 		String keyWord = map.get("keyWord");
+		System.out.println("numPerPage : "+ numPerPage);
+		System.out.println("keyField : "+ keyField);
+		System.out.println("keyWord : "+ keyWord);
+		
 		
 		System.out.println("page : " + page);
 		// List<WalkingTrail> result = walkingTrailService.getAllWalkingList(startNum, endNum);
@@ -78,8 +80,8 @@ public class WalkingTrailController {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("list", pageList.getContent());
 		result.put("totalRecord", pageList.getTotalElements());
-		result.put("totalPages", Math.ceil(pageList.getTotalElements()/10));
-		
+		result.put("totalPages", pageList.getTotalPages());
+		System.out.println("pageList : "+ pageList.getContent());
 		return result;
 	}
 	

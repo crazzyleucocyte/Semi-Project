@@ -7,13 +7,14 @@ import Kakao from '../../data/Kakao';
 import { useDispatch } from 'react-redux';
 import { setCityInfo } from '../../hooks/store';
 
-function PostWalkDetail({ isLoggedIn, likes, onLike }) {
+function PostWalkDetail({ likes, onLike }) {
   const { id } = useParams();
   const [walkingTrails, setWalkingTrails] = useState([]);
   const dispatch = useDispatch()
   const [isLiked, setIsLiked] = useState(false);
   const [like, setLike] = useState(false);
   const userId = localStorage.getItem('username');
+  let isLoggedIn = localStorage.getItem('username')===null;
   
   // const [prevPostId, setPrevPostId] = useState(null);
   // const [nextPostId, setNextPostId] = useState(null);
@@ -53,26 +54,26 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
           const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
           
           
-  const handleLike = async () => {
-    try {
-      const postId = walkingTrails.wid;
-      const response = await axios.post(`/api/like`,{
-        lId:userId,
-        no:postId
-      });
-      console.log(response.data);
+  // const handleLike = async () => {
+  //   try {
+  //     const postId = walkingTrails.wid;
+  //     const response = await axios.post(`/api/like`,{
+  //       lId:userId,
+  //       no:postId
+  //     });
+  //     console.log(response.data);
 
-      const newLikeStatus = !likes[postId];
-      onLike(postId, newLikeStatus);
-      setLike(newLikeStatus);
-      // const newLikeStatus = response.data;
-      // setIsLiked(newLikeStatus);
-      // setLikeCount(prevCount => newLikeStatus ? prevCount + 1 : prevCount - 1);
-      setLike(!like)
-    } catch (error) {
-      console.error('좋아요 처리 중 오류 발생:', error);
-    }
-  };
+  //     const newLikeStatus = !likes[postId];
+  //     onLike(postId, newLikeStatus);
+  //     setLike(newLikeStatus);
+  //     // const newLikeStatus = response.data;
+  //     // setIsLiked(newLikeStatus);
+  //     // setLikeCount(prevCount => newLikeStatus ? prevCount + 1 : prevCount - 1);
+  //     setLike(!like)
+  //   } catch (error) {
+  //     console.error('좋아요 처리 중 오류 발생:', error);
+  //   }
+  // };
 
   // PostWalkDetail.propTypes = {
   //   likes: PropTypes.objectOf(PropTypes.bool).isRequired,
@@ -80,6 +81,7 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
   // };
 
   useEffect(() => {
+    
     // 백엔드로부터 게시글 데이터를 가져옴
     axios.get('/walking/'+ id)
     .then(response => {
@@ -92,6 +94,47 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
     .catch(error => {
       console.error('Error fetching walkingTrail data: ', error);
     });
+    
+        
+           
+             axios.get(`/api/like/status?userId=${userId}&postNo=${walkingTrails.wid}`)
+                  .then((response)=>{
+
+                    setIsLiked(response.data);
+                  })
+                  .catch((error)=>{
+                    console.log('좋아요 상태 확인 중 오류 발생:', error)
+                  })
+          
+        
+  }, [isLiked]);
+
+  const handleLike = async () => {
+    if (isLoggedIn) {
+      alert('로그인이 필요한 기능입니다.');
+      return;
+    }
+
+    try {
+      const postId = walkingTrails.wid;
+      const response = await axios.post(`/api/like`, {
+        lId: userId,
+        no: postId
+      });
+      console.log(response.data);
+
+      const newLikeStatus = response.data;
+      setIsLiked(newLikeStatus);
+      onLike(postId, newLikeStatus);
+      
+    console.log('isLiked : ',isLiked)
+    } catch (error) {
+      console.error('좋아요 처리 중 오류 발생:', error);
+    }
+  };
+
+
+  useEffect(()=>{
     axios.get(`/review/getList/${id}`)
          .then((response)=>{
           console.log(response.data)
@@ -101,8 +144,7 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
           console.log(error)
           alert(error)
          })
-  }, [like]);
-
+  },[])
 
   
   const navigate = useNavigate();
@@ -147,7 +189,7 @@ function PostWalkDetail({ isLoggedIn, likes, onLike }) {
       <div className='detail-div'>
         <h1 className='h1-list'>{walkingTrails.wlktrlName}</h1>
         <button onClick={()=>handleLike()} className='button-detail'>
-                {isLiked ? '❤️' : '🤍'} {walkingTrails.likeCount}
+                {isLiked.isLiked ? '❤️' : '🤍'} {walkingTrails.likeCount}
         </button>&emsp;
         <button className='button-detail' onClick={()=>{
           setWeatherInfo();

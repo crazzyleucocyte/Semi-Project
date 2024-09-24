@@ -36,7 +36,7 @@ function PostReviewDetail({ onAddReview }) {
   return (
     <>
     <br/><br/>
-    <div className="review-detail">
+    <div className="review-detailDiv">
       <h1>후기 작성</h1>
      {/* <form onSubmit={handleSubmit}> */}
         <label htmlFor="content">후기 내용</label>
@@ -49,11 +49,10 @@ function PostReviewDetail({ onAddReview }) {
 
         {/* 사진 첨부 입력 필드 */}
        
-        <button onClick={()=>{handleSubmit()}} >후기 제출</button>
-      {/* </form> */}
-
-      <div className="back-to-list">
-        <button onClick={() => navigate(`/${category}/${id}/`)}>목록으로 가기</button>
+      <div className="back-to-listDiv">
+        <button onClick={()=>{handleSubmit()}} className="review-detail" >후기 제출</button>
+        &emsp;
+        <button onClick={() => navigate(`/${category}/${id}/`)} className="back-to-list">목록으로 가기</button>
       </div>
     </div>
   </>

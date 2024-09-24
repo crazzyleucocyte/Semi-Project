@@ -15,6 +15,7 @@
 
 /* Table Styles */
 .table-detail {
+  table-layout: fixed;
   width: 70%;
   margin: 20px auto;
   border-collapse: collapse;
@@ -27,7 +28,11 @@
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
-
+.hmpUrlTd{
+  word-wrap: break-word; /* 긴 단어가 있을 때 줄을 바꿈 */
+  overflow-wrap: break-word; /* 최신 속성: 긴 단어가 줄을 넘어갈 때 자동 줄바꿈 */
+  white-space: normal; /* 여러 줄을 허용 */
+}
 .table-detail th {
   padding: 10px;
   text-align: left;

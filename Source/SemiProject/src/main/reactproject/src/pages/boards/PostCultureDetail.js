@@ -118,8 +118,8 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
       </div>
 
       <div className='detail-div2'>
-        사진 넣는 칸
-        <img src='' />
+      
+        <img src={culture.picturePath} />
       </div>
       
       <table className='table-detail'>
@@ -187,7 +187,7 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
           </tr>
           <tr>
             <th>홈페이지</th>
-            <td><Link className='hmpUrl' to={culture.hmpgUrl}>{culture.hmpgUrl}</Link></td>
+            <td className='hmpUrlTd'><Link className='hmpUrl' to={culture.hmpgUrl}>{culture.hmpgUrl}</Link></td>
           </tr>
           <tr>
             <th>반려동물정보</th>
@@ -221,7 +221,7 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
               <td>{review.rid}</td>
               <td>{review.content}</td>
               <td>{review.createDate.substring(0,10)}</td>
-              <td>{review.rid === localStorage.getItem('username') &&<button className="button-detail" onClick={()=>{navigate(`/review/update/${culture.cid}/walk`)}}>수정</button>}</td>
+              <td>{review.rid === localStorage.getItem('username') &&<button className="button-detail" onClick={()=>{navigate(`/review/update/${culture.cid}/culture`)}}>수정</button>}</td>
             </tr>
           ))}
         </tbody>
@@ -229,7 +229,7 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
 
       {/* 후기 작성 버튼 */}
         <div className='div-detail'>
-        <button onClick={() => navigate(`/review/${culture.cid}/walk`)} className="button-detail">후기 작성</button>
+        <button onClick={() => navigate(`/review/${culture.cid}/culture`)} className="button-detail">후기 작성</button>
       </div>
 
       {/* 목록으로 가기 버튼 */}
