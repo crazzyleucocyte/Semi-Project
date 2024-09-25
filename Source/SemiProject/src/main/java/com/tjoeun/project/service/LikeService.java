@@ -1,6 +1,7 @@
 package com.tjoeun.project.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +16,7 @@ public class LikeService {
 	@Autowired
 	LikeRepository likeRepository;
 	
-	public boolean toggleLike(String lId, Long no) {
-        if (likeRepository.existsByLidAndNo(lId, no)) {
-        	likeRepository.deleteByLidAndNo(lId, no);
-            return false; // 좋아요 취소
-        } else {
-            Like like = new Like();
-            like.setLid(lId);
-            like.setNo(no);
-            like.setLikeDate(LocalDateTime.now());
-            likeRepository.save(like);
-            return true; // 좋아요 추가
-        }
-    }
+	
 
 	public boolean isLiked(String lId, Long no) {
 		return likeRepository.existsByLidAndNo(lId, no);
@@ -47,5 +36,10 @@ public class LikeService {
 
 	public Like deleteLike(String lId, Long no) {
 		return likeRepository.deleteByLidAndNo(lId, no);
+	}
+
+	public List<Like> findById(String lId) {
+		
+		return likeRepository.findAllById(lId);
 	}
 }

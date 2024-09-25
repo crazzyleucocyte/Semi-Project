@@ -76,7 +76,7 @@ const AreaSelector = ({weatherResult,setWeatherResult, handleSetcityInfo}) => {
         ))}
       </select>
       &emsp;
-        <button onClick={searchWeatherByCity} className="search-button">검색</button>
+        <button onClick={searchWeatherByCity} className="button-detail">검색</button>
 
     </div>
   );

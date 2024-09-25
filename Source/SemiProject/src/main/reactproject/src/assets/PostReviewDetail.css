@@ -49,6 +49,20 @@
   .review-detail:hover {
     background-color: #208537;
   }
+  .review-detail-delete{
+    padding: 10px 13px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background-color: #b92b2b;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .review-detail-delete:hover {
+    background-color: rgb(141, 42, 33);
+  }
   
   .back-to-listDiv {
     margin-top: 20px;

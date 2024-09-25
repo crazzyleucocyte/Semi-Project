@@ -4,7 +4,6 @@ import '../../assets/PostList.css';
 import axios from 'axios';
 
 function PostCultureList({ likes, onLike }) {
-  const { id } = useParams();
   const [culture, setCulture] = useState([]);
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
   const [currentPage, setCurrentPage] = useState(1); // 1부터 시작하는 페이지 번호
@@ -19,15 +18,10 @@ function PostCultureList({ likes, onLike }) {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
-  // const [isLiked, setIsLiked] = useState(false);
   const userId = localStorage.getItem('username');
   const [like, setLike] = useState(false);
   
-  // 페이지 변경 핸들러
-  // const handlePageChange = (pageNumber) => {
-    //   setCurrentPage(pageNumber);
-    // };
-
+ 
     // 페이지 변경 처리
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber); // Spring Boot는 페이지 번호가 0부터 시작
@@ -111,34 +105,24 @@ function PostCultureList({ likes, onLike }) {
   }
 
   const handleLike = async (cid) => {
+    const likeOBJ = {
+      lId:userId,
+      no:cid
+    }
+    console.log('likeOBJ : ', likeOBJ)
     try {
-      const response = await axios.post(`/api/like`, {
-        lId: userId,
-        no: cid
-      });
+      const response = await axios.post(`/like/toggle`,likeOBJ );
       console.log(response.data);
   
       // 서버 응답을 기반으로 상태 업데이트
-      if (response.data === true) {
-        setCulture(prevCultures => prevCultures.map(culture => 
-          culture.cid === cid 
-            ? { ...culture, likeCount: culture.likeCount + 1, isLiked: true }
-            : culture
-        ));
-      } else {
-        setCulture(prevCultures => prevCultures.map(culture => 
-          culture.cid === cid 
-            ? { ...culture, likeCount: culture.likeCount - 1, isLiked: false }
-            : culture
-        ));
-      }
+      
     } catch (error) {
       console.error('좋아요 처리 중 오류 발생:', error);
       alert('좋아요 처리 중 오류가 발생했습니다.');
     }
   };
 
-    useEffect(() => {
+    // useEffect(() => {
       // 백엔드로부터 게시글 데이터를 가져옴
       // axios.get('/culture/'+ id)
       // .then(response => {
@@ -149,8 +133,8 @@ function PostCultureList({ likes, onLike }) {
       // .catch(error => {
       //   console.error('Error fetching walkingTrail data: ', error);
       // });
-      listCaller();
-    }, [like]);
+    //   listCaller();
+    // }, [like]);
 
     useEffect(() => {
       const storedUserId = localStorage.getItem('username');
@@ -191,7 +175,7 @@ function PostCultureList({ likes, onLike }) {
                 <td>{culture.ctprvnName}&nbsp;{culture.signguName}</td>
                 {/* <td>{culture.signguName}</td> */}
                 <td>
-                  <button onClick={()=>handleLike(culture.wid)} className='likeBtn'>
+                  <button onClick={()=>handleLike(culture.cid)} className='likeBtn'>
                     {culture.isLiked ? '❤️' : '🤍'} {culture.likeCount || 0}
                   </button>&emsp;
                 </td>

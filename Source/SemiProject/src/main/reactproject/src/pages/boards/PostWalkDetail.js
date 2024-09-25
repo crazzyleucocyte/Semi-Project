@@ -19,29 +19,29 @@ function PostWalkDetail({ likes, onLike }) {
   const [walkingTrails, setWalkingTrails] = useState([]);
   const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
   const [isLiked, setIsLiked] = useState(false);
-  const [isLikeClick,setIsLikeClick] = useState(false)
-  
+  const [isLikeClick, setIsLikeClick] = useState(false)
+
   const userId = localStorage.getItem('username');
   let isLoggedIn = localStorage.getItem('username') === null;
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-    
+
     const fetchData = async () => {
       try {
         // 첫 번째 axios 호출 (게시글 데이터 가져오기)
         const walkingResponse = await axios.get('/walking/' + id);
         console.log(walkingResponse.data);
         setWalkingTrails(walkingResponse.data);
-  
+
         // walkingTrails 데이터가 설정된 후에야 두 번째 axios 호출이 가능
         if (walkingResponse.data && walkingResponse.data.wid) {
           console.log('userId : ', userId);
           console.log('walkingTrails.wid : ', walkingResponse.data.wid);
-  
+
           // 두 번째 axios 호출 (좋아요 상태 확인)
-          const likeResponse = await axios.post(`/api/like/status`, {
+          const likeResponse = await axios.post(`/like/status`, {
             lId: userId,
             no: walkingResponse.data.wid,
           });
@@ -54,20 +54,20 @@ function PostWalkDetail({ likes, onLike }) {
     };
 
     fetchData();
-    }, [isLikeClick]);
+  }, [isLikeClick]);
 
-     //리뷰 리스트를 가져옴
-    useEffect(() => {
-      axios.get(`/review/getList/${id}`)
-        .then((response) => {
-          console.log(response.data)
-          setReviews([...response.data])
-        })
-        .catch((error) => {
-          console.log(error)
-          alert(error)
-        })
-    }, [])
+  //리뷰 리스트를 가져옴
+  useEffect(() => {
+    axios.get(`/review/getList/${id}`)
+      .then((response) => {
+        console.log(response.data)
+        setReviews([...response.data])
+      })
+      .catch((error) => {
+        console.log(error)
+        alert(error)
+      })
+  }, [])
 
   const handleLike = async () => {
     if (isLoggedIn) {
@@ -77,7 +77,7 @@ function PostWalkDetail({ likes, onLike }) {
 
     try {
       const postId = walkingTrails.wid;
-      const response = await axios.post(`/api/like`, {
+      const response = await axios.post(`/like/toggle`, {
         lId: userId,
         no: postId
       });
@@ -159,7 +159,7 @@ function PostWalkDetail({ likes, onLike }) {
       </table>
 
       <table className='table-detail'>
-       
+
         <tbody>
           <tr>
             <th>옵션설명</th>
@@ -216,16 +216,16 @@ function PostWalkDetail({ likes, onLike }) {
         </tbody>
       </table>
 
-      {isLoggedIn && (
+      {!isLoggedIn && (
         <div className='div-detail'>
           <button onClick={() => navigate(`/review/${walkingTrails.wid}/walk`)} className="button-detail">후기 작성</button>
         </div>
       )}
-
-      {/* 후기 작성 버튼 */}
-      <div className='div-detail'>
-        <button onClick={() => navigate(`/review/${walkingTrails.wid}/walk`)} className="button-detail">후기 작성</button>
+      {/* 목록으로 가기 버튼 */}
+      <div className="div-detail">
+        <button onClick={() => navigate('/walk')} className='button-detail'>목록 가기</button>
       </div>
+
     </div>
   );
 }

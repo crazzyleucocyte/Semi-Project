@@ -6,67 +6,86 @@ import axios from 'axios';
 function UpdateReviewDetail({ onAddReview }) {
   const { id, category } = useParams();
   const [review, setReview] = useState({
-    rid:'',
-    no : 0,
-    content : '',
-    createDate : ''
-  })  
+    rid: '',
+    no: 0,
+    content: '',
+    createDate: ''
+  })
   const handlesetReview = (newReview) => {
-    setReview(prevReview=> ({
+    setReview(prevReview => ({
       ...prevReview,
-     ...newReview
+      ...newReview
     }));
   };
   const handleChange = (e) => {
     setReview({ ...review, content: e.target.value });
-    
+
   };
   const navigate = useNavigate();
   const rid = localStorage.getItem('username');
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get(`/review/get/${id}/${rid}`)
-         .then((response)=>{
-          console.log(response.data)
+      .then((response) => {
+        console.log(response.data)
 
-          setReview(response.data)
-         })
-         .catch((error)=>{
-          console.log(error)
-          // alert(error);
-         })
-  },[])
+        setReview(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+        // alert(error);
+      })
+  }, [])
 
- useEffect(()=>{
-  console.log(review.content)
-},[review.content])
+  useEffect(() => {
+    console.log(review.content)
+  }, [review.content])
 
   const handleSubmit = (e) => {
     // e.preventDefault();
 
     const newReview = {
-      rid:'',
-      no : 0,
-      content : '',
-      createDate : ''
+      rid: '',
+      no: 0,
+      content: '',
+      createDate: ''
     };
-    axios.put('/review/post',review)
-         .then((response)=>{
-          console.log(response.data)
-          alert('후기 수정에 성공했습니다')
-         })
-         .catch((error)=>{
-          alert(error);
-         })
+    axios.put('/review/post', review)
+      .then((response) => {
+        console.log(response.data)
+        alert('후기 수정에 성공했습니다')
+      })
+      .catch((error) => {
+        alert(error);
+      })
 
     // 사진 처리 후 navigate로 페이지 이동
     navigate(`/${category}/${id}`);
   };
+  const reviewOBJ = {
+    rid: rid,
+    no: id
+  }
+  function handleDelete(){
+    console.log('reviewOBJ : ', reviewOBJ)
+    axios.delete(`/review/delete/${id}/${rid}`)
+         .then((response)=>{
+          console.log(response.data)
+          alert('리뷰를 성공적으로 삭제했습니다.')
+          navigate('/review-history')
+         })
+         .catch((error)=>{
+          console.log(error)
+          alert('삭제하는 과정에서 에러가 발생했습니다')
+         })
+  }
 
   return (
-    <div className="review-detail">
-      <h1>후기 수정</h1>
-      {/* <form onSubmit={handleSubmit}> */}
+    <>
+    <br/><br/>
+      <div className="review-detailDiv">
+        <h1>후기 수정</h1>
+        {/* <form onSubmit={handleSubmit}> */}
         <label htmlFor="content">후기 내용</label>
         <textarea
           id="content"
@@ -76,15 +95,15 @@ function UpdateReviewDetail({ onAddReview }) {
           required
         ></textarea>
 
-        {/* 사진 첨부 입력 필드 */}
-       
-        <button onClick={()=>{handleSubmit()}} >후기 제출</button>
-      {/* </form> */}
-
-      <div className="back-to-list">
-        <button onClick={() => navigate(`/${category}/${id}/`)}>목록으로 가기</button>
+        <div className="back-to-listDiv">
+          <button onClick={() => { handleSubmit() }} className="review-detail">후기 제출</button>
+          &emsp;
+          <button onClick={() => { handleDelete() }} className="review-detail-delete">후기 삭제</button>
+          &emsp;
+          <button onClick={() => navigate(`/${category}/${id}/`)} className="back-to-list">목록으로 가기</button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

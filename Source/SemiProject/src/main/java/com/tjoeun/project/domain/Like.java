@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,14 +26,14 @@ public class Like {
 	@Column(name="L_ID", length=20)
 	private String lid;
 	
-
 	@Id
 	@Column(name="NO")
 	private Long no;
 	
 	@CreatedDate
-	@Column(name="LikeDate", insertable=false, updatable=false, columnDefinition="DATE DEFAULT SYSDATE")
+	@Column(name="LIKEDATE", insertable=false, updatable=false, columnDefinition="DATE DEFAULT SYSDATE")
 	private LocalDateTime likeDate;
 	
-	
+	@Transient
+	private String name;
 }

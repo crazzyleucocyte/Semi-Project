@@ -19,12 +19,20 @@ public class ReviewService {
 		return reviewRepository.save(newReview);
 	}
 
-	public List<Review> findById(Long no) {
+	public List<Review> findByNo(Long no) {
 		return reviewRepository.findByNo(no);
 	}
 
 	public Optional<Review> findByRidAndNo(String rid, Long no) {
 		return reviewRepository.findByRIdAndNo(rid,no);
+	}
+
+	public List<Review> findById(String userId) {
+		return reviewRepository.findAllById(userId);
+	}
+
+	public void delete(Review review) {
+		reviewRepository.delete(review);
 	}
 
 }

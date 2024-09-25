@@ -18,4 +18,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	@Query(value = "select * from REVIEW where R_ID = :rid and NO = :no", nativeQuery=true)
 	Optional<Review> findByRIdAndNo(@Param(value="rid") String rid,@Param(value="no") Long no);
 
+	@Query(value = "select * from REVIEW where R_ID = :userId order by CREATE_DATE desc", nativeQuery=true)
+	List<Review> findAllById(@Param(value="userId") String userId);
+	
+
 }

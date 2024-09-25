@@ -2,10 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import '../../assets/PostList.css';
-// import * as FaqStyle from '../assets/FaqStyle';
 
 function WalkingTrailsList({ likes, onLike }) {
-  // const { id } = useParams();
   const [walkingTrails, setWalkingTrails] = useState([]);
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
   const [currentPage, setCurrentPage] = useState(1); // 1부터 시작하는 페이지 번호
@@ -39,16 +37,7 @@ function WalkingTrailsList({ likes, onLike }) {
     }
   };
   
-  // const filteredPosts = walkingTrails.filter((post,i) => {
-  //   console.log("currentPage ", currentPage)
-  //   console.log("currentBlock ", currentBlock)
-  //   console.log("indexOfFirstPost ", indexOfFirstPost)
-  //   console.log("indexOfLastPost ", indexOfLastPost)
-  //   return i>=indexOfFirstPost && i<=indexOfLastPost;
-  // });
-
-  // const filteredPosts = walkingTrails.slice(indexOfFirstPost, indexOfLastPost);
-
+  
   function listCaller(){
     console.log('searchCategory : ', searchCategory)
     console.log('searchInput : ', searchInput)
@@ -173,7 +162,7 @@ function WalkingTrailsList({ likes, onLike }) {
 
   const handleLike = async (wid) => {
     try {
-      const response = await axios.post(`/api/like`,{
+      const response = await axios.post(`/like/toggle`,{
         lId:userId,
         no:wid
       });
@@ -193,9 +182,9 @@ function WalkingTrailsList({ likes, onLike }) {
       ));
 
       // 로컬 스토리지 업데이트
-      const updatedLikedPosts = { ...likedPosts, [wid]: newLikedStatus };
-      setLikedPosts(updatedLikedPosts);
-      localStorage.setItem('likedPosts', JSON.stringify(updatedLikedPosts));
+      // const updatedLikedPosts = { ...likedPosts, [wid]: newLikedStatus };
+      // setLikedPosts(updatedLikedPosts);
+      // localStorage.setItem('likedPosts', JSON.stringify(updatedLikedPosts));
 
     } catch (error) {
       console.error('좋아요 처리 중 오류 발생:', error);
@@ -303,7 +292,6 @@ function WalkingTrailsList({ likes, onLike }) {
           <option value="null">선택</option>
           <option value="wlktrlName">산책길 이름</option>
           <option value="signguNm">시군구</option>
-          <option value="coursLvNm">경로레벨</option>
           <option value="coursTmContent">산책 시간</option>
         </select>
         <input

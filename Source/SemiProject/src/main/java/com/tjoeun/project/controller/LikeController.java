@@ -1,12 +1,15 @@
 package com.tjoeun.project.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tjoeun.project.domain.CultureFacility;
 import com.tjoeun.project.domain.Like;
+import com.tjoeun.project.domain.Review;
 import com.tjoeun.project.domain.WalkingTrail;
 import com.tjoeun.project.service.CultureFacilityService;
 import com.tjoeun.project.service.LikeService;
 import com.tjoeun.project.service.WalkingTrailService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/like")
 public class LikeController {
 	
 	@Autowired
@@ -32,16 +36,10 @@ public class LikeController {
 	@Autowired
 	CultureFacilityService cultureFacilityService;
 	
-//	@PostMapping("/like")
-//	public ResponseEntity<Boolean> toggleLike(@RequestBody Map<String, Object> boardInfo) {
-//		System.out.println("boardInfo.get(\"lId\") : "+boardInfo.get("lId"));
-//		System.out.println("boardInfo.get(\"no\") : "+boardInfo.get("no"));
-//        boolean isLiked = likeService.toggleLike(String.valueOf(boardInfo.get("lId")), Long.parseLong(String.valueOf(boardInfo.get("no"))));
-//        return ResponseEntity.ok(isLiked);
-//    }
-	@PostMapping("/like")
+	@PostMapping("/toggle")
 	public ResponseEntity<?> toggleLike(@RequestBody Map<String, Object> boardInfo) {
 	    try {
+	    	System.out.println("boardInfo : "+ boardInfo);
 	        String lId = String.valueOf(boardInfo.get("lId"));
 	        Long no = Long.parseLong(String.valueOf(boardInfo.get("no")));
 	        System.out.println("1. no : " + no);
@@ -121,7 +119,7 @@ public class LikeController {
 	
 	
 
-	@PostMapping("/like/status")
+	@PostMapping("/status")
 	public ResponseEntity<Boolean> getLikeStatus(@RequestBody Map<String, Object> boardInfo) {
 		String lId = String.valueOf(boardInfo.get("lId"));
 		Long no = Long.parseLong(String.valueOf(boardInfo.get("no")));
@@ -131,5 +129,24 @@ public class LikeController {
 		boolean isLiked= likeService.isLiked(lId, no);
 	    return ResponseEntity.ok(isLiked);
 	}
+	
+	@GetMapping("/history/{lId}")
+	private List<Like> getLikeHistory(@PathVariable("lId") String lId){
+		List<Like> result = new ArrayList<>();
+		List<Like> likeList = likeService.findById(lId);
+		for(Like like : likeList) {
+			if(like.getNo()>200000) {
+				String name = cultureFacilityService.findById(like.getNo()).getFcltyName();
+				like.setName(name);
+				result.add(like);
+			}else {
+				String name = walkingTrailService.findById(like.getNo()).getWlktrlName();
+				like.setName(name);
+				result.add(like);
+			}
+		}
+		
+		return likeList;
+	}	
 	
 }

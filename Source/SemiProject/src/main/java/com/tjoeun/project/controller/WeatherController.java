@@ -176,7 +176,7 @@ public class WeatherController{
 			JSONObject items = (JSONObject) body.get("items");
 			JSONArray itemArray = (JSONArray) items.get("item");
 			vilageFcstList = new ArrayList<ShortFcst>();
-			System.out.println(jsonObj);
+			System.out.println("shortFcst(179) : "+jsonObj);
 			//				itemArray
 
 			for (int i = 0 ; i<itemArray.size();i++ ) {
@@ -187,7 +187,6 @@ public class WeatherController{
 				if(Integer.parseInt(((String)item.get("fcstTime")).substring(0, 2))%2==0)  {
 
 					String evenBaseTime = ((String)item.get("fcstTime")).substring(0, 2);
-					//System.out.println();
 					//시간대가 변경되면 반복 종료
 					ShortFcst vilageFcst = new ShortFcst();
 					int j =0;
@@ -195,7 +194,6 @@ public class WeatherController{
 					for(j = i;
 							((String)((JSONObject) itemArray.get(j)).get("fcstTime")).substring(0, 2).equals(evenBaseTime);
 							j++) {
-						//System.out.println("array : " + ((String)((JSONObject) itemArray.get(j)).get("fcstTime")).substring(0, 2)+"evenBaseTime : "+evenBaseTime);
 						//시간별 강수확률(POP), 하늘 상태(SKY), 기온(TMP), 시간
 						if(((String)((JSONObject) itemArray.get(j)).get("category")).equals("TMP")) {
 							vilageFcst.setTmpValue((String)(((JSONObject) itemArray.get(j)).get("fcstValue")));
@@ -212,7 +210,6 @@ public class WeatherController{
 						vilageFcst.setFcstTime((String)(((JSONObject) itemArray.get(j)).get("fcstTime")));
 						vilageFcst.setFcstDate((String)(((JSONObject) itemArray.get(j)).get("fcstDate")));
 						// 리스트에 VilageFcst 객체 추가
-						//System.out.println("j : " + j+", VilageFcst : " + vilageFcst);
 						i=j;
 						if(i==itemArray.size()-1 ) break;
 					}

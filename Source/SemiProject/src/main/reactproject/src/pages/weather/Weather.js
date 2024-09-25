@@ -21,16 +21,12 @@ export default function Weather(){
 
     useEffect(()=>{
        console.log("Effect reduxs : ", reduxs)
-       //    if(cityInfo.la !==''){
-        
-       //        return(
-        
+       
        Caller()
-       //        );
-       //    }else{
-        //     setLoading(false)
-        //    }
+      
     },[cityInfo])
+
+
     useEffect(()=>{
         console.log(loading)
     },[loading])

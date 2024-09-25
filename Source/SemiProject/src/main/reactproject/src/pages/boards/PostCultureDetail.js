@@ -42,7 +42,7 @@ function PostCultureDetail() {
           console.log('culture.cid : ', cultureResponse.data.cid);
   
           // 두 번째 axios 호출 (좋아요 상태 확인)
-          const likeResponse = await axios.post(`/api/like/status`, {
+          const likeResponse = await axios.post(`/like/status`, {
             lId: userId,
             no: cultureResponse.data.cid,
           });
@@ -78,7 +78,7 @@ function PostCultureDetail() {
 
     try {
       const postId = culture.cid;
-      const response = await axios.post(`/api/like`, {
+      const response = await axios.post(`/like/toggle`, {
         lId: userId,
         no: postId
       });
