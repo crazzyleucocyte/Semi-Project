@@ -12,124 +12,114 @@ const initialReviews = [
     content: "",
     createDate: "",
     rid: ""
-  } 
+  }
 ];
 
-function PostCultureDetail({ isLoggedIn, likes, onLike }) {
+function PostCultureDetail() {
   const { id } = useParams();
   const [culture, setCulture] = useState([]);
   const [reviews, setReviews] = useState(initialReviews); // 후기 목록 상태 추가
-  const dispatch =useDispatch()
-
-  const userId = localStorage.getItem('username');
-  const [like, setLike] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  // const [likes, setLikes] = useState(0);
-  const [likeCount, setLikeCount] = useState(0);
-
-
-  useEffect(() => {
-    console.log(like);
-    axios.get('/culture/' + id)
-    .then(response => {
-      console.log(response.data);
-      setCulture(response.data);
-    })
-    .catch(error => {
-      console.error('Error fetching culture data: ', error);
-    });
-    axios.get(`/review/getList/${id}`)
-    .then((response)=>{
-     console.log(response.data)
-     setReviews([...response.data])
-    })
-    .catch((error)=>{
-     console.log(error)
-     alert(error)
-    })
-  }, [like]);
-
-  // const [post, setPost] = useState(null);
-  // const [likedByUser, setLikedByUser] = useState(false);
+  const [isLikeClick,setIsLikeClick] = useState(false)
+  
+  const userId = localStorage.getItem('username');
+  let isLoggedIn = localStorage.getItem('username') === null;
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   // 데이터 초기화
-  //   const postId = parseInt(id, 10);
-  //   const foundPost = initialPostsData.find((p) => p.id === postId);
+  useEffect(() => {
 
-  //   if (foundPost) {
-  //     // 상태 업데이트
-  //     setPost(foundPost);
-  //     setLikes(foundPost.likes);
-  //     setLikedByUser(foundPost.likedByUser || false);
-  //   } else {
-  //     setPost(null); // 게시글이 없는 경우
-  //   }
-  // }, [id]);
+    const fetchData = async () => {
+      try {
+        // 첫 번째 axios 호출 (게시글 데이터 가져오기)
+        const cultureResponse = await axios.get('/culture/' + id);
+        console.log(cultureResponse.data);
+        setCulture(cultureResponse.data);
+  
+        // culture 데이터가 설정된 후에야 두 번째 axios 호출이 가능
+        if (cultureResponse.data && cultureResponse.data.cid) {
+          console.log('userId : ', userId);
+          console.log('culture.cid : ', cultureResponse.data.cid);
+  
+          // 두 번째 axios 호출 (좋아요 상태 확인)
+          const likeResponse = await axios.post(`/api/like/status`, {
+            lId: userId,
+            no: cultureResponse.data.cid,
+          });
+          console.log('좋아요 상태: ', likeResponse.data)
+          setIsLiked(likeResponse.data);
+        }
+      } catch (error) {
+        console.error('오류 발생:', error);
+      }
+    };
 
-  // if (!post) {
-  //   return <div>게시글을 찾을 수 없습니다.</div>;
-  // }
-  const setWeatherInfo=()=>{
-    dispatch(setCityInfo({
-      la : culture.lcLattd,
-      lo : culture.lcLongt,
-      ctprvnNm : culture.ctprvnName,
-      signguNm : culture.signguName
-    }))
-  }
+    fetchData();
+  }, [isLikeClick]);
 
+  useEffect(()=>{
+    //리뷰 리스트를 가져옴
+    axios.get(`/review/getList/${id}`)
+      .then((response) => {
+        console.log(response.data)
+        setReviews([...response.data])
+      })
+      .catch((error) => {
+        console.log(error)
+        alert(error)
+      })
+  },[])
+  
   const handleLike = async () => {
+    if (isLoggedIn) {
+      alert('로그인이 필요한 기능입니다.');
+      return;
+    }
+
     try {
       const postId = culture.cid;
-      const response = await axios.post(`/api/like`,{
-        lId:userId,
-        no:postId
+      const response = await axios.post(`/api/like`, {
+        lId: userId,
+        no: postId
       });
-      console.log(response.data);
-      
-      // const newLikeStatus = !isLiked;
-      // setIsLiked(newLikeStatus);
-      // setLike(!like)
-      // const newLikeStatus = !likes;
-      console.log(response.data);
-      // onLike(postId, newLikeStatus);
-      console.log(response.data);
-      // setLike(newLikeStatus);
-      setLike(!like)
-      console.log(response.data);
+      setIsLikeClick(!isLikeClick)
+      console.log('isLiked : ', isLiked)
     } catch (error) {
       console.error('좋아요 처리 중 오류 발생:', error);
     }
   };
+
+  const setWeatherInfo = () => {
+    dispatch(setCityInfo({
+      la: culture.lcLattd,
+      lo: culture.lcLongt,
+      ctprvnNm: culture.ctprvnName,
+      signguNm: culture.signguName
+    }))
+  }
+
+ 
 
   return (
     <div className="post-detail">
 
       <div className='detail-div'>
         <h1 className='h1-list'>{culture.fcltyName}</h1>
-        <button onClick={()=>handleLike()} className='button-detail'>
-                {isLiked ? '❤️' : '🤍'} {culture.likeCount}
+        <button onClick={() => handleLike()} className='button-detail'>
+          {isLiked ? '❤️' : '🤍'} {culture.likeCount}
         </button>&emsp;
-        <button className='button-detail' onClick={()=>{
+        <button className='button-detail' onClick={() => {
           setWeatherInfo();
-          navigate("/weather")}}>날씨 확인</button>
+          navigate("/weather")
+        }}>날씨 확인</button>
       </div>
 
       <div className='detail-div2'>
-      
-        <img src={culture.picturePath} />
-      </div>
-      
-      <table className='table-detail'>
-        {/* <colgroup>
-          <col width={15} />
-          <col width={35} />
-          <col width={15} />
-          <col width={35} />
-        </colgroup> */}
 
+        <img src={culture.picturePath} alt='문화시설 사진'/>
+      </div>
+
+      <table className='table-detail'>
         <tbody>
           <tr>
             <th>펫 라이프 케어</th>
@@ -143,7 +133,7 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
             <th>도로명주소</th>
             <td>{culture.rdnmadrName}</td>
           </tr>
-          
+
           <tr>
             <th>전화번호</th>
             <td>{culture.telNumber}</td>
@@ -205,8 +195,8 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
       </table>
 
       <div className='detail-div2'>
-        <Kakao 
-          latitude={parseFloat(culture.lcLattd)} 
+        <Kakao
+          latitude={parseFloat(culture.lcLattd)}
           longitude={parseFloat(culture.lcLongt)}
           locationName={culture.wlktrlName}
         />
@@ -216,19 +206,19 @@ function PostCultureDetail({ isLoggedIn, likes, onLike }) {
       <h1 className='h1-list'>후기</h1>
       <table className="table-detail">
         <tbody>
-        {reviews.map((review) => (
+          {reviews.map((review) => (
             <tr key={review.rid}>
               <td>{review.rid}</td>
               <td>{review.content}</td>
-              <td>{review.createDate.substring(0,10)}</td>
-              <td>{review.rid === localStorage.getItem('username') &&<button className="button-detail" onClick={()=>{navigate(`/review/update/${culture.cid}/culture`)}}>수정</button>}</td>
+              <td>{review.createDate.substring(0, 10)}</td>
+              <td>{review.rid === localStorage.getItem('username') && <button className="button-detail" onClick={() => { navigate(`/review/update/${culture.cid}/culture`) }}>수정</button>}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
       {/* 후기 작성 버튼 */}
-        <div className='div-detail'>
+      <div className='div-detail'>
         <button onClick={() => navigate(`/review/${culture.cid}/culture`)} className="button-detail">후기 작성</button>
       </div>
 

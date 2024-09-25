@@ -29,8 +29,6 @@ function Main() {
     axios.post('/api/weather/short', mainWeather)
     .then(({data}) =>{
         console.log('data',data)
-        // setWeatherResult(...result.data)
-        
         try {
             
             setShortWeather([...data])
@@ -119,8 +117,7 @@ function Main() {
         <br/>
 
       <article onClick={()=>{navigate('/weather')}} className='weatherArticle'>
-        {/* <div className="maindiv1">     */}
-            {/* <img src={process.env.PUBLIC_URL+'/img/main/main1.jpg'} alt="1번사진" width="100%" height="220"/> */}
+      {loading ? <div className="loadingMainDiv" ><img className="loadingImg"src={process.env.PUBLIC_URL+'/img/loading.gif'}/><span>로딩중...</span></div>: ''}
             <div className="weather" style={divStyle}>
         <div className="scroll-container"  ref={scrollContainerRef}>
             <div className="scroll-content">

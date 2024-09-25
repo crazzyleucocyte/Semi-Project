@@ -112,7 +112,7 @@ function Header() {
                 <span id = "dropdown"><span>마이페이지</span>
               <ul className="dropdownMenu">
                 <li onClick={()=>{navigate('/password-check')}} className="dropdownItem"><span>개인정보 수정</span></li>
-                <li to="/walk" className="dropdownItem"><span>산책 경로 목록</span></li>
+                <li onClick={()=>{navigate('review-history')}} className="dropdownItem"><span>리뷰 목록</span></li>
                 <li to="/culture" className="dropdownItem"><span>문화 경로 목록</span></li>
               </ul>
               </span>

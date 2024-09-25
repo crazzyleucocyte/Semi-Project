@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Route, Routes, Link, useLocation } from 'react-router-dom';
+import {Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
 import Login from './pages/member/Login';
 import Register from './pages/member/Register';
 import Profile from './pages/member/Profile'; // 프로필 컴포넌트 불러오기
@@ -19,6 +19,7 @@ import Footer from './components/Footer';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [reviews, setReviews] = useState({}); // 리뷰 상태 추가
+  const navigate = useNavigate()
 
  
   const handleAddReview = (postId, newReview) => {
@@ -29,13 +30,25 @@ function App() {
   };
   const location = useLocation();
   const hideHeader = location.pathname === '/' || location.pathname === '/register';
+  function loginAuth(){
+
+    if(!hideHeader){
+      if(localStorage.getItem('username')===null){
+        alert('로그인을 먼저 해주세요')
+        navigate('/')
+        
+      }
+    }
+  }
+
   return (
     <div className='bodyBackground'>
     
       <div>
     {!hideHeader && <Header />}
+    {!hideHeader && loginAuth()}
         
-      <Boards handleAddReview={handleAddReview} reviews={reviews}/>
+      <Boards />
         <Routes>
 
 

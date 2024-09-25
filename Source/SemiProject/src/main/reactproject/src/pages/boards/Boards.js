@@ -8,22 +8,15 @@ import PostReviewDetail from './PostReviewDetail';
 import Weather from "../weather/Weather";
 import UpdateReviewDetail from "./UpdateReviewDetail";
 
-export default function Boards({ handleAddReview }){
-  const [likes, setLikes] = useState({});
-
-  const handleLike = (postId, newStatus) => {
-    setLikes(prevLikes => ({
-      ...prevLikes,
-      [postId]: newStatus
-    }));
-  };
+export default function Boards(){
+ 
 
     return(
         <>
         <Routes>
           
-          <Route path="/walk" element={<PostWalkList likes={likes} />} />
-          <Route path="/walk/:id" element={<PostWalkDetail likes={likes} onLike={handleLike} />} />
+          <Route path="/walk" element={<PostWalkList  />} />
+          <Route path="/walk/:id" element={<PostWalkDetail  />} />
           
           {/* <Route path="/api" element={<Test  handleSetcityInfo={handleSetcityInfo}/>} />  */}
           <Route path='/weather' element={<div><Weather /></div>}/>
