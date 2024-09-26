@@ -19,8 +19,6 @@
   width: 70%;
   margin: 20px auto;
   border-collapse: collapse;
-  /* background-color: #fff; */
-  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
   border: none;
 }
 .table-detail-review {
@@ -28,8 +26,6 @@
   width: 70%;
   margin: 20px auto;
   border-collapse: collapse;
-  /* background-color: #fff; */
-  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
   border: none;
 }
 .tbody-detail > tr{
@@ -45,7 +41,6 @@
 .table-detail th {
   padding: 10px;
   text-align: left;
-  /* background-color: #f4f4f4; */
   border-bottom: 1px solid #ddd;
 }
 
@@ -66,52 +61,9 @@
   color: #555;
 }
 
-/* .detail-table {
-  width: 50%;
-  border-collapse: collapse;
-} */
-
-/* .detail-table2 {
-  width: 50%;
-  border-collapse: collapse;
-} */
-
 .detail-table td {
   width: 33%;
-  /* border: 1px solid #ccc;
-  padding: 10px;
-  vertical-align: top; */
 }
-
-/* .post-detail-table tr td:nth-child(2) {
-  text-align: center;
-} */
-
-/* .post-detail-table tr td:nth-child(3) {
-  text-align: right;
-} */
-
-/* td:nth-child(odd) {
-  background-color: #f9f9f9;
-} */
-
-/* .post-photos img {
-  max-width: 100px;
-  height: auto;
-  margin-right: 10px;
-} */
-
-/* .back-to-list {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.back-to-list button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-} */
 
 .bold-text {
   font-weight: bold;
@@ -124,10 +76,6 @@
 .detail-div {
   text-align: center;
 }
-
-/* .tabel1 th {
-  background-color: #f9f9f9;
-} */
 
 .detail-div2 {
   margin: 150px;

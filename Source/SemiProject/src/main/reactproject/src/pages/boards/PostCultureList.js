@@ -3,21 +3,15 @@ import { Link, useParams } from 'react-router-dom';
 import '../../assets/PostList.css';
 import axios from 'axios';
 
-function PostCultureList({ likes, onLike }) {
+function PostCultureList() {
   const [culture, setCulture] = useState([]);
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
   const [currentPage, setCurrentPage] = useState(1); // 1부터 시작하는 페이지 번호
   const [totalPages, setTotalPages] = useState(); // 전체 페이지 수
   const [searchInput, setSearchInput] = useState('');
-  const [totalRecord, setTotalRecord] = useState('');
   const [totalBlock, setTotalBlock] = useState('');       // 전체 페이지 블록
   const [currentBlock, setCurrentBlock] = useState(0);    // 현재 페이지 블록
   const [searchCategory, setSearchCategory] = useState('null');
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-
   const userId = localStorage.getItem('username');
   const [like, setLike] = useState(false);
 
@@ -29,11 +23,7 @@ function PostCultureList({ likes, onLike }) {
 
   const handlePostsPerPageChange = (event) => {
     setPostsPerPage(parseInt(event.target.value, 10));
-    if (currentPage === 1) {
-      listCaller()
-    } else {
-      setCurrentPage(1); // 한 페이지에 나타낼 글 수를 변경하면 첫 페이지로 이동
-    }
+    
   };
 
   function listCaller() {
@@ -47,7 +37,6 @@ function PostCultureList({ likes, onLike }) {
         console.log("currentPage", currentPage);
         console.log(response.data);
         setCulture(response.data.list);
-        setTotalRecord(response.data.totalRecord);
         setTotalPages(response.data.totalPages);
 
         // totalPages를 클라이언트에서 계산
@@ -62,14 +51,12 @@ function PostCultureList({ likes, onLike }) {
       });
   }
 
-  
   useEffect(() => {
     listCaller()
   }, [currentPage, postsPerPage]);
 
   //검색버튼 누를떄
   const handleSearch = () => {
-    // setSearchTerm(searchInput);
     SearchCulture();
     setCurrentPage(1);
   };
@@ -93,7 +80,7 @@ function PostCultureList({ likes, onLike }) {
       }
     }
   }
-//  리스트에서 바로 좋아요 클릭할 수 있는 기능
+  //  리스트에서 바로 좋아요 클릭할 수 있는 기능 구현중
   // const handleLike = async (cid) => {
   //   const likeOBJ = {
   //     lId: userId,
@@ -112,16 +99,9 @@ function PostCultureList({ likes, onLike }) {
   //   }
   // };
 
- 
-  useEffect(() => {
-    const storedUserId = localStorage.getItem('username');
-    console.log('저장된 사용자 ID:', storedUserId);
-    // userId 상태를 설정하는 로직이 있다면 여기에 추가
-  }, []);
-
   return (
     <div>
-      <br/><br/>
+      <br /><br />
       <span className='mainTitle'><h1>산책누리 문화길</h1></span>
 
       {/* 한 페이지에 표시할 글 수 선택하는 select 요소 */}
@@ -136,9 +116,7 @@ function PostCultureList({ likes, onLike }) {
       <table className='table-list'>
         <thead className='thead-list'>
           <tr>
-            {/* <th>글번호</th> */}
             <th>지역</th>
-            {/* <th>시군구</th> */}
             <th>좋아요</th>
             <th>시설명</th>
             <th>펫 라이프 스타일</th>
@@ -148,24 +126,24 @@ function PostCultureList({ likes, onLike }) {
         </thead>
         <tbody>
           {culture.map((culture) => {
-            return(
+            return (
 
               <tr key={culture.cid}>
-              <td>{culture.ctprvnName}&nbsp;{culture.signguName}</td>
-              <td>
-                {/* <button onClick={() => handleLike(culture.cid)} className='likeBtn'> */}
+                <td>{culture.ctprvnName}&nbsp;{culture.signguName}</td>
+                <td>
+                  {/* <button onClick={() => handleLike(culture.cid)} className='likeBtn'> */}
                   {/* {culture.isLiked ? '❤️' : '🤍'}  */}
                   ❤️{culture.likeCount}
-                {/* </button> */}
-                &emsp;
-              </td>
-              <td className='detail-td'>
-                <Link to={`/culture/${culture.cid}`}>{culture.fcltyName}</Link>
-              </td>
-              <td>{culture.ctgryOne}</td>
-              <td>{culture.ctgryTwo}</td>
-              <td>{culture.entrPetSize}</td>
-            </tr>
+                  {/* </button> */}
+                  &emsp;
+                </td>
+                <td className='detail-td'>
+                  <Link to={`/culture/${culture.cid}`}>{culture.fcltyName}</Link>
+                </td>
+                <td>{culture.ctgryOne}</td>
+                <td>{culture.ctgryTwo}</td>
+                <td>{culture.entrPetSize}</td>
+              </tr>
             )
           })}
         </tbody>

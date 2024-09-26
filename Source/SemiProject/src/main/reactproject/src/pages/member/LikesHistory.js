@@ -7,18 +7,18 @@ const LikesHistory = () => {
     const userId = localStorage.getItem('username');
     const [likes, setLikes] = useState([])
     useEffect(() => {
-       axios.get('/like/history/'+userId)
-            .then((response)=>{
+        axios.get('/like/history/' + userId)
+            .then((response) => {
                 console.log(response.data)
                 setLikes(response.data)
             })
     }, []);
 
-    function NoConfig(number){
-        let result =''
-        if(number>200000){
+    function NoConfig(number) {
+        let result = ''
+        if (number > 200000) {
             result = 'culture'
-        }else{
+        } else {
             result = 'walk'
         }
         return result
@@ -43,9 +43,9 @@ const LikesHistory = () => {
                         {likes.map((likes, i) => {
                             return (
                                 <tr>
-                                    <td>{i+1}</td>
+                                    <td>{i + 1}</td>
                                     <td className='detail-td'><Link to={`/${NoConfig(likes.no)}/${likes.no}`}>{likes.name}</Link></td>
-                                    <td>{(likes.likeDate).substring(0,10)}</td>
+                                    <td>{(likes.likeDate).substring(0, 10)}</td>
                                 </tr>
                             )
                         })}
