@@ -12,6 +12,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -127,4 +128,6 @@ public class WalkingTrail {
 	@Column(name="LIKE_CT", columnDefinition="NUMBER DEFAULT 0")
 	private int likeCount;
 
+	@Transient
+	private boolean isLiked;
 }

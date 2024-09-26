@@ -75,7 +75,9 @@ public class CultureFacilityController {
 		int endPage = Math.min(pageList.getTotalPages(), page + pagePerBlock);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
+		
 		result.put("list", pageList.getContent());
+		
 		result.put("totalRecord", pageList.getTotalElements());
 		result.put("totalPages",pageList.getTotalPages());
 		result.put("currentPages",pageList.getNumber()+1);
