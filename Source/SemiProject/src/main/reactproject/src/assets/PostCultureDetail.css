@@ -23,6 +23,15 @@
   /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
   border: none;
 }
+.table-detail-review {
+  table-layout: fixed;
+  width: 70%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  /* background-color: #fff; */
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  border: none;
+}
 .tbody-detail > tr{
   padding: 10px;
   text-align: left;
@@ -43,6 +52,11 @@
 .table-detail td {
   padding: 10px;
   text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.table-detail-review td {
+  padding: 10px;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
 

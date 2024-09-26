@@ -102,9 +102,9 @@ function PostCultureDetail() {
 
   return (
     <div className="post-detail">
-
+      <br/><br/>
       <div className='detail-div'>
-        <h1 className='h1-list'>{culture.fcltyName}</h1>
+      <span className='mainTitle'><h1>{culture.fcltyName}</h1></span>
         <button onClick={() => handleLike()} className='button-detail'>
           {isLiked ? '❤️' : '🤍'} {culture.likeCount}
         </button>&emsp;
@@ -203,8 +203,8 @@ function PostCultureDetail() {
       </div>
 
       {/* 후기 표시 부분 */}
-      <h1 className='h1-list'>후기</h1>
-      <table className="table-detail">
+      <span className='mainTitle'><h1>후기</h1></span>
+      <table className="table-detail-review">
         <tbody>
           {reviews.map((review) => (
             <tr key={review.rid}>

@@ -37,8 +37,7 @@ function PostReviewDetail({ onAddReview }) {
     <>
     <br/><br/>
     <div className="review-detailDiv">
-      <h1>후기 작성</h1>
-     {/* <form onSubmit={handleSubmit}> */}
+    <span className='mainTitle'><h1>후기 작성</h1></span>
         <label htmlFor="content">후기 내용</label>
         <textarea
           id="content"
@@ -47,7 +46,6 @@ function PostReviewDetail({ onAddReview }) {
           required
           ></textarea>
 
-        {/* 사진 첨부 입력 필드 */}
        
       <div className="back-to-listDiv">
         <button onClick={()=>{handleSubmit()}} className="review-detail" >후기 제출</button>

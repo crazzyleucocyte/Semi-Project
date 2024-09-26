@@ -113,7 +113,7 @@ function Main() {
       
 
       {/* 1번째 article */}
-        <span  className='mainTitle'><h3>서울의 날씨</h3></span>
+        <span  className='mainTitle'><h1>서울의 날씨</h1></span>
         <br/>
 
       <article onClick={()=>{navigate('/weather')}} className='weatherArticle'>
@@ -149,7 +149,7 @@ function Main() {
 
       {/* 2번째 article */}
       <br/><br/><br/><br/>
-      <span  className='mainTitle'><h3>인기 산책로</h3></span><br/>
+      <span  className='mainTitle'><h1>인기 산책로</h1></span><br/>
       
       <article className='boardContainer' >
 

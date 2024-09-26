@@ -164,33 +164,33 @@ function WalkingTrailsList({ likes, onLike }) {
   //   fetchData();
   // }, [fetchData]);
 
-  const handleLike = async (wid) => {
-    try {
-      const response = await axios.post(`/like/toggle`, {
-        lId: userId,
-        no: wid
-      });
-      console.log(response.data);
+  // const handleLike = async (wid) => {
+  //   try {
+  //     const response = await axios.post(`/like/toggle`, {
+  //       lId: userId,
+  //       no: wid
+  //     });
+  //     console.log(response.data);
 
-      const newLikedStatus = response.data.isLiked;
-      const newLikeCount = response.data.likeCount;
+  //     const newLikedStatus = response.data.isLiked;
+  //     const newLikeCount = response.data.likeCount;
 
-      setWalkingTrails(prevTrails => prevTrails.map(trail =>
-        trail.wid === wid
-          ? {
-            ...trail,
-            likeCount: newLikeCount,
-            isLiked: newLikedStatus
-          }
-          : trail
-      ));
+  //     setWalkingTrails(prevTrails => prevTrails.map(trail =>
+  //       trail.wid === wid
+  //         ? {
+  //           ...trail,
+  //           likeCount: newLikeCount,
+  //           isLiked: newLikedStatus
+  //         }
+  //         : trail
+  //     ));
 
     
-    } catch (error) {
-      console.error('좋아요 처리 중 오류 발생:', error);
-      alert('좋아요 처리 중 오류가 발생했습니다.');
-    }
-  };
+  //   } catch (error) {
+  //     console.error('좋아요 처리 중 오류 발생:', error);
+  //     alert('좋아요 처리 중 오류가 발생했습니다.');
+  //   }
+  // };
   // useEffect(() => {
   //   if (firstEffectDone) {
 
@@ -204,7 +204,8 @@ function WalkingTrailsList({ likes, onLike }) {
 
   return (
     <div>
-      <h1 className='h1-list'>산책누리 산책길</h1>
+      <br/><br/>
+      <span className='mainTitle'><h1>산책누리 산책길</h1></span>
 
       {/* 한 페이지에 표시할 글 수 선택하는 select 요소 */}
       <div className="posts-per-page">
@@ -219,7 +220,7 @@ function WalkingTrailsList({ likes, onLike }) {
         <thead className='thead-list'>
           <tr>
             {/* <th>글번호</th> */}
-            <th>시군구</th>
+            <th>지역</th>
             <th>좋아요</th>
             <th>산책길 이름</th>
             <th>경로레벨</th>
@@ -228,13 +229,13 @@ function WalkingTrailsList({ likes, onLike }) {
         </thead>
         <tbody>
           {walkingTrails.map((walkingTrails) => {
-            const likeResponse = axios.post(`/like/status`, {
-              lId: userId,
-              no: walkingTrails.wid,
-            });
-            walkingTrails.isLiked = likeResponse.data===null?false:true
+            //  리스트에서 바로 좋아요 클릭할 수 있는 기능
+            // const likeResponse = axios.post(`/like/status`, {
+            //   lId: userId,
+            //   no: walkingTrails.wid,
+            // });
+            // walkingTrails.isLiked = likeResponse.data===null?false:true
             
-            console.log('좋아요 상태:', likeResponse.data)
             return(
               <tr key={walkingTrails.wid}>
               {/* <td>{walkingTrails.wid}</td> */}

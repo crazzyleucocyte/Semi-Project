@@ -116,9 +116,9 @@ function PostWalkDetail({ likes, onLike }) {
 
   return (
     <div className="post-detail">
-
+      <br/><br/>
       <div className='detail-div'>
-        <h1 className='h1-list'>{walkingTrails.wlktrlName}</h1>
+      <span className='mainTitle'><h1>{walkingTrails.wlktrlName}</h1></span>
         <button onClick={() => handleLike()} className='button-detail'>
           {isLiked ? '❤️' : '🤍'} {walkingTrails.likeCount}
         </button>&emsp;
@@ -202,8 +202,8 @@ function PostWalkDetail({ likes, onLike }) {
       </div>
 
       {/* 후기 표시 부분 */}
-      <h1>후기</h1>
-      <table className="table-detail">
+      <span className='mainTitle'><h1>후기</h1></span>
+      <table className="table-detail-review">
         <tbody>
           {reviews.map((review) => (
             <tr key={review.rid}>

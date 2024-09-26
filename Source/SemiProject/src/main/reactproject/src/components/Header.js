@@ -98,13 +98,13 @@ function Header() {
         <div className="div2">
         <ul className="navBar">
               <li className="nav" onClick={()=>{navigate('/weather')}}>
-                <span>날씨 경로 목록</span>
+                <span>날씨 보기</span>
                 </li>
               <li className="nav" onClick={()=>{navigate('/walk')}}>
                 <span>산책 경로 목록</span>
                 </li>
               <li className="nav" onClick={()=>{navigate('/culture')}}>
-                <span>문화 경로 목록</span>
+                <span>문화 시설 목록</span>
                 </li>
               
 
