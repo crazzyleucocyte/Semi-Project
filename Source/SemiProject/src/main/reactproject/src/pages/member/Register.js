@@ -49,7 +49,7 @@ const Signup = () => {
     const { ssnFirst, ssnSecond } = formData;
     const ssn = ssnFirst + ssnSecond;
     // 주민등록번호 형식에 맞는지 확인 (6자리 + 7자리)
-    const regex = /^[0-9]{6}[1-4][0-9]{6}$/; 
+    const regex = /^[0-9]{6}[1-4][0-9]{6}$/;
     return regex.test(ssn);
   };
 
@@ -62,8 +62,8 @@ const Signup = () => {
 
     // 비밀번호와 비밀번호 확인이 일치하지 않으면 에러 처리
     if (password !== confirmPassword) {
-      setShowError(true); 
-      setIsLoading(false); 
+      setShowError(true);
+      setIsLoading(false);
       return;
     }
 
@@ -98,20 +98,20 @@ const Signup = () => {
       pwd: formData.password,
       memSsn: Number(formData.ssnFirst + formData.ssnSecond), // 주민등록번호
     })
-    .then(response => {
-      console.log("회원가입 성공:", response.data);
-      window.alert("회원가입을 완료했습니다."); // 성공 메시지
+      .then(response => {
+        console.log("회원가입 성공:", response.data);
+        window.alert("회원가입을 완료했습니다."); // 성공 메시지
 
-      // 성공 시 로그인 페이지로 이동
-      handleLogin();
-    })
-    .catch(error => {
-      console.error("회원가입 실패:", error);
-      setShowError(true); // 에러 발생 시 상태 업데이트
-    })
-    .finally(() => {
-      setIsLoading(false); // 로딩 상태 종료
-    });
+        // 성공 시 로그인 페이지로 이동
+        handleLogin();
+      })
+      .catch(error => {
+        console.error("회원가입 실패:", error);
+        setShowError(true); // 에러 발생 시 상태 업데이트
+      })
+      .finally(() => {
+        setIsLoading(false); // 로딩 상태 종료
+      });
   };
 
   // 휴대폰 번호 입력 시 '-' 자동으로 추가하는 함수
@@ -163,12 +163,12 @@ const Signup = () => {
       className="sign-up__wrapper"
       style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/member/background.jpg)` }} // 배경 이미지 설정
     >
-      <div className="sign-up__backdrop"></div> 
+      <div className="sign-up__backdrop"></div>
 
       <form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
         <img
           className="img-thumbnail mx-auto d-block mb-2"
-          src={process.env.PUBLIC_URL+'/img/member/logo5.png'} // 로고 이미지 설정
+          src={process.env.PUBLIC_URL + '/img/member/logo5.png'} // 로고 이미지 설정
           alt="logo"
         />
 
@@ -200,9 +200,9 @@ const Signup = () => {
               onChange={handleChange}
               required
               className="form-control me-2"
-              // style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
             />
-            //아이디 중복확인 
+            {/* 아이디 중복확인  */}
             <Button
               variant="secondary"
               onClick={handleIdCheck}
@@ -233,7 +233,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            // style={{ border: '2px solid black' }}
+          // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -249,7 +249,7 @@ const Signup = () => {
             onChange={handlePhoneChange}
             required
             className="form-control"
-            // style={{ border: '2px solid black' }}
+          // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -265,7 +265,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            // style={{ border: '2px solid black' }}
+          // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -279,7 +279,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            // style={{ border: '2px solid black' }}
+          // style={{ border: '2px solid black' }}
           >
             <option value="">성별을 선택하세요</option>
             <option value="M">남성</option>
@@ -302,7 +302,7 @@ const Signup = () => {
               onChange={handleChange}
               required
               className="form-control me-2"
-              // style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
             />
             <input
               type="password"
@@ -314,7 +314,7 @@ const Signup = () => {
               onChange={handleChange}
               required
               className="form-control"
-              // style={{ border: '2px solid black' }}
+            // style={{ border: '2px solid black' }}
             />
           </div>
         </div>
@@ -331,7 +331,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            // style={{ border: '2px solid black' }}
+          // style={{ border: '2px solid black' }}
           />
         </div>
 
@@ -347,7 +347,7 @@ const Signup = () => {
             onChange={handleChange}
             required
             className="form-control"
-            // style={{ border: '2px solid black' }}
+          // style={{ border: '2px solid black' }}
           />
         </div>
 

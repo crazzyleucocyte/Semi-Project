@@ -97,9 +97,6 @@ function PostCultureDetail() {
       signguNm: culture.signguName
     }))
   }
-
- 
-
   return (
     <div className="post-detail">
       <br/><br/>

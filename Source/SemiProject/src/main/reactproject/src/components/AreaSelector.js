@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCityInfo } from '../hooks/store';
 
-const AreaSelector = ({weatherResult,setWeatherResult, handleSetcityInfo}) => {
+const AreaSelector = ({ handleSetcityInfo}) => {
   // 상태 관리
   const [selectedProvince, setSelectedProvince] = useState('');
   const [selectedCity, setSelectedCity] = useState('');

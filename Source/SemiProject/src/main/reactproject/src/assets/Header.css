@@ -1,190 +1,185 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&family=Nanum+Gothic:wght@400;700;800&display=swap');
-.logo-logout{
+
+.logo-logout {
   height: 130px;
 }
-.logo{
+
+.logo {
   float: left;
   margin-left: 15%;
   cursor: pointer;
 }
-.logoImg{
+
+.logoImg {
   height: 100px;
   margin: 15px;
 }
-.logout{
+
+.logout {
   display: flex;
   height: 130px;
-  font-family:  'SDGothic';
+  font-family: 'SDGothic';
   align-items: center;
 }
-.logoutDiv{
+
+.logoutDiv {
   margin-right: 15%;
   float: right;
   height: 130px;
-  }
-  .logoTitle{
-    color: #00bf63;
-    font-size: 60px;
-    line-height: 130px;
-    font-weight: 700;
-    font-family:  "Dongle", sans-serif;
-  }
-  .logoTitleDiv{
-    float: right;
-    display: flex;
-    flex-direction: column;
-  }
+}
 
-  .welcomeMsg{
-    letter-spacing: 0.7px;
-    font-size: 18px;
-  }
-  .userId{
-    font-weight: 700;
-  }
-  .logoutButton{
-    display: flex;
-    font-size: 18px;
-    border: 3px solid #00bf634d;
-    background-color: rgba(0, 0, 0, 0.062);
-    color: rgb(97, 97, 97);
-    height: 45px;
-    width: 90px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 18px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  .logoutButton:hover{
-    
-    color: rgb(59, 59, 59);
-    background-color: rgba(11, 138, 11, 0.363);
-    
-  }
-  .navBar{
-    font-family: 'SDGothic';
-    font-weight: 500;
-    width: 70%;
-    display: flex;
-    justify-content: space-around;
-    height: 100px;
-  }
-  .navBar>li{
-    display: inline-block;
-    height: 100px;
-    color: black; /* 링크 색상 */
-    font-size: 18px; /* 글자 크기 */
-    margin: 0 15px; /* 좌우 여백 */
-    cursor: pointer;
-    line-height: 100px;
-    transition: all 0.3s;
-    width: 25%;
-  }
-  .navBar>li>span{
-    margin: 0 auto; /* 좌우 여백 */
-    display: flex;
-    justify-content: center;
-  }
-  .navBar>li:hover{
-    transform: translateX(1.1);
-    box-shadow: 0px 8px 16px 10px rgba(0,0,0,0.2);
-  }
-  #dropdown:hover .dropdownMenu{
-    opacity: 1;
-    display: block;
-    transform: translateY(0);
-  }
+.logoTitle {
+  color: #00bf63;
+  font-size: 60px;
+  line-height: 130px;
+  font-weight: 700;
+  font-family: "Dongle", sans-serif;
+}
 
-  
-  .dropdownMenu{
-    transform: translateY(-20px);
-    transition: opacity 0.3s ease, transform 0.3s ease; /* 애니메이션 설정 */
-    opacity: 0;
-    display: none;
-    height: 210px;
-    width: 14.7%;
-    position: absolute;
-    z-index: 10;
-    background-color: white;
-    margin-top: 100px;
-    list-style-type: none;
-    padding: 0;
-    /* margin: 0; */
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.356);
-  }
- 
-  /* 드롭다운 메뉴 */
-  .dropdownItem{
-    display: flex;
-    justify-content: center;
-    height: 70px;
-    width: 100%;
-
-  }
-  .dropdownItem>span{
-    font-family:  'SDGothic';
-    line-height: 70px;
-  }
-  .dropdownItem:hover{
-    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.356);
-    transition: all 0.4s;
-  }
-
-  .div2 {
-    letter-spacing: 1px;
+.logoTitleDiv {
+  float: right;
   display: flex;
-  justify-content: center; 
-  /* align-items: center;  */
-  height: 100px; 
+  flex-direction: column;
+}
+
+.welcomeMsg {
+  letter-spacing: 0.7px;
+  font-size: 18px;
+}
+
+.userId {
+  font-weight: 700;
+}
+
+.logoutButton {
+  display: flex;
+  font-size: 18px;
+  border: 3px solid #00bf634d;
+  background-color: rgba(0, 0, 0, 0.062);
+  color: rgb(97, 97, 97);
+  height: 45px;
+  width: 90px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logoutButton:hover {
+
+  color: rgb(59, 59, 59);
+  background-color: rgba(11, 138, 11, 0.363);
+
+}
+
+.navBar {
+  font-family: 'SDGothic';
+  font-weight: 500;
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  height: 100px;
+}
+
+.navBar>.nav {
+  display: inline-block;
+  height: 100px;
+  color: black;
+  font-size: 18px;
+  margin: 0 15px;
+  cursor: pointer;
+  line-height: 100px;
+  transition: all 0.3s;
+  width: 25%;
+}
+
+.navBar>.nav>span {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.navBar>.nav:hover {
+  transform: translateX(1.1);
+  box-shadow: 0px 8px 16px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navBar>.nav-drop {
+  display: inline-block;
+  height: 100px;
+  color: black;
+  font-size: 18px;
+  margin: 0 15px;
+  cursor: pointer;
+  line-height: 100px;
+  transition: all 0.3s;
+  width: 25%;
+}
+
+.navBar>.nav-drop>span {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  height: 100px;
+}
+
+#dropdown:hover .dropdownMenu {
+  opacity: 1;
+  display: block;
+  transform: translateY(0);
+}
+
+
+.dropdownMenu {
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+  opacity: 0;
+  display: none;
+  height: 210px;
+  width: 14.7%;
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+  margin-top: 100px;
+  list-style-type: none;
+  padding: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.356);
 }
 
-  
-  /* 링크에 마우스를 올렸을 때 */
-  .custom-link1:hover {
-    color: black; /* 호버 시 색상 변경 */
-  }
-  .custom-link2:hover {
-    color: black; /* 호버 시 색상 변경 */
-  }
-  .custom-link3:hover {
-    color: black; /* 호버 시 색상 변경 */
-  }
-  .custom-link4:hover {
-    color: black; /* 호버 시 색상 변경 */
-  }
-
-  /* DropdownMenu.css */
-.dropdown {
-  position: relative;
-  display: inline-block;
+.dropdownItem {
+  display: flex;
+  justify-content: center;
+  height: 70px;
+  width: 100%;
 }
 
-/* .dropdown-menu {
+.dropdownItem>span {
+  font-family: 'SDGothic';
+  line-height: 70px;
+}
+
+.dropdownItem:hover {
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.356);
+  transition: all 0.4s;
+}
+
+.div2 {
+  letter-spacing: 1px;
   display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-} */
-
-
+  justify-content: center;
+  height: 100px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.356);
+}
 
 .swiper-container {
   position: relative;
   width: 100%;
-  /* height: 100%; */
 }
+
 .slide-content {
   display: flex;
   justify-content: center;
@@ -193,34 +188,39 @@
   background-color: #eee;
   font-size: 24px;
 }
-.banner{
+
+.banner {
   height: 600px;
 }
-#banner1{
+
+#banner1 {
   background-color: #1D1915;
 }
-#banner2{
+
+#banner2 {
   background-color: #E2DDD3;
-  
+
 }
-#banner3{
+
+#banner3 {
   background-color: #C0DDFD;
 
 }
-.headerSwiper{
+
+.headerSwiper {
   height: 600px;
-  /* padding-top: 300px; */
 }
-.swiper-button-prev, .swiper-button-next  {
+
+.swiper-button-prev,
+.swiper-button-next {
   position: absolute;
-  /* top: 50%; */
-  /* transform: translateY(-50%); */
   background-color: rgba(131, 131, 131, 0.349);
-  border-radius: 200px; 
+  border-radius: 200px;
   color: rgba(255, 255, 255, 0.651) !important;
   justify-content: center;
   align-items: center;
-  width:65px !important;;
+  width: 65px !important;
+  ;
   height: 65px !important;
   cursor: pointer;
   text-align: center;
@@ -230,24 +230,14 @@
   font-weight: 500;
   font-family: "Nanum Gothic", sans-serif;
 }
-.swiper-button-prev{
-  left: max(calc(calc(100% - 1200px)/2 - 52px),0px) !important;
-  /* background-image: url('../assets/icon.jpg'); 또는 backgroundImage 변수를 사용할 수 있음 */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+
+.swiper-button-prev {
+  left: max(calc(calc(100% - 1200px)/2 - 52px), 0px) !important;
 }
 
 .swiper-button-next {
-  right: max(calc(calc(100% - 1200px)/2 - 52px),0px) !important;
-  /* background-image: url('../assets/icon2.jpg'); 또는 backgroundImage 변수를 사용할 수 있음 */
-
-  
+  right: max(calc(calc(100% - 1200px)/2 - 52px), 0px) !important;
 }
-
-
-
-
 
 .nanum-gothic-regular {
   font-family: "Nanum Gothic", sans-serif;

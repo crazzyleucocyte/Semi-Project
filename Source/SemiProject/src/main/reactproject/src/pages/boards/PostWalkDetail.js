@@ -82,7 +82,6 @@ function PostWalkDetail({ likes, onLike }) {
         no: postId
       });
       setIsLikeClick(!isLikeClick)
-      // console.log(response.data);
     } catch (error) {
       console.error('좋아요 처리 중 오류 발생:', error);
     }
@@ -126,11 +125,6 @@ function PostWalkDetail({ likes, onLike }) {
           setWeatherInfo();
           navigate("/weather")
         }}>날씨 확인</button>
-      </div>
-
-      <div className='detail-div2'>
-        사진 넣는 칸
-        <img src='' />
       </div>
 
       <table className='table-detail'>

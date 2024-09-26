@@ -1,29 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../assets/PostList.css';
 
-function WalkingTrailsList({ likes, onLike }) {
+function WalkingTrailsList() {
   const [walkingTrails, setWalkingTrails] = useState([]);
   const [postsPerPage, setPostsPerPage] = useState(10); // 한 페이지에 표시할 글 수
   const [currentPage, setCurrentPage] = useState(1); // 1부터 시작하는 페이지 번호
   const [totalPages, setTotalPages] = useState(); // 전체 페이지 수
   const [searchInput, setSearchInput] = useState('');
-  const [totalRecord, setTotalRecord] = useState('');
   const [totalBlock, setTotalBlock] = useState('');       // 전체 페이지 블록
   const [currentBlock, setCurrentBlock] = useState(0);    // 현재 페이지 블록
   const [searchCategory, setSearchCategory] = useState('null');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [likedPosts, setLikedPosts] = useState({});
   const [isLikeClick, setIsLikeClick] = useState(false)
   const [firstEffectDone, setFirstEffectDone] = useState(false);
 
   // const [isLiked, setIsLiked] = useState(false);
   const userId = localStorage.getItem('username');
-  const [like, setLike] = useState(false);
-
-  // const indexOfLastPost = currentPage * postsPerPage;
-  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
   // 페이지 변경 처리
   const handlePageChange = (pageNumber) => {
@@ -32,13 +25,7 @@ function WalkingTrailsList({ likes, onLike }) {
 
   const handlePostsPerPageChange = (event) => {
     setPostsPerPage(parseInt(event.target.value, 10));
-    if (currentPage === 1) {
-      listCaller()
-    } else {
-      setCurrentPage(1); // 한 페이지에 나타낼 글 수를 변경하면 첫 페이지로 이동
-    }
   };
-
 
   async function listCaller() {
     try {
@@ -56,7 +43,6 @@ function WalkingTrailsList({ likes, onLike }) {
       console.log('listCaller : ', response.data);
 
       setWalkingTrails(response.data.list);
-      setTotalRecord(response.data.totalRecord);
       setTotalPages(response.data.totalPages);
 
       // totalPages를 클라이언트에서 계산
@@ -72,26 +58,12 @@ function WalkingTrailsList({ likes, onLike }) {
     }
   }
 
-
-  // postsPerPage가 변경될 때마다 totalPages와 totalBlock을 재계산
-  // useEffect(() => {
-  //   if (totalRecord > 0) {
-  //     const calculatedTotalPages = Math.floor(totalRecord / postsPerPage);
-  //     setTotalPages(calculatedTotalPages);
-  //     console.log("totalRecord : ",totalRecord)
-  //     console.log("postsPerPage : ", postsPerPage)
-  //     console.log("calculatedTotalPages : ", calculatedTotalPages)
-  //     setTotalBlock(Math.ceil(calculatedTotalPages / 10));
-  //   }
-  // }, [totalRecord, postsPerPage]);
-
   useEffect(() => {
     listCaller()
   }, [currentPage, postsPerPage]);
 
   //검색버튼 클릭
   const handleSearch = () => {
-    // setSearchTerm(searchInput);
     SearchWalkingTrail();
     setCurrentPage(1);
   };
@@ -109,7 +81,11 @@ function WalkingTrailsList({ likes, onLike }) {
     if (searchCategory == 'null') {
       alert('카테고리를 선택하십시오')
     } else {
-      listCaller();
+      if (currentPage === 1) {
+        listCaller()
+      } else {
+        setCurrentPage(1); // 한 페이지에 나타낼 글 수를 변경하면 첫 페이지로 이동
+      }
     }
   }
 
@@ -130,40 +106,7 @@ function WalkingTrailsList({ likes, onLike }) {
     }
   };
 
-  // const fetchData = useCallback(async () => {
-  //   try {
-  //     const response = await axios.post('/walking/list', {
-  //       'page': currentPage,
-  //       'numPerPage': postsPerPage,
-  //       'keyField': searchCategory,
-  //       'keyWord': searchInput
-  //     });
-
-  //     const storedLikes = JSON.parse(localStorage.getItem('likedPosts') || '{}');
-
-  //     const updatedTrails = response.data.list.map(trail => ({
-  //       ...trail,
-  //       isLiked: storedLikes[trail.wid] || false
-  //     }));
-
-  //     setWalkingTrails(updatedTrails);
-  //     setTotalRecord(response.data.totalRecord);
-
-  //     const calculatedTotalPages = Math.floor(response.data.totalRecord / postsPerPage);
-  //     setTotalPages(calculatedTotalPages);
-  //     setTotalBlock(Math.ceil(calculatedTotalPages / 10));
-  //   } catch (error) {
-  //     console.error('Error fetching walkingTrail data: ', error);
-  //   }
-  // }, [currentPage, postsPerPage, searchCategory]);
-
-  // useEffect(() => {
-  //   const storedLikes = JSON.parse(localStorage.getItem('likedPosts') || '{}');
-  //   console.log(1)
-  //   setLikedPosts(storedLikes);
-  //   fetchData();
-  // }, [fetchData]);
-
+  //  리스트에서 바로 좋아요 클릭할 수 있는 기능 구현중
   // const handleLike = async (wid) => {
   //   try {
   //     const response = await axios.post(`/like/toggle`, {
@@ -185,7 +128,7 @@ function WalkingTrailsList({ likes, onLike }) {
   //         : trail
   //     ));
 
-    
+
   //   } catch (error) {
   //     console.error('좋아요 처리 중 오류 발생:', error);
   //     alert('좋아요 처리 중 오류가 발생했습니다.');
@@ -200,11 +143,11 @@ function WalkingTrailsList({ likes, onLike }) {
   // }, [firstEffectDone, isLikeClick])
 
 
- 
+
 
   return (
     <div>
-      <br/><br/>
+      <br /><br />
       <span className='mainTitle'><h1>산책누리 산책길</h1></span>
 
       {/* 한 페이지에 표시할 글 수 선택하는 select 요소 */}
@@ -235,27 +178,26 @@ function WalkingTrailsList({ likes, onLike }) {
             //   no: walkingTrails.wid,
             // });
             // walkingTrails.isLiked = likeResponse.data===null?false:true
-            
-            return(
+
+            return (
               <tr key={walkingTrails.wid}>
-              {/* <td>{walkingTrails.wid}</td> */}
-              <td>{walkingTrails.signguNm}</td>
-              <td>
-                {/* <button onClick={() => { handleLike(walkingTrails.wid); setIsLikeClick(!isLikeClick) }} className='likeBtn'>
+                <td>{walkingTrails.signguNm}</td>
+                <td>
+                  {/* <button onClick={() => { handleLike(walkingTrails.wid); setIsLikeClick(!isLikeClick) }} className='likeBtn'>
                   {walkingTrails.isLiked ? '❤️' : '🤍'} */}
                   ❤️
-                   {walkingTrails.likeCount}
-                {/* </button> */}
-                &emsp;
-              </td>
-              <td className='detail-td'>
-                <Link to={`/walk/${walkingTrails.wid}`}>{walkingTrails.wlktrlName}</Link>
-              </td>
-              <td title='{walkingTrails.coursLvNm}'>
-                {getLevelStars(walkingTrails.coursLvNm)}
-              </td>
-              <td>{walkingTrails.coursTmContent}</td>
-            </tr>
+                  {walkingTrails.likeCount}
+                  {/* </button> */}
+                  &emsp;
+                </td>
+                <td className='detail-td'>
+                  <Link to={`/walk/${walkingTrails.wid}`}>{walkingTrails.wlktrlName}</Link>
+                </td>
+                <td title='{walkingTrails.coursLvNm}'>
+                  {getLevelStars(walkingTrails.coursLvNm)}
+                </td>
+                <td>{walkingTrails.coursTmContent}</td>
+              </tr>
             )
           })}
         </tbody>
@@ -291,9 +233,6 @@ function WalkingTrailsList({ likes, onLike }) {
           }}>...Next</button>
         )}
       </div>
-
-
-
       <div className="search">
         <select onChange={handleCategoryChange} className="search-select">
           <option value="null">선택</option>
