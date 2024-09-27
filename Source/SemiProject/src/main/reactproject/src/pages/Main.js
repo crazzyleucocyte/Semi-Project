@@ -124,7 +124,7 @@ function Main() {
                     <span className='cultureCategory'>{value.ctgryTwo}</span>
                     <span className='culturename'>{value.fcltyName}({value.ctprvnName})</span>
                     <span className='culturePetEnter'>{petEnterYN}</span>
-                    <span className='cultureLike'>👍{value.likeCount}</span>
+                    <span className='cultureLike'>❤️{value.likeCount}</span>
                   </div>
                 </div>
               )

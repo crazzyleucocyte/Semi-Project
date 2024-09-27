@@ -184,9 +184,9 @@ function PostCultureList() {
         <select value={searchCategory} onChange={handleCategoryChange} className="search-select">
           <option value="null">선택</option>
           <option value="fcltyName">시설명</option>
-          <option value="signguName">시군구명</option>
-          <option value="ctgryOne">카테고리1</option>
-          <option value="ctgryTwo">카테고리2</option>
+          <option value="signguName">지역명</option>
+          <option value="ctgryOne">펫 라이프 스타일</option>
+          <option value="ctgryTwo">펫 라이프 케어</option>
           <option value="entrPetSize">입장가능반려동물크기</option>
         </select>
         <input

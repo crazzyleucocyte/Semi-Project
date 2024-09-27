@@ -14,7 +14,7 @@ function Header() {
     <header>
       <div className="logo-logout">
         <div className="logo" onClick={() => { navigate('/main') }}>
-          <img className="logoImg" src={process.env.PUBLIC_URL + '/img/main/logo4.png'} />
+          <img className="logoImg" src={process.env.PUBLIC_URL + '/img/main/logo.png'} />
           <div className="logoTitleDiv">
             <span className="logoTitle">산책누리</span>
           </div>

@@ -237,7 +237,7 @@ function WalkingTrailsList() {
         <select onChange={handleCategoryChange} className="search-select">
           <option value="null">선택</option>
           <option value="wlktrlName">산책길 이름</option>
-          <option value="signguNm">시군구</option>
+          <option value="signguNm">지역</option>
           <option value="coursTmContent">산책 시간</option>
         </select>
         <input

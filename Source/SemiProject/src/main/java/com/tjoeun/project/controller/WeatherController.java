@@ -124,7 +124,6 @@ public class WeatherController{
 
 		if((cityInfo.get("la")) !=null && (cityInfo.get("lo")) != null ) {
 			latxLony = ApiService.convertGRID_GPS(Double.parseDouble (cityInfo.get("la")), Double.parseDouble(cityInfo.get("lo")));
-
 		}
 		if(latxLony != null) {
 			nx = latxLony.getX();
@@ -140,7 +139,7 @@ public class WeatherController{
 		List<ShortFcst> vilageFcstList=null;
 
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"); /*URL*/
-		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=VXXP0D4BAwzrR%2BknA9hDGadwsPq9C2fmBD0KrTH1NNj3VOAF1j5915zQleJgAjBeT2umqkiP%2BhfokdcdMSB3XA%3D%3D"); /*Service Key*/
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=7hTtGR%2FdJRrqCBGXcaViR4T%2FVIlV8qMRTW7q3lGlVOgtgmdj0UUDPlTbN15x%2FbDgpWC%2BYzq4Gcft7Z%2Fk54lLbQ%3D%3D"); /*Service Key*/
 		urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
 		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("1000", "UTF-8")); /*한 페이지 결과 수*/
 		urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
@@ -180,10 +179,10 @@ public class WeatherController{
 			//				itemArray
 
 			for (int i = 0 ; i<itemArray.size();i++ ) {
-				//					Object itemObject
+				//Object itemObject
 
 				JSONObject item = (JSONObject) itemArray.get(i);
-				//					짝수 시간 체킹
+				//짝수 시간 체킹
 				if(Integer.parseInt(((String)item.get("fcstTime")).substring(0, 2))%2==0)  {
 
 					String evenBaseTime = ((String)item.get("fcstTime")).substring(0, 2);
@@ -259,7 +258,7 @@ public class WeatherController{
 			System.out.println("tmFc : " + tmFc + " regId : " + regId);
 
 			StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa");
-			urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=VXXP0D4BAwzrR%2BknA9hDGadwsPq9C2fmBD0KrTH1NNj3VOAF1j5915zQleJgAjBeT2umqkiP%2BhfokdcdMSB3XA%3D%3D");
+			urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=7hTtGR%2FdJRrqCBGXcaViR4T%2FVIlV8qMRTW7q3lGlVOgtgmdj0UUDPlTbN15x%2FbDgpWC%2BYzq4Gcft7Z%2Fk54lLbQ%3D%3D");
 
 			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8"));
@@ -295,7 +294,6 @@ public class WeatherController{
 		}
 		System.out.println(sb.toString());
 		JSONObject jsonObj=null;
-		List<MidFcst> result=null;
 		try {
 			org.json.simple.parser.JSONParser jsonParser = new org.json.simple.parser.JSONParser();
 			jsonObj = (JSONObject)jsonParser.parse(sb.toString());
@@ -332,7 +330,7 @@ public class WeatherController{
 			System.out.println("tmFc : " + tmFc + " regId : " + regId);
 
 			StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst");
-			urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=VXXP0D4BAwzrR%2BknA9hDGadwsPq9C2fmBD0KrTH1NNj3VOAF1j5915zQleJgAjBeT2umqkiP%2BhfokdcdMSB3XA%3D%3D");
+			urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=7hTtGR%2FdJRrqCBGXcaViR4T%2FVIlV8qMRTW7q3lGlVOgtgmdj0UUDPlTbN15x%2FbDgpWC%2BYzq4Gcft7Z%2Fk54lLbQ%3D%3D");
 
 			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8"));
@@ -368,7 +366,6 @@ public class WeatherController{
 		}
 		System.out.println("midLandFcst : "+ sb.toString());
 		JSONObject jsonObj=null;
-		List<MidFcst> result=null;
 		try {
 			org.json.simple.parser.JSONParser jsonParser = new org.json.simple.parser.JSONParser();
 			jsonObj = (JSONObject)jsonParser.parse(sb.toString());
