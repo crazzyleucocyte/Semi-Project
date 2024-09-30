@@ -20,7 +20,7 @@ import lombok.ToString;
 @ToString
 public class ShortFcst {
 
-	public static Object Category;
+	
 	
 	private String fcstDate;
 	private String fcstTime;

@@ -26,7 +26,8 @@ const LikesHistory = () => {
 
     return (
         <div>
-            <h2>좋아요 내역</h2>
+            <br/><br/>
+            <span className='mainTitle'><h1>좋아요 내역</h1></span>
             {likes.length === 0 ? ( // 좋아요 내역이 없으면 메시지 표시
                 <p>좋아요한 게시물이 없습니다.</p>
             ) : (
