@@ -68,7 +68,7 @@ function PostCultureDetail() {
         console.log(error)
         alert(error)
       })
-  },[])
+  },[reviews])
   
   const handleLike = async () => {
     if (isLoggedIn) {

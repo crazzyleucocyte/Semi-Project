@@ -97,7 +97,7 @@ public class CultureFacilityController {
 		Set<Integer> random = new HashSet<Integer>();
 		Math.floor(Math.random()*11);
 		while(random.size()!=10) {
-			random.add((int)Math.floor(Math.random()*11));
+			random.add((int)Math.floor(Math.random()*10));
 		}
 		
 		List<CultureFacility> result= new ArrayList<>();

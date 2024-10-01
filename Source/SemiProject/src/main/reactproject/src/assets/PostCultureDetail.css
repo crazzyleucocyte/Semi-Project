@@ -78,8 +78,16 @@
 }
 
 .detail-div2 {
-  margin: 150px;
+  margin: 0 auto;
   text-align: center;
+  width: 60%;
+  height: 700px;
+  overflow: hidden;
+  
+}
+.detail-div2>img{
+  width: 100%;
+height: auto;
 }
 
 .button-detail {

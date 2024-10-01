@@ -165,7 +165,7 @@ public class WeatherController{
 		}
 		rd.close();
 		conn.disconnect();
-		System.out.println(sb.toString());
+//		System.out.println("short : "+sb.toString());
 		JSONObject jsonObj=null;
 		try {
 			JSONParser jsonParser = new JSONParser();
@@ -175,7 +175,7 @@ public class WeatherController{
 			JSONObject items = (JSONObject) body.get("items");
 			JSONArray itemArray = (JSONArray) items.get("item");
 			vilageFcstList = new ArrayList<ShortFcst>();
-			System.out.println("shortFcst(179) : "+jsonObj);
+//			System.out.println("shortFcst(179) : "+jsonObj);
 			//				itemArray
 
 			for (int i = 0 ; i<itemArray.size();i++ ) {
@@ -364,7 +364,7 @@ public class WeatherController{
 				e.printStackTrace();
 			}
 		}
-		System.out.println("midLandFcst : "+ sb.toString());
+//		System.out.println("midLandFcst : "+ sb.toString());
 		JSONObject jsonObj=null;
 		try {
 			org.json.simple.parser.JSONParser jsonParser = new org.json.simple.parser.JSONParser();

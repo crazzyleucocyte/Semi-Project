@@ -26,7 +26,7 @@ public interface CultureFacilityRepository extends JpaRepository<CultureFacility
 
 	Page<CultureFacility> findByEntrPetSizeLike(PageRequest of, String keyWord);
 	
-	@Query(value="select * from CULTURE_FCLT where PICTURE_PT is not null", nativeQuery=true)
+	@Query(value="select * from CULTURE_FCLT where PICTURE_PT is not null order by LIKE_CT desc", nativeQuery=true)
 	List<CultureFacility> findByPicturePath();
 
 
