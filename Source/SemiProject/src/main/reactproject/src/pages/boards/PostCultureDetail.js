@@ -110,6 +110,7 @@ function PostCultureDetail() {
           navigate("/weather")
         }}>날씨 확인</button>
       </div>
+      <br/><br/>
 
       <div className='detail-div2'>
 
